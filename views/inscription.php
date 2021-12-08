@@ -13,6 +13,7 @@ require "../functions/function.php";
             <input type="password" placeholder="password" name="password">
             <input type="submit" name="inscription">
             <?php inscription()?>
+            test
         </form>
     </main>
     
