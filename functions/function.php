@@ -74,7 +74,7 @@
                         $_SESSION['login'] = $login;
                         $_SESSION['id'] = $result_user_connexion['id'];
                         $_SESSION['id_droits'] = $result_user_connexion['id_droits'];
-                        header("location: ../views/profil.php");
+                        header("location: ../views/articles.php");
                     } else {
                         $message_erreur = "Mot de passe incorrect";
                         echo $message_erreur;
