@@ -1,0 +1,30 @@
+body {
+    text-align: center;
+}
+header {
+    text-align: center;
+}
+header ul {
+    gap: 10vh;
+    justify-content: center;
+    display: flex;
+    list-style: none;
+}
+
+footer ul {
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    gap: 10vh;
+}
+
+footer {
+    margin-bottom: 0;
+}
+
+.titre_connexion {
+    color: rebeccapurple;
+}
+
+
+/*------------Style css de la page connexion ---------------*/
