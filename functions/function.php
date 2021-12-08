@@ -80,6 +80,7 @@
                         $_SESSION['id'] = $result_user_connexion['id'];
                         $_SESSION['id_droits'] = $result_user_connexion['id_droits'];
                         header("location: accueil.php");
+                        "test";
                     } else {
                         $message_erreur = "Mot de passe incorrect";
                         echo $message_erreur;
