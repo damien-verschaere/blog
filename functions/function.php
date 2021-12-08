@@ -12,13 +12,18 @@
             $login = htmlspecialchars ( $_POST['login'] );
             $email = htmlspecialchars ( $_POST['email'] );
             $password = htmlspecialchars( $_POST['password'] );
+            $password2=$_POST['password2'];
             $droit = 1;
             if ( empty($login)) {
             return $message='champ login vide';
+            "test";
         }
         elseif ( empty($password)) {
             echo "<p> remplissez le champ password </p>";
             
+        }
+        elseif ($password != $password2) {
+            echo " Les passwords ne correspondent pas .";
         }
         elseif ( !empty($login)) {
             $veriflogin = mysqli_query(connexion_BDD(),"SELECT login FROM utilisateurs WHERE login= '$login'");
