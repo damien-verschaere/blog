@@ -11,9 +11,9 @@ require "../functions/function.php";
             <input type="text" placeholder="login" name=login>
             <input type="email" placeholder="email" name="email">
             <input type="password" placeholder="password" name="password">
+            <input type="password" placeholder="verivication password" name="password2">
             <input type="submit" name="inscription">
             <?php inscription()?>
-            test
         </form>
     </main>
     
