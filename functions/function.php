@@ -74,7 +74,7 @@
                         $_SESSION['login'] = $login;
                         $_SESSION['id'] = $result_user_connexion['id'];
                         $_SESSION['id_droits'] = $result_user_connexion['id_droits'];
-                        header("location: ../views/articles.php");
+                        header("location: accueil.php");
                     } else {
                         $message_erreur = "Mot de passe incorrect";
                         echo $message_erreur;
@@ -96,7 +96,6 @@
         $affiche_articles = mysqli_query(connexion_BDD(), "SELECT * FROM articles INNER JOIN utilisateurs ON articles.id_utilisateur=utilisateurs.id ORDER BY `date` DESC");
         
         while($result_affiche_articles = mysqli_fetch_array($affiche_articles, MYSQLI_ASSOC)){
-            var_dump($result_affiche_articles);
 ?>
         <p class="titre_affiche_articles"><?= $result_affiche_articles['titre'] ?></p>
         <p class="introdruction_affiche-articles"><?= $result_affiche_articles['introduction'] ?></p>
