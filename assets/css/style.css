@@ -28,3 +28,25 @@ footer {
 
 
 /*------------Style css de la page connexion ---------------*/
+main{
+    height: 800px;
+    background-color: darkkhaki;
+}
+body{
+    background-color: darkkhaki;
+}
+.com{
+    margin-top: 2%;
+  
+}
+.com_index {
+  
+    display:flex;
+    height: auto;
+    width: auto;
+    margin-top: 2%;
+    border: solid 1px black;
+    margin-right: 15%;
+    margin-left: 15%;
+    
+}

@@ -1,7 +1,7 @@
 <?php
     /*Fonction de connexion à la base de données */
     function connexion_BDD(){
-        $connexion = mysqli_connect("localhost", "root", "", "blog");
+        $connexion = mysqli_connect('localhost', 'root', '', 'blog');
         mysqli_set_charset($connexion, 'utf8');
         return $connexion;
     }
@@ -36,10 +36,12 @@
     }
 #affiche les 3 premiers articles de la page index
     function affiche_article(){
-        $req=mysqli_query(connexion_BDD(),"SELECT `article`,`date` FROM `articles` order by date DESC LIMIT 3 ");
+        $req=mysqli_query(connexion_BDD(),"SELECT `titre`,`introduction`,`article`,`date` FROM `articles` order by date DESC LIMIT 3 ");
         $result=mysqli_fetch_all($req,MYSQLI_ASSOC);
         foreach ($result as $key) {
             echo "<div class =com_index>";
+            echo $key['titre']."<br>";
+            echo $key['introduction']."<br>";
             echo  $key['article'] ."<br>";
             echo $key['date']."<br>";
             echo"</div>";
