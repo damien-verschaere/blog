@@ -93,13 +93,15 @@
     /*----------------------------PAGE ARTICLES------------------------------- */
 
     function affiche_all_articles(){
-        $affiche_articles = mysqli_query(connexion_BDD(), "SELECT * FROM articles ORDER BY `date` DESC");
+        $affiche_articles = mysqli_query(connexion_BDD(), "SELECT * FROM articles INNER JOIN utilisateurs ON articles.id_utilisateur=utilisateurs.id ORDER BY `date` DESC");
         
         while($result_affiche_articles = mysqli_fetch_array($affiche_articles, MYSQLI_ASSOC)){
+            var_dump($result_affiche_articles);
 ?>
         <p class="titre_affiche_articles"><?= $result_affiche_articles['titre'] ?></p>
         <p class="introdruction_affiche-articles"><?= $result_affiche_articles['introduction'] ?></p>
         <p class="affiche_articles"><?= $result_affiche_articles['article'] ?></p>
+        <p class="user_affiche_articles"> Posté par <?= $result_affiche_articles['login'] ?> le <?= $result_affiche_articles['date'] ?>
 
 <?php
         }
