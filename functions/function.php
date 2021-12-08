@@ -16,7 +16,7 @@
             $droit = 1;
             if ( empty($login)) {
             return $message='champ login vide';
-            "test";
+            
         }
         elseif ( empty($password)) {
             echo "<p> remplissez le champ password </p>";
