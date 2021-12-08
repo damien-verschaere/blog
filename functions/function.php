@@ -53,6 +53,14 @@
         }
         
     }
+
+    function creer_article(){
+        $a=0;
+        $requete=mysqli_query(connexion_BDD(),"SELECT * FROM `categories`");
+        $result=mysqli_fetch_all($requete,MYSQLI_ASSOC);
+      
+        }
+    
     /*----------------------------PAGE CONNEXION------------------------------- */
     /*Fonction de verification des informations de connexion */
     function verif_user_connexion(){
