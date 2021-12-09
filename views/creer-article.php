@@ -8,11 +8,14 @@ require "../functions/function.php";
 ?>
 <main>
     <form action="creer-article.php"method="POST">
-        <?php creer_article() ?>
-        <input type="text" name="titre">
-        <input type="text" name="description">
+        <select name="categorie" >
+        <?php affiche_categorie() ?>
+        </select>
+        <input type="text" name="titre" placeholder="titre article">
+        <input type="text" name="description" placeholder="introduction article">
         <textarea name="article" cols="30" rows="10"></textarea>
-
+        <input type="submit" name="creer">
+        <?php creer_article()?>
     </form>
 </main>
 <?php

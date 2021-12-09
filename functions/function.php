@@ -54,12 +54,27 @@
         
     }
 
-    function creer_article(){
-        $a=0;
+    function affiche_categorie(){
         $requete=mysqli_query(connexion_BDD(),"SELECT * FROM `categories`");
         $result=mysqli_fetch_all($requete,MYSQLI_ASSOC);
-      
+        foreach ($result as $key ) {
+            echo "<option value=".$key['id'].">".$key['nom']."</option>";
         }
+        
+    }
+    function creer_article(){
+        if (isset($_POST['creer'])) {
+            $categorie=$_POST['categorie'];
+            $titre=$_POST['titre'];
+            $description=$_POST['description'];
+            $article=$_POST['article'];
+        
+            if (!empty($titre || $description || $article)) {
+             $requete= mysqli_query(connexion_BDD(),"INSERT INTO `articles`(`id`, `titre`, `introduction`, `article`, `id_utilisateur`, `id_categorie`, `date`) VALUES ( NULL,'$titre','$description','$article',1,'$categorie',NOW() )");
+                var_dump($_POST['creer']);
+            }
+        }
+    }
     
     /*----------------------------PAGE CONNEXION------------------------------- */
     /*Fonction de verification des informations de connexion */
