@@ -23,6 +23,7 @@
             
         }
         elseif ($password != $password2) {
+
             echo " Les passwords ne correspondent pas .";
         }
         elseif ( !empty($login)) {
