@@ -33,7 +33,7 @@
             }
             else {
                 $cryptage=password_hash($password,PASSWORD_DEFAULT);
-                $requete=mysqli_query(connexion_BDD(),"INSERT INTO utilisateurs (`id`,`login`,`password`,`email`,`id_droits`) VALUES (NULL,'$login','$cryptage','$email','$droit')");
+                $requete=mysqli_query(connexion_BDD(),"INSERT INTO utilisateurs (`id`,`login`,`password`,`email`,`id_droit`) VALUES (NULL,'$login','$cryptage','$email','$droit')");
                 header('location:' . 'connexion.php');
             }
         }
@@ -66,11 +66,11 @@
         if (isset($_POST['creer'])) {
             $categorie=$_POST['categorie'];
             $titre=$_POST['titre'];
-            $description=$_POST['description'];
+            $description=addslashes( $_POST['description']);
             $article=$_POST['article'];
         
             if (!empty($titre || $description || $article)) {
-             $requete= mysqli_query(connexion_BDD(),"INSERT INTO `articles`(`id`, `titre`, `introduction`, `article`, `id_utilisateur`, `id_categorie`, `date`) VALUES ( NULL,'$titre','$description','$article',1,'$categorie',NOW() )");
+             $requete= mysqli_query(connexion_BDD(),"INSERT INTO `articles`(`id`, `titre`, `introduction`, `article`, `id_utilisateur`, `id_categorie`, `date`) VALUES ( NULL,'$titre','$description','$article','$_SESSION[id]','$categorie',NOW() )");
                 var_dump($_POST['creer']);
             }
         }

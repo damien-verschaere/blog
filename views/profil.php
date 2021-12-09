@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-
+echo $_SESSION['id'];
 require "requires/require_Header.php";
 ?>
 <h3 class="titre_profil">Bonjour, bienvenue <?= $_SESSION['login'] ?></h3>
