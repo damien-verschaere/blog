@@ -54,7 +54,7 @@
         }
         
     }
-
+    /*----------------------------PAGE CREER-ARTICLE------------------------------- */
     function affiche_categorie(){
         $requete=mysqli_query(connexion_BDD(),"SELECT * FROM `categories`");
         $result=mysqli_fetch_all($requete,MYSQLI_ASSOC);
