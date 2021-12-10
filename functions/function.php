@@ -53,7 +53,7 @@
         }
         
     }
-      /*----------------------------PAGE ARTICLES------------------------------- */
+      /*----------------------------PAGE CREER-ARTICLE------------------------------- */
 
 function affiche_categorie(){
      $requete=mysqli_query(connexion_BDD(),"SELECT * FROM categories");
