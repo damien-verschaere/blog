@@ -78,7 +78,7 @@
     }
     function image(){
         if (isset($_POST['send_image'])) {
-            if (isset($_FILES['image_article']) && !empty($_FILES['image_article']['name'])){
+            if (isset($_FILES['image_article']) ){
                 $filename = $_FILES['image_article']['tmp_name']; // On récupère le nom du fichier
                 list($width_orig, $height_orig) = getimagesize($filename);
                 if($width_orig >= 500 && $height_orig >= 500 && $width_orig <= 6000 && $height_orig <= 6000){ 
