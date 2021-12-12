@@ -17,6 +17,11 @@ require "../functions/function.php";
         <input type="submit" name="creer">
         <?php creer_article()?>
     </form>
+    <form action="creer-article.php" method="POST" enctype="multipart/form-data">
+        <input type="file" name="image_article" id="image_article">
+        <input type="submit" name="send_image">
+        <?php image() ?>
+    </form>
 </main>
 <?php
 
