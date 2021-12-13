@@ -4,8 +4,14 @@
  if(isset($_POST['open_navbar'])){//Premier Input pour ouvrir ou fermer la barre de navigation
     $_SESSION['onpen_navbar'] = $_POST['open_navbar'];
  }
+ else {
+     $_SESSION['open_navbar'] = 'close';
+ }
  if(isset($_POST['size_navbar'])){
     $_SESSION['size_navbar'] = $_POST['size_navbar'];//DEuxième input qui influ sur le CSS
+ }
+ else {
+    $_SESSION['size_navbar'] = 'large';
  }
 ?>
 <section class="navbar_header"><!-- << Section Barre header -->
@@ -29,9 +35,9 @@
     <?php if(droit_user()=='none'){?>
         <!-- DIVISION DE DROITE, CONNEXION OU INSCRIPTION -->
     <div class="connect">
-        <a href="inscription.php">S'inscrire</a>
-        <a href="connexion.php">
-            <div>
+        <a class="a_inscription_header" href="inscription.php">S'inscrire</a>
+        <a class="a_connexion_header" href="connexion.php">
+            <div class="button_connexion_header">
                 <p>connexion<p>
             </div>
         </a>
@@ -48,7 +54,7 @@
     <?php } ?> 
 </section>
             <!-- SI LE FORME EST OPEN -->
-<?php if($_SESSION['onpen_navbar']=='open'){?>
+<?php if(isset($_SESSION['onpen_navbar']) && $_SESSION['onpen_navbar']=='open'){?>
 <nav class="<?=$_SESSION['size_navbar']?>_nav_verticale_header">
     <section class="all_a_nav_vertical_header">
         <section class="navbar_section_art_header"><!-- SECTION DESTINEE A LA NAVIGATION -->
