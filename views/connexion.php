@@ -37,4 +37,3 @@ verif_user_connexion();
     </footer>
 </body>
 </html>
-<h2 class="titre_connexion">Beblog</h2>

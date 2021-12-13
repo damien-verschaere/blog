@@ -277,7 +277,14 @@ function affiche_categorie(){
             }
         }
     }
-?> 
+
+            /*----------------------------PAGE ARTICLE------------------------------- */
+            function affiche_self_article(){
+                $id_article = $_GET['article'];
+                $requete_self_article = mysqli_query(connexion_BDD(), "SELECT FROM articles AS a INNER JOIN utilisateurs as u ON id_utilisateur = u.id WHERE a.id = $id_article ");
+                $result_self_article = mysqli_fetch_array($requete_self_article);
+            }    //requete categorie = "
+                // requete commentaires = "
   
 
     

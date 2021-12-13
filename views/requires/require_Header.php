@@ -33,7 +33,7 @@
             <?php }
         } ?>
            <!-- LOGO DE RETOUR -->
-        <a href="accueil.php"><img class="logo_navabar_header" src="..\asset\img\beblog_logo_nav.png" alt="Logo de l'entreprise beblog"></a>
+        <a href="accueil.php"><img class="logo_navabar_header" src="..\assets\img\beblog_logo_nav.png" alt="Logo de l'entreprise beblog"></a>
     </div>
     <?php if(droit_user()=='none'){?>
         <!-- DIVISION DE DROITE, CONNEXION OU INSCRIPTION -->
@@ -51,7 +51,7 @@
         <div class='primo_div_header'>
             <h3><?=$_SESSION['login']?></h3>
             <div class="icon_user_header">
-                <img src="..\asset\img\beblog_logo_icon.png" alt="image de profil">
+                <img src="..\assets\img\beblog_logo_icon.png" alt="image de profil">
             </div>
         </div>
     <?php } ?> 

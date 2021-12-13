@@ -30,7 +30,7 @@ body{
     margin: 0;
     box-sizing: border-box;
     font-family: 'Lato', sans-serif;
-    background-image: url(../img/beblog_background01.png);
+    /* background-image: url(../img/beblog_background01.png); */
 }
 /**DEBUT HEADER*/
 .navbar_header{
@@ -44,6 +44,7 @@ body{
     justify-content: space-between;
     align-items: center;
     box-sizing: content-box;
+    position: fixed;
 }
 .primo_div_header{
     padding: .9375rem;
@@ -114,8 +115,9 @@ body{
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    position: absolute;
+    position: fixed;
     z-index: 99;
+    top: 10vh;
 }
 .small_nav_verticale_header a{
     text-decoration: none;
@@ -162,6 +164,7 @@ body{
     align-items: center;
     position: fixed;
     z-index: 99;
+    top: 10vh;
 }
 .large_nav_verticale_header a{
     text-decoration: none;
@@ -230,3 +233,13 @@ body{
     color: white;
 }
 /*------------Style css de la page connexion ---------------*/
+
+/*------------Style css de la page articles ---------------*/
+
+.section_articles {
+    text-align: center;
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+    padding-left: 10rem ;
+    padding-right: 10rem ;
+}
