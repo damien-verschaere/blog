@@ -1,4 +1,4 @@
-body {
+/* body {
     text-align: center;
 }
 header {
@@ -24,47 +24,209 @@ footer {
 
 .titre_connexion {
     color: rebeccapurple;
-}
-
-
-/*------------Style css de la page connexion ---------------*/
-main{
-    height: 800px;
-    background-color: darkkhaki;
-}
+} */
 body{
-    background-color: darkkhaki;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Lato', sans-serif;
+    background-image: url(../img/beblog_background01.png);
 }
-.com{
-    margin-top: 2%;
-  
+/**DEBUT HEADER*/
+.navbar_header{
+    width: 100%;
+    height: 10vh;
+    min-height: 50px;
+    background-color: rgba(0, 0, 0, 0.700);
+    box-shadow: 0px 3px 15px 5px rgba(0, 0, 0, 0.33);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: content-box;
 }
-.com_index {
-  
-    display:flex;
-    height: auto;
-    width: auto;
-    margin-top: 2%;
-    border: solid 1px black;
-    margin-right: 15%;
-    margin-left: 15%;
-    
+.primo_div_header{
+    padding: .9375rem;
+    display: flex;
+    align-items: center;
 }
-/*------------Style css de la page articles---------------*/
+.primo_div_header form button{
+    border: none;
+    color: #efa32f;
+    background-color: rgba(255, 0, 0, 0);
+    cursor: pointer;
+}
+.primo_div_header h3{
+    color: #efa32f;
+    margin-right: 1.875rem;
+    text-transform: capitalize;
+    font-size: 1.8rem;
+}
+.primo_div_header form button i{
+    font-size: 2rem;
+}
+.logo_navabar_header{
+    height: 7vh;
+    min-height: 40px;
+}
 
-.href_articles {
+.icon_user_header img{
+    height: 7vh;
+    width: 7vh;
+    border-radius: 5vh;
+}
+/** BOUTON connexion et inscription*/
+.connect{
+    display: flex;
+    align-items: center;
+}
+.button_connexion_header{
+    height: 2rem;
+    width: 6rem;
+    border-radius: 6px;
+    background: linear-gradient(#efa32f,#ea6c3a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 1.875rem;
+    margin-right: 1.875rem;
+    box-shadow: 0px 3px 15px 5px rgba(0, 0, 0, 0.33);
+    transition: 0.3s;
+}
+.button_connexion_header:hover{
+    background: linear-gradient(#363636,#272727);
+    color: #efa32f;
+    border: #efa32f solid 0.3px;
+}
+.a_inscription_header{
+    color: #efa32f;
+}
+.a_connexion_header{
     text-decoration: none;
     color: black;
 }
-.presentation_articles {
-    margin: auto;
-    width: 30%;
-    background: rgba(255, 255, 255, 0.377);
+/** BARRE VERTICAL SMALL*/
+.small_nav_verticale_header{
+    height: 80vh;
+    width: 3rem;
+    background-color: rgba(0, 0, 0, 0.700);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    z-index: 99;
 }
-
-.presentation_articles:hover {
-    transition: .2s ease-out;
-    width: 32%;
-    background: rgba(255, 255, 255, 0.404);
-    box-shadow: 7px 7px 3px 1px rgba(0, 0, 0, 0.281);
+.small_nav_verticale_header a{
+    text-decoration: none;
+    color: #efa32f;
+    font-size: 1.5rem;
+    transition: 0.5s;
 }
+.small_nav_verticale_header a:hover{
+    color: white;
+}
+.section_form_navbar_vert_header{
+    align-self: flex-end;
+    justify-items: flex-end;
+}
+.small_nav_verticale_header form button{
+    border: none;
+    color: #efa32f;
+    margin-bottom: .7rem;
+    background-color: rgba(255, 0, 0, 0);
+    transition: 0.3s;
+    cursor: pointer;
+}
+.small_nav_verticale_header form button:hover{
+    color: white;
+}
+.cesure_navbar_vertical_header{
+    border-top: solid 1px #efa32f;
+    margin: .625rem 0rem .625rem 0rem;
+}
+.small_nav_verticale_header a .large_a{
+    display: none;
+}
+.large_nav_verticale_header a .smal_a{
+    display: none;
+}
+/** BARRE VERTICAL large*/
+.large_nav_verticale_header{
+    height: 80vh;
+    width: 10rem;
+    background-color: rgba(0, 0, 0, 0.700);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    z-index: 99;
+}
+.large_nav_verticale_header a{
+    text-decoration: none;
+    color: #efa32f;
+    font-size: 1rem;
+    transition: 0.5s;
+}
+.large_nav_verticale_header a:hover{
+    color: white;
+}
+.section_form_navbar_vert_header{
+    align-self: flex-end;
+    justify-items: flex-end;
+}
+.large_nav_verticale_header form button{
+    border: none;
+    color: #efa32f;
+    margin-bottom: .7rem;
+    background-color: rgba(255, 0, 0, 0);
+    transition: 0.3s;
+    cursor: pointer;
+}
+.large_nav_verticale_header form button:hover{
+    color: white;
+}
+.cesure_navbar_vertical_header{
+    border-top: solid 1px #efa32f;
+    margin: .625rem 0rem .625rem 0rem;
+}
+.all_a_nav_vertical_header{
+    margin-top: 1.875rem;
+}
+/**FIN HEADER*/
+/** FOOTER*/
+.navbar_footer{
+    width: 100%;
+    height: 10vh;
+    min-height: 50px;
+    background-color: rgba(0, 0, 0, 0.700);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    box-sizing: content-box;
+    position: fixed;
+    bottom: 0px;
+    box-shadow: 0px 3px 15px 5px rgba(0, 0, 0, 0.33);
+}
+.navbar_footer a{
+    color: #efa32f;
+    text-decoration: none;
+}
+.cesure_navbar_footer{
+    margin: 1.875rem;
+    height: 2.8125rem;
+    border-left: solid 1px #efa32f;
+}
+/** FIN FOOTER*/
+/** MAIN MODEL*/
+.main_center_section_all{
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+/*------------Style css de la page connexion ---------------*/
