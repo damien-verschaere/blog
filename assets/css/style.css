@@ -50,3 +50,21 @@ body{
     margin-left: 15%;
     
 }
+/*------------Style css de la page articles---------------*/
+
+.href_articles {
+    text-decoration: none;
+    color: black;
+}
+.presentation_articles {
+    margin: auto;
+    width: 30%;
+    background: rgba(255, 255, 255, 0.377);
+}
+
+.presentation_articles:hover {
+    transition: .2s ease-out;
+    width: 32%;
+    background: rgba(255, 255, 255, 0.404);
+    box-shadow: 7px 7px 3px 1px rgba(0, 0, 0, 0.281);
+}
