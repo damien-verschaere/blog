@@ -4,13 +4,13 @@
  if(isset($_POST['open_navbar'])){//Premier Input pour ouvrir ou fermer la barre de navigation
     $_SESSION['onpen_navbar'] = $_POST['open_navbar'];
  }
- else {
+ elseif(!empty($_SESSION['open_navbar'])) {
      $_SESSION['open_navbar'] = 'close';
  }
  if(isset($_POST['size_navbar'])){
     $_SESSION['size_navbar'] = $_POST['size_navbar'];//DEuxième input qui influ sur le CSS
  }
- else {
+ elseif(!empty($_SESSION['size_navbar'])) {
     $_SESSION['size_navbar'] = 'large';
  }
 ?>
