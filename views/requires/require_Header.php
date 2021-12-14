@@ -95,7 +95,7 @@
         <?php } ?>
         </section>
         <section>
-        <a href="deconnexion.php">
+        <a href="requires/deconnexion.php">
             <span class="smal_a"><i class="fa-solid fa-right-from-bracket"></i></span>
             <span class="large_a">Se deconnecter</span>
         </a>
