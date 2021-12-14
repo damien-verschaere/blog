@@ -19,18 +19,20 @@ verif_user_connexion();
     <header>
     <?php require "requires/require_header.php";?>
     </header>
-    <main>
-        <form class="form_connexion" action="" method="post">
-        <label for="login">Login</label></br>
-        <input type="text" name="login" placeholder="Login">
-        <br>
+    <main class="main_center">
+        <section class="section_connexion">
+            <form class="form_connexion" action="" method="post">
+                <label for="login">Login</label></br>
+                <input type="text" name="login" placeholder="Login">
+                <br>
 
-        <label for="password">Password</label></br>
-        <input type="password" name="password" placeholder="Password">
-        </br><br>
+                <label for="password">Password</label></br>
+                <input type="password" name="password" placeholder="Password">
+                </br><br>
         
-        <input type="submit" name="submit_connexion" value="Connexion">
-        </form>
+                <input type="submit" name="submit_connexion" value="Connexion">
+            </form>
+        </section>
     </main>
     <footer>
         <?php require "requires/require_Footer.php" ?>
