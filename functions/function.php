@@ -5,6 +5,11 @@
         mysqli_set_charset($connexion, 'utf8');
         return $connexion;
     }
+    function select_all_categories_BDD(){
+        $requete = mysqli_query(connexion_BDD(),"SELECT * FROM categories");
+        $result = mysqli_fetch_all($requete,MYSQLI_ASSOC);
+        return $result;
+    }
     /*----------------------------PAGE INSCRIPTION------------------------------- */
     function inscription(){
         $message='';
