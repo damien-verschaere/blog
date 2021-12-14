@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+echo $_SESSION['id'];
 require "requires/require_Header.php";
 require "../functions/function.php";
 
