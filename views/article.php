@@ -2,7 +2,6 @@
 session_start();
 require "../functions/function.php";
 
-var_dump($_GET['article']);
 ?>
 
 <!DOCTYPE html>
@@ -17,10 +16,19 @@ var_dump($_GET['article']);
             require "requires/require_Header.php";
         ?>
     </header>
+    <main class="main_center">
+        <section class="section_article">
+            <form method="get" action>
+            <?php
+                affiche_self_article();
 
+            ?>
+            </form>
+        </section>
+    </main>
 
-<?php
-require "requires/require_Footer.php";
-?>
+    <?php
+        require "requires/require_Footer.php";
+    ?>
 </body>
 </html>

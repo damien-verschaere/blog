@@ -250,3 +250,10 @@ body{
     padding-right: 10rem ;
 }
 /*------------Style css de la page article ---------------*/
+.section_article {
+    text-align: center;
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+    padding-left: 10rem ;
+    padding-right: 10rem ;
+}
