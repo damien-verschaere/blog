@@ -280,16 +280,20 @@ function affiche_categorie(){
 
             /*----------------------------PAGE ARTICLE------------------------------- */
             function affiche_self_article(){
+                
                 $id_article = $_GET['article'];
-                $requete_self_article_user = mysqli_query(connexion_BDD(), "SELECT * FROM articles AS a INNER JOIN utilisateurs AS u ON id_utilisateur = u.id WHERE a.id = $id_article ");
-                $result_self_article_user = mysqli_fetch_all($requete_self_article_user,MYSQLI_ASSOC);
 
+                //requête de récupération des informations users de la page article
+                $requete_self_article_user = mysqli_query(connexion_BDD(), "SELECT a.id AS id_article, a.titre, a.introduction, a.article, a.date, u.id AS id_utilisateur, u.login FROM articles AS a INNER JOIN utilisateurs AS u ON u.id = id_utilisateur WHERE a.id = $id_article ");
+                $result_self_article_user = mysqli_fetch_array($requete_self_article_user,MYSQLI_ASSOC);
                 var_dump($result_self_article_user);
 
+                //requête de récupération des informations catégories de la page article
                 $requete_self_article_categorie = mysqli_query(connexion_BDD(), "SELECT c.id , c.nom FROM categories AS c INNER JOIN articles AS a ON c.id = a.id_categorie WHERE a.id = $id_article ");
                 $result_self_article_categorie = mysqli_fetch_all($requete_self_article_categorie);
                 var_dump($result_self_article_categorie);
-                // requete commentaires = "
+                
+                //requête de récupération des informations commentaires de la page article
                 
 
             }
