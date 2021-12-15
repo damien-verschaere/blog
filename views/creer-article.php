@@ -18,7 +18,7 @@ require "../functions/function.php";
         <?php require "requires/require_Header.php" ?>
     </header>
     <main class="main_center">
-        <section class="section_creer_article">
+        <section class="section_article">
             <div class="display_form_creer_article">
             <form action="creer-article.php" method="POST" enctype="multipart/form-data">
                 <select name="categorie">

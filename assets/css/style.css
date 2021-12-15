@@ -237,14 +237,7 @@ body{
     align-items: center;
     color: white;
 }
-/*------------Style css de la page connexion ---------------*/
-.section_connexion {
-    text-align: center;
-    padding-top: 10vh;
-    padding-bottom: 10vh;
-    padding-left: 10rem ;
-    padding-right: 10rem ;
-}
+
 /*------------Style css de la page articles ---------------*/
 .section_articles {
     text-align: center;
@@ -265,18 +258,7 @@ body{
     padding-right: 10rem ;
     overflow: auto;
 }
-/*------------Style css de la page creer-article ---------------*/
 
-.section_creer_article {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    padding-top: 10vh;
-    height: 80vh;
-    padding-left: 10rem ;
-    padding-right: 10rem ;
-    overflow: auto;
-}
 /* ----------------------- Page Catégorie-----------------*/
 .content_all_cats_categories{
     display: flex;

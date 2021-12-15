@@ -19,7 +19,7 @@ verif_user_connexion();
         ?>
     </header>
     <main>
-        <section class="section_connexion">
+        <section class="section_article">
     <h2 class="titre_connexion">Beblog</h2>
 
 
