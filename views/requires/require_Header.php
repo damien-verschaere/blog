@@ -79,14 +79,14 @@
             <span class="large_a">Mon Profil</span>
         </a>
         <div class="cesure_navbar_vertical_header"></div>
-        <?php if(droit_user()=='modo'){?> <!-- PAGE DESTINEE AU MODERATEUR -->
+        <?php if(droit_user()=='modo'||(droit_user()=='admin')){?> <!-- PAGE DESTINEE AU MODERATEUR -->
             <a href="creer-article.php">
                 <span class="smal_a"><i class="fa-solid fa-square-plus"></i></span>
                 <span class="large_a">Nouvel Article</span>
             </a>
             <div class="cesure_navbar_vertical_header"></div>
         <?php } 
-            elseif(droit_user()=='admin'){?> <!-- PAGE DESTINEE AU ADMINISTRATEUR -->
+            if(droit_user()=='admin'){?> <!-- PAGE DESTINEE AU ADMINISTRATEUR -->
             <a href="admin.php">
                 <span class="smal_a"><i class="fa-solid fa-unlock-keyhole"></i></span>
                 <span class="large_a">Administrateur</span>
