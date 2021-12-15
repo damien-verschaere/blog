@@ -122,46 +122,43 @@ function affiche_categorie(){
 
                             }
                             $nom = $titre.$categorie ; // Permet de générer un nom unique à la photo
-                            $chemin = "../assets/css/images_article" . $titre.$categorie . "/" . $nom . "." . $extensionUpload; // Chemin pour placer la photo
-                            $resultat = move_uploaded_file($_FILES['image_article']['tmp_name'], $chemin); // On fini par mettre la photo dans le dossier
-                            if ($resultat){ // Si on a le résultat alors on va comprésser l'image
- 
-                                if (is_readable("../assets/css/images_article" . $titre.$categorie . "/" . $nom . "." . $extensionUpload)) {
-                                    $verif_ext = getimagesize("../assets/css/images_article" . $titre.$categorie . "/" . $nom . "." . $extensionUpload);
- 
-                                    // Vérification des extensions avec la liste des extensions autorisés
-                                    if($verif_ext['mime'] == $ListeExtension[$extensionUpload]  || $verif_ext['mime'] == $ListeExtensionIE[$extensionUpload]){              
-                                        // J'enregistre le chemin de l'image dans filename
-                                        $filename = "../assets/css/images_article" . $titre.$categorie . "/" . $nom . "." . $extensionUpload;
- 
-                                        // Vérification des extensions que je souhaite prendre
-                                        if($extensionUpload == 'jpg' || $extensionUpload == 'png' || $extensionUpload == "JPG"|| $extensionUpload == "gif" ){
+                                $chemin = "../assets/css/images_article" . $titre.$categorie . "/" . $nom . "." . $extensionUpload; // Chemin pour placer la photo
+                                $resultat = move_uploaded_file($_FILES['image_article']['tmp_name'], $chemin); // On fini par mettre la photo dans le dossier
+                                if ($resultat){ // Si on a le résultat alors on va comprésser l'image
+     
+                                    if (is_readable("../assets/css/images_article" . $titre.$categorie . "/" . $nom . "." . $extensionUpload)) {
+                                        $verif_ext = getimagesize("../assets/css/images_article" . $titre.$categorie . "/" . $nom . "." . $extensionUpload);
+     
+                                        // Vérification des extensions avec la liste des extensions autorisés
+                                        if($verif_ext['mime'] == $ListeExtension[$extensionUpload]  || $verif_ext['mime'] == $ListeExtensionIE[$extensionUpload]){              
+                                            // J'enregistre le chemin de l'image dans filename
+                                            $filename = "../assets/css/images_article" . $titre.$categorie . "/" . $nom . "." . $extensionUpload;
+     
+                                            // Vérification des extensions que je souhaite prendre
+                                            if($extensionUpload == 'jpg' || $extensionUpload == 'png' || $extensionUpload == "JPG"|| $extensionUpload == "gif" ){
+                                                
+                                                // Content type
+                                                header('Content-Type: image/jpeg'); // Important !!
+                                            }
                                             
-                                            // Content type
-                                            header('Content-Type: image/jpeg'); // Important !!
+                                           
                                         }
-                                        
-                                       
-                                    }
-                                } 
+                                    } 
+                                }
+                                
                             }
-                            
                         }
+                        
                     }
-                    
+                   
                 }
-               
+                
             }
-            
+            mysqli_query(connexion_BDD(),"INSERT INTO articles(id, titre, introduction, article, id_utilisateur, id_categorie, date,image_article) VALUES ( NULL,'$titre','$description','$article','$_SESSION[id]','$categorie',NOW(),'$filename')");
+                var_dump($filename);
         }
-        mysqli_query(connexion_BDD(),"INSERT INTO articles(id, titre, introduction, article, id_utilisateur, id_categorie, date,image_article) VALUES ( NULL,'$titre','$description','$article','$_SESSION[id]','$categorie',NOW(),'$filename')");
-            var_dump($filename);
+       
     }
-   
-}
-
-
-
 
     /*----------------------------PAGE CONNEXION------------------------------- */
     /*Fonction de verification des informations de connexion */
