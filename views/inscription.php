@@ -1,22 +1,32 @@
 <?php
 session_start();
-
-require "requires/require_Header.php";
-
 require "../functions/function.php";
 
+
+
 ?>
-    <main>
-        <form action="inscription.php" method="post">
-            <input type="text" placeholder="login" name=login>
-            <input type="email" placeholder="email" name="email">
-            <input type="password" placeholder="password" name="password">
-            <input type="password" placeholder="verivication password" name="password2">
-            <input type="submit" name="inscription">
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <?php require "requires/require_meta.php" ?>
+    <title>Inscription</title>
+</head>
+<body>
+    <header>
+    <?php require "requires/require_header.php";?>
+    </header>
+    <main class="section_inscription">
+        <form action="inscription.php" method="post" class=form_inscription>
+            <input class="input_inscription" type="text" placeholder="login" name=login>
+            <input class="input_inscription" type="email" placeholder="email" name="email">
+            <input class="input_inscription" type="password" placeholder="password" name="password">
+            <input class="input_inscription" type="password" placeholder="verivication password" name="password2">
+            <input class="input_inscription" type="submit" name="inscription">
             <?php inscription()?>
         </form>
     </main>
-    
-<?php
-require "requires/require_Footer.php";
-?>
+    <footer>
+        <?php require "requires/require_Footer.php" ?>
+    </footer>
+    </body>
+</html>

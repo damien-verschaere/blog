@@ -15,7 +15,7 @@
             $password2=$_POST['password2'];
             $droit = 1;
             if ( empty($login)) {
-            return $message='champ login vide';
+            echo '<p> champ login vide </p>';
             
         }
         elseif ( empty($password)) {
@@ -24,7 +24,7 @@
         }
         elseif ($password != $password2) {
 
-            echo " Les passwords ne correspondent pas .";
+            echo "<p> Les passwords ne correspondent pas </p>";
         }
         elseif ( !empty($login)) {
             $veriflogin = mysqli_query(connexion_BDD(),"SELECT login FROM utilisateurs WHERE login= '$login'");
@@ -35,21 +35,22 @@
             else {
                 $cryptage=password_hash($password,PASSWORD_DEFAULT);
                 $requete=mysqli_query(connexion_BDD(),"INSERT INTO utilisateurs (`id`,`login`,`password`,`email`,`id_droit`) VALUES (NULL,'$login','$cryptage','$email','$droit')");
-                header('location:' . 'connexion.php');
+                header('location:' . 'accueil.php');
             }
         }
         }
     }
 #affiche les 3 premiers articles de la page index
     function affiche_article(){
-        $req=mysqli_query(connexion_BDD(),"SELECT `titre`,`introduction`,`article`,`date` FROM `articles` order by date DESC LIMIT 3 ");
+        $req=mysqli_query(connexion_BDD(),"SELECT * FROM `articles` order by date DESC LIMIT 3 ");
         $result=mysqli_fetch_all($req,MYSQLI_ASSOC);
         foreach ($result as $key) {
-            echo "<div class =com_index>";
-            echo $key['titre']."<br>";
-            echo $key['introduction']."<br>";
-            echo  $key['article'] ."<br>";
-            echo $key['date']."<br>";
+            echo "<div class =com_accueil>";
+            echo   "<p>". $key['titre']."</p><br>";
+            echo "<img src=".$key['image_article'].">";
+            echo "<p>". $key['introduction']."</p><br>";
+            echo  "<p>".$key['article'] ."</p><br>";
+            echo "<p>".$key['date']."</p><br>";
             echo"</div>";
         }
         
@@ -131,10 +132,10 @@
                     }
                    
                 }
-                mysqli_query(connexion_BDD(),"INSERT INTO `articles`(`id`, `titre`, `introduction`, `article`, `id_utilisateur`, `id_categorie`, `date`,`image_article`) VALUES ( NULL,'$titre','$description','$article','$_SESSION[id]','$categorie',NOW(),'$filename')");
-                var_dump($filename);
+                
             }
-            
+            mysqli_query(connexion_BDD(),"INSERT INTO `articles`(`id`, `titre`, `introduction`, `article`, `id_utilisateur`, `id_categorie`, `date`,`image_article`) VALUES ( NULL,'$titre','$description','$article','$_SESSION[id]','$categorie',NOW(),'$filename')");
+                var_dump($filename);
         }
        
     }
@@ -182,6 +183,23 @@
             }
         }
     }
+    /*----------------------------FONCTION DROIT UTILISATEUR------------------------------- */
+function droit_user(){
+    if(!isset($_SESSION['id_droit'])){
+        $droit_user = 'none';
+    }
+    elseif($_SESSION['id_droit']=='42'){
+        $droit_user = 'modo';
+    }
+    elseif($_SESSION['id_droit']=='1337'){
+        $droit_user = 'admin';
+    }
+    elseif($_SESSION['id_droit']=='1'){
+        $droit_user = 'user';
+    }
+    return  $droit_user;
+}
+
     /*----------------------------PAGE ARTICLES------------------------------- */
 
     function affiche_all_articles(){
