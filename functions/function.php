@@ -263,7 +263,6 @@ function affiche_categorie(){
                 $premier_affichage_categories = ($page -1) * $nombre_articles_categories;
                 //Puis on réalise une requête qui récuperera tout des tables articles user et categorie classé par date DESC et ayant pour limites de select les articles à afficher réclamer auparavant
                 $affichage_articles_categories = mysqli_query(connexion_BDD(), "SELECT a.id as id_articles, a.titre, a.introduction, a.article, a.date, u.id as id_utilisateur, u.login, c.id as id_categorie, c.nom FROM articles as a INNER JOIN utilisateurs as u ON id_utilisateur=u.id INNER JOIN categories as c ON id_categorie = c.id WHERE `id_categorie` = '$id_categories_get' ORDER BY `date` DESC LIMIT $premier_affichage_categories, $nombre_articles_categories ");
-                var_dump($affichage_articles_categories);
                 //Puis on boucle sur le résultat de la requete afin d'afficher les articles comme souhaité
                 while($result_affiche_articles_categories = mysqli_fetch_array($affichage_articles_categories, MYSQLI_ASSOC)){
                     
