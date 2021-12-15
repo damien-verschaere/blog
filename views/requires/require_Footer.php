@@ -1,7 +1,7 @@
 
 <nav class="navbar_footer">
         <a href="articles.php">
-            <span class="large_a">Article</span>
+            <span class="large_a">Articles</span>
         </a>
         <div class="cesure_navbar_footer"></div>
     <a href="profil.php">

@@ -69,7 +69,7 @@
             <div class="cesure_navbar_vertical_header"></div>
             <a href="articles.php">
                 <span class="smal_a"><i class="fa-solid fa-newspaper"></i></span>
-                <span class="large_a">Article</span>
+                <span class="large_a">Articles</span>
             </a>
             <div class="cesure_navbar_vertical_header"></div>
         </section>
