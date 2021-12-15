@@ -18,12 +18,12 @@ require "../functions/function.php";
     </header>
     <main class="main_center">
         <section class="section_article">
-            <form method="get" action>
+            
             <?php
                 affiche_self_article();
-
+                affiche_commentaires_article();
             ?>
-            </form>
+            
         </section>
     </main>
 

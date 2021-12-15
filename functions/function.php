@@ -5,6 +5,11 @@
         mysqli_set_charset($connexion, 'utf8');
         return $connexion;
     }
+    function select_all_categories_BDD(){
+        $requete=mysqli_query(connexion_BDD(),"SELECT * FROM `categories`");
+        $result=mysqli_fetch_all($requete,MYSQLI_ASSOC);
+        return $result;
+    }
     /*------------------- Donner les droit pour l'affichage------------------- */
     function droit_user(){
         if(!isset($_SESSION['id_droits'])){
@@ -199,7 +204,7 @@ function affiche_categorie(){
                 $premier_affichage_categories = ($page -1) * $nombre_articles_categories;
                 //Puis on réalise une requête qui récuperera tout des tables articles user et categorie classé par date DESC et ayant pour limites de select les articles à afficher réclamer auparavant
                 $affichage_articles_categories = mysqli_query(connexion_BDD(), "SELECT a.id as id_articles, a.titre, a.introduction, a.article, a.date, u.id as id_utilisateur, u.login, c.id as id_categorie, c.nom FROM articles as a INNER JOIN utilisateurs as u ON id_utilisateur=u.id INNER JOIN categories as c ON id_categorie = c.id WHERE `id_categorie` = '$id_categories_get' ORDER BY `date` DESC LIMIT $premier_affichage_categories, $nombre_articles_categories ");
-                
+                var_dump($affichage_articles_categories);
                 //Puis on boucle sur le résultat de la requete afin d'afficher les articles comme souhaité
                 while($result_affiche_articles_categories = mysqli_fetch_array($affichage_articles_categories, MYSQLI_ASSOC)){
                     
@@ -207,12 +212,12 @@ function affiche_categorie(){
             <form method="get" action="">
                 <a class="href_articles" href="../views/article.php?article=<?=$result_affiche_articles_categories['id_articles']?>">
                     <article class="presentation_articles">
-                        <p class="categorie_affiche_articles"><?= $result_affiche_articles_categories['nom'] ?></p>
-                        <p class="titre_affiche_articles"><?= $result_affiche_articles_categories['titre'] ?></p>
-                        <p class="introdruction_affiche-articles"><?= $result_affiche_articles_categories['introduction'] ?></p>
-                        <p class="affiche_articles"><?= $result_affiche_articles_categories['article'] ?></p>
-                        <p class="user_affiche_articles"> Posté par <?= $result_affiche_articles_categories['login'] ?> le <?= $result_affiche_articles_categories['date'] ?>
-                        <input type="hidden" name="ID" class="ID" value="<?= $result_affiche_articles_categories['id_articles'] ?> ">
+                        <p class="categorie_affiche_articles"><?= htmlspecialchars ($result_affiche_articles_categories['nom']) ?></p>
+                        <p class="titre_affiche_articles"><?= htmlspecialchars($result_affiche_articles_categories['titre']) ?></p>
+                        <p class="introdruction_affiche-articles"><?= htmlspecialchars($result_affiche_articles_categories['introduction']) ?></p>
+                        <p class="affiche_articles"><?= htmlspecialchars($result_affiche_articles_categories['article']) ?></p>
+                        <p class="user_affiche_articles"> Posté par <?= htmlspecialchars($result_affiche_articles_categories['login']) ?> le <?= htmlspecialchars($result_affiche_articles_categories['date']) ?>
+                        <input type="hidden" name="ID" class="ID" value="<?= htmlspecialchars($result_affiche_articles_categories['id_articles']) ?> ">
                     </article>
                 </a>
             </form>
@@ -224,7 +229,7 @@ function affiche_categorie(){
                 $t = 0;
                 for ($t = 1 ; $t <= $nombre_pages; $t++){
                     echo '<a href="articles.php?categories='.$id_categories_get.'&page=' . $t . '">' . $t . '</a> ';
-                }   
+                }
         } elseif(!isset($_GET['categories']) || isset($_POST['all'])) {
 
             //On définit le nombre d'articles qu'il y aura par pages
@@ -257,11 +262,11 @@ function affiche_categorie(){
     <form method="get" action="">
         <a class="href_articles" href="../views/article.php?article=<?=$result_affiche_articles['id_articles']?>">
             <article class="presentation_articles">
-                <p class="categorie_affiche_articles"><?= $result_affiche_articles['nom'] ?></p>
-                <p class="titre_affiche_articles"><?= $result_affiche_articles['titre'] ?></p>
-                <p class="introdruction_affiche-articles"><?= $result_affiche_articles['introduction'] ?></p>
-                <p class="affiche_articles"><?= $result_affiche_articles['article'] ?></p>
-                <p class="user_affiche_articles"> Posté par <?= $result_affiche_articles['login'] ?> le <?= $result_affiche_articles['date'] ?><br><br>
+                <p class="categorie_affiche_articles"><?= htmlspecialchars($result_affiche_articles['nom']) ?></p>
+                <p class="titre_affiche_articles"><?= htmlspecialchars($result_affiche_articles['titre']) ?></p>
+                <p class="introdruction_affiche-articles"><?= htmlspecialchars($result_affiche_articles['introduction']) ?></p>
+                <p class="affiche_articles"><?= nl2br($result_affiche_articles['article']) ?></p>
+                <p class="user_affiche_articles"> Posté par <?= htmlspecialchars($result_affiche_articles['login']) ?> le <?= htmlspecialchars($result_affiche_articles['date']) ?><br><br>
                 <input type="hidden" id="ID" name="ID" value="<?php echo $result_affiche_articles['id_articles']?>">
             </article>
         </a>
@@ -298,11 +303,11 @@ function affiche_categorie(){
                 ?>
                     <div class="affiche_self_article">
                         <article class="presentation_self_article">
-                            <p class="affiche_self_article_categorie"><?= $result_self_article_categorie['nom'] ?></p>
-                            <h2 class="titre_self_article"><?= $result_self_article['titre'] ?></h2>
-                            <h3 class="introduction_self_article"><?= $result_self_article['introduction'] ?></h3>
-                            <p class="contenu_article"><?= $result_self_article['article'] ?></p>
-                            <p class="login_date_article">Posté par <?= $result_self_article_user['login'] ?> le <?= $result_self_article['datefr'] ?> à <?= $result_self_article['heurefr'] ?></p>
+                            <p class="affiche_self_article_categorie"><?= htmlspecialchars($result_self_article_categorie['nom']) ?></p>
+                            <h2 class="titre_self_article"><?= htmlspecialchars($result_self_article['titre']) ?></h2>
+                            <h3 class="introduction_self_article"><?= htmlspecialchars($result_self_article['introduction']) ?></h3>
+                            <p class="contenu_article"><?= nl2br($result_self_article['article'] )?></p>
+                            <p class="login_date_article">Posté par <?= htmlspecialchars($result_self_article_user['login']) ?> le <?= htmlspecialchars($result_self_article['datefr']) ?> à <?= htmlspecialchars($result_self_article['heurefr']) ?></p>
 
                             
                         </article>
@@ -316,12 +321,20 @@ function affiche_categorie(){
                 //requête de récupération des informations des commentaires liés à l'article
                 $requete_self_article_commentaire = mysqli_query(connexion_BDD(), "SELECT c.commentaire, c.date FROM articles AS a INNER JOIN commentaires AS c ON a.id = c.id_article WHERE a.id = $id_article");
                 $result_self_article_commentaire = mysqli_fetch_all($requete_self_article_commentaire, MYSQLI_ASSOC);
-                var_dump($result_self_article_commentaire);
             
+                $i = 0;
+                    while(isset($result_self_article_commentaire[$i])){
+                        ?>
+                            <div class="affiche_commentaires_article">
+                                <p class="commentaires_article"><?= $result_self_article_commentaire[$i]['commentaire'] ?> </p>
+                                <p class="date_commentaires_articles">Le <?= $result_self_article_commentaire[$i]['date'] ?></p>
+                        <?php
+                        $i ++;
+                    }
+
                 //requête de récupération du login de l'user associé au commentaire
                 $requete_login_article_commentaire = mysqli_query(connexion_BDD(), "SELECT u.id, u.login FROM utilisateurs AS u INNER JOIN commentaires AS c ON u.id = c.id_utilisateur WHERE u.id = c.id_utilisateur AND c.id_article = $id_article");
                 $result_login_article_commentaire = mysqli_fetch_all($requete_login_article_commentaire);
-                var_dump($result_login_article_commentaire);
                 }
             
                 

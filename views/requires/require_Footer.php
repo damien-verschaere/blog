@@ -21,7 +21,7 @@
         <div class="cesure_navbar_footer"></div>
     <?php } ?>
     <section>
-    <a href="deconnexion.php">
+    <a href="requires/deconnexion.php">
         <span class="large_a">Se deconnecter</span>
     </a>
 </section>

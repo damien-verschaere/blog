@@ -62,7 +62,7 @@
     <section class="all_a_nav_vertical_header">
         <section class="navbar_section_art_header"><!-- SECTION DESTINEE A LA NAVIGATION -->
             <div class="cesure_navbar_vertical_header"></div>
-            <a href="catégories.php">
+            <a href="categories.php">
                 <span class="smal_a"><i class="fas fa-tag"></i></span>
                 <span class="large_a">Catégories</span>
             </a>
@@ -95,7 +95,7 @@
         <?php } ?>
         </section>
         <section>
-        <a href="deconnexion.php">
+        <a href="requires/deconnexion.php">
             <span class="smal_a"><i class="fa-solid fa-right-from-bracket"></i></span>
             <span class="large_a">Se deconnecter</span>
         </a>

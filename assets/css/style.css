@@ -24,13 +24,18 @@ footer {
 
 .titre_connexion {
     color: rebeccapurple;
+    jaune #efa32f
+Orange #ea6c3a
+rose #d93356
+violet #843482
 } */
 body{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
     font-family: 'Lato', sans-serif;
-    /* background-image: url(../img/beblog_background01.png); */
+    background-image: url(../img/beblog_background01.png);
+    color: white;
 }
 /**DEBUT HEADER*/
 .navbar_header{
@@ -241,7 +246,6 @@ body{
     padding-right: 10rem ;
 }
 /*------------Style css de la page articles ---------------*/
-
 .section_articles {
     text-align: center;
     padding-top: 10vh;
@@ -249,11 +253,89 @@ body{
     padding-left: 10rem ;
     padding-right: 10rem ;
 }
+
 /*------------Style css de la page article ---------------*/
 .section_article {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding-top: 10vh;
-    padding-bottom: 10vh;
+    height: 80vh;
     padding-left: 10rem ;
     padding-right: 10rem ;
+    overflow: auto;
+}
+
+/* ----------------------- Page Catégorie-----------------*/
+.content_all_cats_categories{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 90%;
+}
+.content_all_cats_categories a{
+    text-decoration: none;
+    color: white;
+    width: 18rem;
+    margin: 1.875rem;
+    border-radius: 8px;
+    box-shadow: 0px 3px 15px 5px rgba(0, 0, 0, 0.33);
+    transition: 0.7s;
+}
+.jaune_a_background_categories{
+    background: linear-gradient(#efa32f,#ea6c3a);
+}
+.orange_a_background_categories{
+    background: linear-gradient(#ea6c3a,#d93356);
+}
+.violet_a_background_categories{
+    background: linear-gradient(#d93356,#843482);
+}
+.content_all_cats_categories a:hover{
+    filter: contrast(120%);
+    filter: brightness(1.2);
+    border: #ffffff solid 1px;
+
+}
+.content_all_cats_categories a:hover img{
+    width: 120%;
+}
+.content_img_categories{
+    width: 100%;
+    height: 28rem;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.content_img_categories img{
+    width: 100%;
+    height: auto;
+    transition: 4s;
+}
+.head_selesct_categories{
+    display: flex;
+    width: 100%;
+    padding: .3125rem;
+    justify-content: flex-start;
+    align-items: center;
+}
+.head_selesct_categories i{
+    margin: .625rem;
+}
+.footer_select_cotegories{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: .4375rem;
+}
+.footer_select_cotegories h4{
+    text-transform: uppercase;
+    margin-block-start: 0;
+    margin-block-end: 0.5rem;
+}
+.footer_select_cotegories p{
+    margin-block-start: 0;
+    margin-block-end: 0.5rem;
+    text-align: center;
 }
