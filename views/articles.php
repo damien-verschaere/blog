@@ -18,7 +18,7 @@ require "../functions/function.php";
         ?>
     </header>
     <main class="main_center">
-        <section class="section_article">
+        <section class="section_articles">
             <form class="form_articles" method="get" action="">
                 <?php
                     affiche_all_articles();

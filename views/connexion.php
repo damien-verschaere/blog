@@ -1,19 +1,29 @@
 <?php
 
 session_start();
-
-require "requires/require_Header.php";
-
 require "../functions/function.php";
 
 verif_user_connexion();
 
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <?php require "requires/require_meta.php" ?>
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <?php
+            require "requires/require_Header.php"
+        ?>
+    </header>
+    <main>
+        <section class="section_connexion">
+    <h2 class="titre_connexion">Beblog</h2>
 
-<h2 class="titre_connexion">Beblog</h2>
 
-
-<form class="form_connexion" action="" method="post">
+    <form class="form_connexion" action="" method="post">
     <label for="login">Login</label></br>
     <input type="text" name="login" placeholder="Login">
     <br>
@@ -23,7 +33,13 @@ verif_user_connexion();
     </br><br>
     
     <input type="submit" name="submit_connexion" value="Connexion">
-</form>
+    </form> 
+        </section>
+    </main>
+</body>
+</html>
+
+
 
 
 
