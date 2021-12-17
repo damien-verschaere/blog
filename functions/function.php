@@ -394,6 +394,32 @@ function affiche_categorie(){
                 $requete_login_article_commentaire = mysqli_query(connexion_BDD(), "SELECT u.id, u.login FROM utilisateurs AS u INNER JOIN commentaires AS c ON u.id = c.id_utilisateur WHERE u.id = c.id_utilisateur AND c.id_article = $id_article");
                 $result_login_article_commentaire = mysqli_fetch_all($requete_login_article_commentaire);
                 }
+
+                //------------------------- BARRE D'INFO------------------------//
+                function info_barre(){
+                    if(isset($_SESSION['info_update'])) //Si la variable de session existe alors envoyer le message
+                            {
+                                ?>      
+                                <div class="info_update">
+                                    <img src="..\assets\img\beblog_gif_validation.gif?date=<?php echo date('Y-m-d-H-i-s');?>" alt="validation"/>
+                                    <p><b><?=$_SESSION['info_update']?><b></p>
+                                </div>
+                                <?php
+                            unset($_SESSION['info_update']); //Supression de la variable de session après son jeux afin qu'elle ne s'affiche pas à chaque réactulaisation
+                            } 
+                            elseif(isset($_SESSION['error_validation']))
+                            {
+                            ?>
+                            <div class="info_update">
+                            <img src="..\assets\img\beblog_icon_error.png" alt="validation"/>
+                            <p><b><?=$_SESSION['error_validation']?></b><p>
+                            </div>
+                            <?php
+                            $localisation_erreur = 'error_user';
+                            unset($_SESSION['error_validation']);
+                            }
+                }
+                
             
                 
   

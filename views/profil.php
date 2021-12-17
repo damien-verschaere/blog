@@ -58,39 +58,19 @@ require "requires/require_meta.php"; //Récupération des meta et des link neces
     <title>Mon compte</title>
 </head>
 
-<body>
+<body id="body_profil">
     <header>
         <?php
         require('requires/require_Header.php'); //Envoie de la barre de navigation 
         ?>
     </header>
-    <main class="section_article">
+    <main class="section_article_profil">
         <table>
             <?php
-                if(isset($_SESSION['info_update'])) //Si la variable de session existe alors envoyer le message
-                {
-                    ?>      
-                    <div class="info_update">
-                        <img src="..\assets\img\beblog_gif_validation.gif?date=<?php echo date('Y-m-d-H-i-s');?>" alt="validation"/>
-                        <p><b><?=$_SESSION['info_update']?><b></p>
-                    </div>
-                    <?php
-                unset($_SESSION['info_update']); //Supression de la variable de session après son jeux afin qu'elle ne s'affiche pas à chaque réactulaisation
-                } 
-                elseif(isset($_SESSION['error_validation']))
-                {
-                ?>
-                <div class="info_update">
-                <img src="..\assets\img\beblog_icon_error.png" alt="validation"/>
-                <p><b><?=$_SESSION['error_validation']?></b><p>
-                </div>
-                <?php
-                $localisation_erreur = 'error_user';
-                unset($_SESSION['error_validation']);
-                }
+                info_barre()
             ?>
             <thead>
-                    <th><?=$_SESSION['login']?></th>
+                    <th>Modifier ses information :</th>
             </thead>
             <tbody>
                 </tr>
@@ -158,7 +138,7 @@ require "requires/require_meta.php"; //Récupération des meta et des link neces
             <?php
             }
         ?>
-<tr>
+        <tr>
                     <td>Password:</td>
                     <td>
                     <?php
@@ -193,7 +173,7 @@ require "requires/require_meta.php"; //Récupération des meta et des link neces
     ?>
                 </tr>
             </tbody>
-        </table> 
+</table> 
     <?php
     //**FIN DE MON TABLEAU POUR LES MODIFICATION & ENTREE DANS LA FENETRE POPUP */
     if((isset($_POST['m_pass'])) || isset($_POST['Modification_mdp'])) //Début des condition de mon formulaire se trouvant en bas de la pages
@@ -241,7 +221,7 @@ require "requires/require_meta.php"; //Récupération des meta et des link neces
                     <label for="new_passv">Récrivez votre nouveau mot de pass </label>
                     <input type="text" name="new_passv" placeholder="Verfier le nouveau mot de passe"><br>
                     <div id="input_bottom">
-                        <a href="deconnexion.php">annuler</a>
+                        <a href="profil.php">annuler</a>
                         <input type="submit" name='Modification_mdp' value="modifier">
                     </div>                            
     <?php
