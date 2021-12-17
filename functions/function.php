@@ -62,15 +62,21 @@
     }
 #affiche les 3 premiers articles de la page index
     function affiche_article(){
-        $req=mysqli_query(connexion_BDD(),"SELECT `titre`,`introduction`,`article`,`date` FROM `articles` order by date DESC LIMIT 3 ");
+        $req=mysqli_query(connexion_BDD(),"SELECT `titre`,`introduction`,`article`,`date`,`image_article` FROM `articles` order by date DESC LIMIT 3 ");
         $result=mysqli_fetch_all($req,MYSQLI_ASSOC);
         foreach ($result as $key) {
-            echo "<div class =com_index>";
-            echo $key['titre']."<br>";
-            echo $key['introduction']."<br>";
-            echo  $key['article'] ."<br>";
-            echo $key['date']."<br>";
-            echo"</div>";
+            echo "<div class=affiche_article>";
+            echo "<p>". $key['titre']."</p>";
+            
+            echo "<div class= image_article>";
+            echo "<img src=".$key['image_article'].">";
+            echo "</div>";
+            echo "<div class=footer_accueil>";
+            echo "<p>". $key['introduction']."</p>";
+            echo "<p>".$key['date']."</p>";
+            echo "</div>";
+            echo "</div>";
+            
         }
         
     }

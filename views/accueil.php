@@ -13,7 +13,11 @@ require "../functions/function.php";
     <header>
      <?php require "requires/require_header.php";?>
     </header>
-    <main></main>
+    <main class="section_article">
+        <section>
+            <?php affiche_article() ?>
+        </section>
+    </main>
     <footer>
     <?php require "requires/require_footer.php";?>
     </footer>

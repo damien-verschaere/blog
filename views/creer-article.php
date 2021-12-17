@@ -19,8 +19,7 @@ require "../functions/function.php";
     </header>
     <main class="main_center">
         <section class="section_article">
-            <div class="display_form_creer_article">
-            <form action="creer-article.php" method="POST" enctype="multipart/form-data">
+            <form action="creer-article.php" method="POST" enctype="multipart/form-data" class="form_inscription">
                 <select name="categorie">
                     <?php affiche_categorie() ?>
                 </select>
