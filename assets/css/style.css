@@ -36,6 +36,11 @@ body{
     font-family: 'Lato', sans-serif;
     background-image: url(../img/beblog_background01.png);
     color: white;
+    --orange: #ea6c3a;
+    --jaune: #efa32f;
+    --rose: #d93356;
+    --violet: #843482;
+    --full_degrade: linear-gradient(to top left,#efa32f,#ea6c3a,#d93356,#843482);
 }
 /**DEBUT HEADER*/
 .navbar_header{
@@ -332,4 +337,89 @@ body{
     margin-block-end: 0.5rem;
     text-align: center;
 }
-
+/** PAGE PROFIL**/
+#body_profil table{
+    background-color: #535353;
+}
+.section_article_profil {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10vh;
+    height: 80vh;
+    padding-left: 10rem ;
+    padding-right: 10rem ;
+    overflow: auto;
+}
+/** POPUP MDP**/
+#popup_password{
+    position: absolute;
+    z-index: 99;
+    color :#535353;
+    backdrop-filter: blur(7px);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.418);
+}
+.popup_password_content{
+    padding: 1.875rem;
+    background-color: #ffffff;
+    box-shadow: 5px 0px 30px 1px rgba(0, 0, 0, 0.308);
+    border-radius: 10px;
+}
+#input_bottom{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#input_bottom a{
+    background-color: #b3b3b3;
+    color: #535353;
+    width: 40% !important;
+    height: 1.9rem;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#input_bottom input{
+    background-color: #212b53;
+    color: #ffffff;
+    width: 40% !important;
+}
+#input_bottom input:hover{
+    background-color: #01898c;
+}
+/** BARRE D'INFO**/
+.info_update{
+    position: absolute;
+    bottom: 10.3vh;
+    right: 1.875rem;
+    background: var(--full_degrade);
+    padding: 1.25rem;
+    border-radius: 8px;
+    box-shadow: 5px 0px 30px 1px rgba(0, 0, 0, 0.308);
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.875rem;
+    opacity: 1;
+    animation: disparition 1s ease-in 3s  forwards;
+}
+@keyframes disparition {
+    0%{opacity: 1;}
+    100%{opacity: 0;}
+}
+.info_update img{
+    width: 4rem;
+    height: 4rem;
+    margin-right: 1.25rem;
+}
+.info_update p{
+    color :#ffffff;
+    text-shadow: 0px 0px 1px 2px #000000;
+}
