@@ -354,19 +354,22 @@ function affiche_categorie(){
             function affiche_self_article(){
 
                 $id_article = $_GET['article'];
-
+        
                 //requête de récupération des informations d'affichage de l'article concerné, formatage de la date à la sortie pour un meilleur affichage à l'user.
                 $requete_self_article = mysqli_query(connexion_BDD(),"SELECT titre, introduction, article, DATE_FORMAT(date, '%d/%m/%Y') AS 'datefr' , DATE_FORMAT(date, '%H:%i:%s') AS 'heurefr' FROM articles WHERE id = $id_article");
                 $result_self_article = mysqli_fetch_array($requete_self_article, MYSQLI_ASSOC);
-
+        
                 //requête de récupération des informations de l'user ayant posté cet article
                 $requete_self_article_user = mysqli_query(connexion_BDD(), "SELECT u.id, u.login FROM articles AS a INNER JOIN utilisateurs AS u ON u.id = id_utilisateur WHERE a.id = $id_article ");
                 $result_self_article_user = mysqli_fetch_array($requete_self_article_user, MYSQLI_ASSOC);
-
+        
                 //requête de récupération des informations de la catégorie de l'article
                 $requete_self_article_categorie = mysqli_query(connexion_BDD(), "SELECT c.id , c.nom FROM categories AS c INNER JOIN articles AS a ON c.id = a.id_categorie WHERE a.id = $id_article ");
                 $result_self_article_categorie = mysqli_fetch_array($requete_self_article_categorie, MYSQLI_ASSOC);
-                
+        
+                $requete_count_commentaire_article = mysqli_query(connexion_BDD(),"SELECT COUNT(*) FROM commentaires INNER JOIN articles ON commentaires.id_article = articles.id WHERE articles.id = $id_article");
+                $result_count_commentaire_article = mysqli_fetch_array($requete_count_commentaire_article,MYSQLI_ASSOC);
+                        
                 ?>
                     <div class="affiche_self_article">
                         <article class="presentation_self_article">
@@ -375,59 +378,216 @@ function affiche_categorie(){
                             <h3 class="introduction_self_article"><?= htmlspecialchars($result_self_article['introduction']) ?></h3>
                             <p class="contenu_article"><?= nl2br($result_self_article['article'] )?></p>
                             <p class="login_date_article">Posté par <?= htmlspecialchars($result_self_article_user['login']) ?> le <?= htmlspecialchars($result_self_article['datefr']) ?> à <?= htmlspecialchars($result_self_article['heurefr']) ?></p>
-
-                            
+                            <p class="count_commentaire_article"><i class="fa-solid fa-comments"> <?= $result_count_commentaire_article['COUNT(*)'] ?></i></p>
+                                    
                         </article>
                     </div>
                 <?php
                 }
             function affiche_commentaires_article() {   
-                
+                        
                 $id_article = $_GET['article'];
-
+        
                 //requête de récupération des informations des commentaires liés à l'article
-                $requete_self_article_commentaire = mysqli_query(connexion_BDD(), "SELECT c.commentaire, c.date FROM articles AS a INNER JOIN commentaires AS c ON a.id = c.id_article WHERE a.id = $id_article");
+                $requete_self_article_commentaire = mysqli_query(connexion_BDD(), "SELECT c.commentaire, c.date FROM articles AS a INNER JOIN commentaires AS c ON a.id = c.id_article WHERE a.id = $id_article ORDER BY `date` DESC");
                 $result_self_article_commentaire = mysqli_fetch_all($requete_self_article_commentaire, MYSQLI_ASSOC);
-            
+        
+                $requete_login_article_commentaire = mysqli_query(connexion_BDD(), "SELECT u.id, u.login FROM utilisateurs AS u INNER JOIN commentaires AS c ON u.id = c.id_utilisateur WHERE u.id = c.id_utilisateur AND c.id_article = $id_article");
+                $result_login_article_commentaire = mysqli_fetch_all($requete_login_article_commentaire, MYSQLI_ASSOC);
+                $x = 0;
                 $i = 0;
-                    while(isset($result_self_article_commentaire[$i])){
+                    while ( isset ( $result_self_article_commentaire[$i]). isset ($result_login_article_commentaire[$x])){
                         ?>
                             <div class="affiche_commentaires_article">
                                 <p class="commentaires_article"><?= $result_self_article_commentaire[$i]['commentaire'] ?> </p>
-                                <p class="date_commentaires_articles">Le <?= $result_self_article_commentaire[$i]['date'] ?></p>
+                                <p class="date_commentaires_articles">Posté le <?= $result_self_article_commentaire[$i]['date'] ?></p>
+                                <p class="login_commentaire_article">Par <?= $result_login_article_commentaire[$x]['login'] ?></p>
+                                
+                            </div>
                         <?php
                         $i ++;
+                    $x++;
                     }
-
-                //requête de récupération du login de l'user associé au commentaire
-                $requete_login_article_commentaire = mysqli_query(connexion_BDD(), "SELECT u.id, u.login FROM utilisateurs AS u INNER JOIN commentaires AS c ON u.id = c.id_utilisateur WHERE u.id = c.id_utilisateur AND c.id_article = $id_article");
-                $result_login_article_commentaire = mysqli_fetch_all($requete_login_article_commentaire);
                 }
-
-                //------------------------- BARRE D'INFO------------------------//
-                function info_barre(){
-                    if(isset($_SESSION['info_update'])) //Si la variable de session existe alors envoyer le message
-                            {
-                                ?>      
-                                <div class="info_update">
-                                    <img src="..\assets\img\beblog_gif_validation.gif?date=<?php echo date('Y-m-d-H-i-s');?>" alt="validation"/>
-                                    <p><b><?=$_SESSION['info_update']?><b></p>
-                                </div>
-                                <?php
-                            unset($_SESSION['info_update']); //Supression de la variable de session après son jeux afin qu'elle ne s'affiche pas à chaque réactulaisation
-                            } 
-                            elseif(isset($_SESSION['error_validation']))
-                            {
-                            ?>
-                            <div class="info_update">
-                            <img src="..\assets\img\beblog_icon_error.png" alt="validation"/>
-                            <p><b><?=$_SESSION['error_validation']?></b><p>
-                            </div>
-                            <?php
-                            $localisation_erreur = 'error_user';
-                            unset($_SESSION['error_validation']);
-                            }
+                    
+            function post_commentaire_article(){
+        
+                $echo = "";
+                $error = "";
+        
+                //On récupere l'id de l'article en URL afin de s'en servir en requête
+                $id_article = $_GET['article'];
+        
+                //Si l'user poste un commentaire
+                if ( isset ( $_POST['submit_commentaire_article'] )){
+        
+                    //Si le textarea est bien rempli
+                    if ( !empty ( $_POST['commentaire_article'] )){
+        
+                        $com_article = $_POST['commentaire_article'];
+        
+                        //Alors on insert le commentaire en base de données et prévient l'user du bon déroulement
+                        $requete_insert_commentaire_article = mysqli_query(connexion_BDD(), "INSERT INTO `commentaires`(`commentaire`, `id_article`, `id_utilisateur`, `date`) VALUES ('$com_article','$id_article','$_SESSION[id]',NOW())");
+        
+                        $echo = ' <a class="echo"> Votre commentaire a été envoyer avec succés </a>';
+                        echo $echo;
+                        mysqli_close(connexion_BDD());
+                        
+                    } else {
+                        $error = '<a class="message_erreur"> Erreur, <br> Veuillez remplir le champ </a>';
+                        echo $error;
+                    }
                 }
+            }
+    //------------------------- BARRE D'INFO------------------------//
+        function info_barre(){
+            if(isset($_SESSION['info_update'])) //Si la variable de session existe alors envoyer le message
+            {
+                ?>      
+                <div class="info_update">
+                <img src="..\assets\img\beblog_gif_validation.gif?date=<?php echo date('Y-m-d-H-i-s');?>" alt="validation"/>
+                <p><b><?=$_SESSION['info_update']?><b></p>
+                </div>
+                <?php
+                unset($_SESSION['info_update']); //Supression de la variable de session après son jeux afin qu'elle ne s'affiche pas à chaque réactulaisation
+            } 
+                elseif(isset($_SESSION['error_validation']))
+            {
+                ?>
+                <div class="info_update">
+                <img src="..\assets\img\beblog_icon_error.png" alt="validation"/>
+                <p><b><?=$_SESSION['error_validation']?></b><p>
+                </div>
+                <?php
+                $localisation_erreur = 'error_user';
+                unset($_SESSION['error_validation']);
+            }
+        }
+
+    //----------------------------PAGE ADMIN -----------------------------//
+
+    function recup_all_articles_admin() {
+        ?>
+        <form method="POST" action="">
+        <table class="affiche_articles_admin" >
+            <thead>
+                <tr>
+                    <th colspan="8">Articles</th>
+                </tr>
+                <tr>
+                    <th>Titre</th>
+                    <th>Article</th>
+                    <th>Id_categorie</th>
+                </tr>
+            </thead>
+        <tbody>
+        <?php
+        $requete_recup_all_articles = mysqli_query(connexion_BDD(), "SELECT * FROM articles ORDER BY `date` DESC");
+        $result_recup_all_articles = mysqli_fetch_all($requete_recup_all_articles, MYSQLI_ASSOC);
+        $i = 0;
+            while(isset($result_recup_all_articles[$i])){
+                ?>
+                <tr>
+                    <td><input id="titre_article_admin" name="titre_article_admin" type="text" value="<?= $result_recup_all_articles[$i]['titre'] ?>"></td>
+                    <td><textarea rows="3" cols="30" ><?= $result_recup_all_articles[$i]['article'] ?>...</textarea></td>
+                    <td><input class="id_categorie_articles_admin" name="id_categorie_articles_admin" type="text" value="<?= $result_recup_all_articles[$i]['id_categorie'] ?>"></td>
+                   
+                </tr>
+                <?php 
+            $i++;
+            }
+            update_articles_admin();
+        ?>
+            </tbody>
+        </table>
+        </form>
+        <?php
+    }
+    function update_articles_admin(){
+        if (isset($_GET['update_articles']));
+        
+    }
+
+
+    function recup_all_categorie_admin(){
+        ?>
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="3">Infos Catégories</th>
+                </tr>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>Style</th>
+                </tr>
+            </thead>
+            <tbody>
+
+        <?php
+        $requete_recup_all_categorie = mysqli_query(connexion_BDD(), "SELECT id, nom, style FROM categories");
+        $result_recup_all_categorie = mysqli_fetch_all($requete_recup_all_categorie, MYSQLI_ASSOC);
+        $i = 0;    
+            while (isset($result_recup_all_categorie[$i])){
+                ?>
+                    <tr>
+                        <td><?= $result_recup_all_categorie[$i]['id'] ?></td>
+                        <td><?= $result_recup_all_categorie[$i]['nom'] ?></td>
+                        <td><?= $result_recup_all_categorie[$i]['style'] ?></td>
+                    </tr>
+                <?php
+                $i++;
+            }
+            ?>
+            </tbody>
+        </table>
+        <?php
+    }
+
+    function recup_all_users_admin(){
+        ?>
+            <table>
+                <thead>
+                    <tr>
+                        <th colspan="4">Infos utilisateurs</th>
+                    </tr>
+                    <tr>
+                        <th>Id</th>
+                        <th>Login</th>
+                        <th>Email</th>
+                        <th>Id_droits</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+        <?php
+        $requete_recup_all_users = mysqli_query(connexion_BDD(), "SELECT * FROM utilisateurs");
+        $result_recup_all_users = mysqli_fetch_all($requete_recup_all_users,MYSQLI_ASSOC);
+            
+        $i = 0;
+        while (isset($result_recup_all_users[$i])){
+            ?>  
+                <tr>
+                    <td><?= $result_recup_all_users[$i]['id'] ?></td>
+                    <td><?= $result_recup_all_users[$i]['login'] ?></td>
+                    <td><?= $result_recup_all_users[$i]['email'] ?></td>
+                    <td><?= $result_recup_all_users[$i]['id_droits'] ?></td>
+                    <td>
+				        <a href="admin.php?update_user=<?php echo $result_recup_all_users[$i]['id']; ?>" class="update_btn" >Modifier</a>
+			        </td>
+			        <td>
+				        <a href="admin.php?delete_user=<?php echo $result_recup_all_users[$i]['id']; ?>" class="delete_btn">Supprimer</a>
+			        </td>
+                    </tr>
+                    
+            <?php
+        $i++;
+        } 
+        ?>
+            </tbody>
+        </table>
+        <?php
+    }
                 
             
                 
