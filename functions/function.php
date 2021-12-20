@@ -101,7 +101,6 @@ function affiche_categorie(){
         $titreBDD=addslashes(htmlentities($_POST['titre']));
         $description=addslashes(htmlentities($_POST['description']));
         $article=addslashes(htmlentities($_POST['article']));
-        $article=$_POST['article'];
         $space=" ";
         $replace="";
         $outString=str_replace($space,$replace,$titreBDD);
