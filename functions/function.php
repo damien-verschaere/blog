@@ -343,7 +343,7 @@ function affiche_categorie(){
                 <p class="introdruction_affiche-articles"><?= htmlspecialchars($result_affiche_articles['introduction']) ?></p>
                 <p class="affiche_articles"><?= nl2br($result_affiche_articles['article']) ?></p>
                 <p class="user_affiche_articles"> Posté par <?= htmlspecialchars($result_affiche_articles['login']) ?> le <?= htmlspecialchars($result_affiche_articles['date']) ?><br>
-                <p class="count_commentaire_article"><i class="fa-solid fa-comments"><?= $result_count_commentaire_article['COUNT(*)'] ?></i></p>
+                <p class="count_commentaire_article"><i class="fa-solid fa-comments"> <?= $result_count_commentaire_article['COUNT(*)'] ?></i></p>
                 <input type="hidden" id="ID" name="ID" value="<?php echo $result_affiche_articles['id_articles']?>">
             </article>
         </a>
