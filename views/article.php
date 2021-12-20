@@ -17,7 +17,7 @@ require "../functions/function.php";
         ?>
     </header>
     <main class="main_center">
-        <section class="section_article">
+        <section class="section_articles">
             
             <?php
                 affiche_self_article();

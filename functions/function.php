@@ -133,40 +133,43 @@ function affiche_categorie(){
 
                             }
                             $nom = uniqid(rand()) ; // Permet de générer un nom unique à la photo
-                                $chemin = "../assets/images_article" . $titreBDD.$categorie . "/" . $nom . "." . $extensionUpload; // Chemin pour placer la photo
-                                $resultat = move_uploaded_file($_FILES['image_article']['tmp_name'], $chemin); // On fini par mettre la photo dans le dossier
-                                if ($resultat){ // Si on a le résultat alors on va comprésser l'image
-                                        echo "l129"; 
-                                        $verif_ext = getimagesize("../assets/images_article" . $titreBDD.$categorie . "/" . $nom . "." . $extensionUpload);
-                                        echo "l132";
-                                        // Vérification des extensions avec la liste des extensions autorisés
-                                                      
-                                            // J'enregistre le chemin de l'image dans filename
-                                            $filename = "../assets/images_article" . $titreBDD.$categorie . "/" . $nom . "." . $extensionUpload;
-                                            echo "l137";
-                                            // Vérification des extensions que je souhaite prendre
-                                            if($extensionUpload == 'jpg' || $extensionUpload == 'png' || $extensionUpload == "JPG"|| $extensionUpload == "gif" ){
-                                                echo "l140";
-                                                // Content type
-                                                
-                                            echo '<script language="Javascript">document.location.replace("accueil.php")</script>';
-
-                                                
-                                                
-                                            }
+                            $chemin = "../assets/images_article" . $titreBDD.$categorie . "/" . $nom . "." . $extensionUpload; // Chemin pour placer la photo
+                            $resultat = move_uploaded_file($_FILES['image_article']['tmp_name'], $chemin); // On fini par mettre la photo dans le dossier
+                            if ($resultat){ // Si on a le résultat alors on va comprésser l'image
+                                    echo "l129"; 
+                                    $verif_ext = getimagesize("../assets/images_article" . $titreBDD.$categorie . "/" . $nom . "." . $extensionUpload);
+                                    echo "l132";
+                                    // Vérification des extensions avec la liste des extensions autorisés
+                                                  
+                                        // J'enregistre le chemin de l'image dans filename
+                                        $filename = "../assets/images_article" . $titreBDD.$categorie . "/" . $nom . "." . $extensionUpload;
+                                        echo "l137";
+                                        // Vérification des extensions que je souhaite prendre
+                                        if($extensionUpload == 'jpg' || $extensionUpload == 'png' || $extensionUpload == "JPG"|| $extensionUpload == "gif" ){
+                                            echo "l140";
+                                            // Content type
                                             
-                                           
+                                        echo '<script language="Javascript">document.location.replace("accueil.php")</script>';
+
+                                            
+                                            
                                         }
-                                    } 
-                                }
-                                
+                                        
+                                       
+                                    }
+                                } 
                             }
+                            
                         }
-                        error_reporting(E_ERROR | E_PARSE);
-                    mysqli_query(connexion_BDD(),"INSERT INTO articles(id, titre, introduction, article, id_utilisateur, id_categorie, date,image_article) VALUES ( NULL,'$titre','$description','$article','$_SESSION[id]','$categorie',NOW(),'$filename')"); 
                     }
+                    error_reporting(E_ERROR | E_PARSE);
+                mysqli_query(connexion_BDD(),"INSERT INTO articles(id, titre, introduction, article, id_utilisateur, id_categorie, date,image_article) VALUES ( NULL,'$titre','$description','$article','$_SESSION[id]','$categorie',NOW(),'$filename')"); 
+                }
                     
                 
+
+
+
 
     /*----------------------------PAGE CONNEXION------------------------------- */
     /*Fonction de verification des informations de connexion */
@@ -475,128 +478,163 @@ function affiche_categorie(){
         }
 
     //----------------------------PAGE ADMIN -----------------------------//
-
-    function recup_all_articles_admin() {
-        ?>
-        <form method="POST" action="">
-        <table class="affiche_articles_admin" >
-            <thead>
-                <tr>
-                    <th colspan="8">Articles</th>
-                </tr>
-                <tr>
-                    <th>Titre</th>
-                    <th>Article</th>
-                    <th>Id_categorie</th>
-                </tr>
-            </thead>
-        <tbody>
-        <?php
-        $requete_recup_all_articles = mysqli_query(connexion_BDD(), "SELECT * FROM articles ORDER BY `date` DESC");
-        $result_recup_all_articles = mysqli_fetch_all($requete_recup_all_articles, MYSQLI_ASSOC);
-        $i = 0;
-            while(isset($result_recup_all_articles[$i])){
-                ?>
-                <tr>
-                    <td><input id="titre_article_admin" name="titre_article_admin" type="text" value="<?= $result_recup_all_articles[$i]['titre'] ?>"></td>
-                    <td><textarea rows="3" cols="30" ><?= $result_recup_all_articles[$i]['article'] ?>...</textarea></td>
-                    <td><input class="id_categorie_articles_admin" name="id_categorie_articles_admin" type="text" value="<?= $result_recup_all_articles[$i]['id_categorie'] ?>"></td>
-                   
-                </tr>
-                <?php 
-            $i++;
-            }
-            update_articles_admin();
-        ?>
-            </tbody>
-        </table>
-        </form>
-        <?php
-    }
-    function update_articles_admin(){
-        if (isset($_GET['update_articles']));
+    function infos_blog_admin(){
+        $requete_nbr_articles = mysqli_query(connexion_BDD(), "SELECT COUNT(*) FROM articles");
+        $result_nbr_articles = mysqli_fetch_array($requete_nbr_articles);
         
+        $requete_nbr_users = mysqli_query(connexion_BDD(), "SELECT COUNT(*) FROM utilisateurs");
+        $result_nbr_users = mysqli_fetch_array($requete_nbr_users);
+
+        $requete_nbr_cat = mysqli_query(connexion_BDD(), "SELECT COUNT(*) FROM categories");
+        $result_nbr_cat = mysqli_fetch_array($requete_nbr_cat);
+
+        ?>
+        <div class="conteneur_infos_admin">
+            <div class="nbr_articles_admin">
+                <h3 class="articles_admin">Articles</h3>
+                <i class="fas fa-newspaper"></i>
+                <p class="nbr_articles_admin"><?= $result_nbr_articles['COUNT(*)'] ?></p>
+            </div>
+            <div class="nbr_users_admin">
+                <h3 class="users_admin">Utilisateurs</h3>
+                <i class="fas fa-users"></i>
+                <p class="nbr_users_admin"><?= $result_nbr_users['COUNT(*)'] ?></p>
+            </div>
+            <div class="nbr_cat_admin">
+                <h3 class="cat_admin">Catégories</h3>
+                <i class="far fa-bookmark"></i>
+                <p class="nbr_cat_admin"><?= $result_nbr_cat['COUNT(*)'] ?></p>
+            </div>
+        </div>
+        <?php
     }
 
 
-    function recup_all_categorie_admin(){
-        ?>
-        <table>
-            <thead>
-                <tr>
-                    <th colspan="3">Infos Catégories</th>
-                </tr>
-                <tr>
-                    <th>Id</th>
-                    <th>Nom</th>
-                    <th>Style</th>
-                </tr>
-            </thead>
-            <tbody>
+    function all_articles_admin(){
+           
+        $display1 = "none";
 
-        <?php
-        $requete_recup_all_categorie = mysqli_query(connexion_BDD(), "SELECT id, nom, style FROM categories");
-        $result_recup_all_categorie = mysqli_fetch_all($requete_recup_all_categorie, MYSQLI_ASSOC);
-        $i = 0;    
-            while (isset($result_recup_all_categorie[$i])){
-                ?>
-                    <tr>
-                        <td><?= $result_recup_all_categorie[$i]['id'] ?></td>
-                        <td><?= $result_recup_all_categorie[$i]['nom'] ?></td>
-                        <td><?= $result_recup_all_categorie[$i]['style'] ?></td>
-                    </tr>
-                <?php
-                $i++;
-            }
-            ?>
-            </tbody>
-        </table>
-        <?php
-    }
-
-    function recup_all_users_admin(){
-        ?>
-            <table>
-                <thead>
-                    <tr>
-                        <th colspan="4">Infos utilisateurs</th>
-                    </tr>
-                    <tr>
-                        <th>Id</th>
-                        <th>Login</th>
-                        <th>Email</th>
-                        <th>Id_droits</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-        <?php
-        $requete_recup_all_users = mysqli_query(connexion_BDD(), "SELECT * FROM utilisateurs");
-        $result_recup_all_users = mysqli_fetch_all($requete_recup_all_users,MYSQLI_ASSOC);
+        //requête affichage des articles page admin ordonnée par date de publication les plus récentes
+        $affiche_articles_admin = mysqli_query(connexion_BDD(), "SELECT id, titre, introduction, article, id_categorie FROM articles ORDER BY `date` DESC");
             
-        $i = 0;
-        while (isset($result_recup_all_users[$i])){
-            ?>  
-                <tr>
-                    <td><?= $result_recup_all_users[$i]['id'] ?></td>
-                    <td><?= $result_recup_all_users[$i]['login'] ?></td>
-                    <td><?= $result_recup_all_users[$i]['email'] ?></td>
-                    <td><?= $result_recup_all_users[$i]['id_droits'] ?></td>
-                    <td>
-				        <a href="admin.php?update_user=<?php echo $result_recup_all_users[$i]['id']; ?>" class="update_btn" >Modifier</a>
-			        </td>
-			        <td>
-				        <a href="admin.php?delete_user=<?php echo $result_recup_all_users[$i]['id']; ?>" class="delete_btn">Supprimer</a>
-			        </td>
-                    </tr>
+        //Si le formulaire de modif est soumis 
+        if(isset($_POST['submit_articles_admin'])){
+
+            //Si ce dernier ne comprend aucune zone de texte vide
+            if (!empty($_POST['titre_articles_admin']) && !empty($_POST['intro_articles_admin']) && !empty($_POST['article_articles_admin']) && !empty($_POST['id_categorie_articles_admin'])){
+
+                $titre = addslashes(htmlspecialchars($_POST['titre_articles_admin']));
+                $intro = addslashes(htmlspecialchars($_POST['intro_articles_admin']));
+                $article = addslashes(htmlspecialchars($_POST['article_articles_admin']));
+                $id_categorie = htmlspecialchars($_POST['id_categorie_articles_admin']);
+                $id = htmlspecialchars($_POST['id_articles_admin']);
+
+                //Alors on update l'article concerné et on refresh la page directement afin d'afficher le changement sans header location.
+                $update_articles_admin = mysqli_query(connexion_BDD(), "UPDATE `articles` SET `titre`='$titre',`introduction`='$intro',`article`='$article',`id_categorie`='$id_categorie' WHERE id = '$id'");
+                
+                $_SESSION['msg'] = "Article modifié avec succés";
+                echo "<meta http-equiv='refresh' content='0'>";
                     
+            } else {
+                $_SESSION['msg'] = "Impossible d'envoyer un champ vide";
+            }
+        }
+            
+        //Si on clique sur modifier on récupére l'id de l'article qu'on souhaite modifier en GET et on laisse apparaitre le formulaire de modif
+        if(isset($_GET['modif'])){
+            $id = $_GET['modif'];
+            $display1 = "block";
+
+            //On récupere les informations de l'article concerné afin d'afficher ses informatons dans le formulaire de modif
+            $affiche_update_articles_admin = mysqli_query(connexion_BDD(), "SELECT id, titre, introduction, article, id_categorie FROM articles WHERE id = '$id' ");
+            $result_update_articles_admin = mysqli_fetch_array($affiche_update_articles_admin, MYSQLI_ASSOC);
+
+            $titre = $result_update_articles_admin['titre'];
+            $intro = $result_update_articles_admin['introduction'];
+            $article = $result_update_articles_admin['article'];
+            $id_categorie = $result_update_articles_admin['id_categorie'];
+            $id = $result_update_articles_admin['id'];
+        }
+
+        $display2 = "none";
+        //Partie suppression d'articles avec formulaire de confirmation de supp qui apparait
+        if (isset($_GET['supp'])){
+            $id = $_GET['supp'];
+            $display2 = "block";
+
+            if (isset($_POST['valid_supp_non_articles'])){
+                $display2 = "none";
+            } 
+
+            elseif (isset($_POST['valid_supp_oui_articles'])){
+                $delete_articles_admin = mysqli_query(connexion_BDD(), " DELETE FROM articles WHERE id = '$id' ");
+                $_SESSION['msg'] = "Article supprimé avec succés";
+                echo '<script language="Javascript">document.location.replace("admin.php")</script>';
+            }
+            
+            ?>
+            <div class="form_supp_articles_admin" style="display: <?= $display2 ?>;">
+                <p class="valid_supp_articles">Êtes-vous sur de vouloir supprimer cet article?</p>
+                <form method="post" action="">
+                    <button name="valid_supp_oui_articles">Oui</button>
+                    <button name="valid_supp_non_articles">Non</button>
+                </form>
+            </div>
             <?php
-        $i++;
-        } 
+            
+        }
         ?>
-            </tbody>
-        </table>
-        <?php
+        <div class="align_center_form" style="display: <?= $display1 ?>;">
+            <form class="form_articles_admin" action="" method="post">
+                <input type="hidden" name="id_articles_admin" value="<?= $id ?>">
+
+                <label for="titre_articles_admin">Titre</label>
+                    <input class="input_admin" id="titre_articles_admin" type="text" name="titre_articles_admin" value="<?= $titre ?>">
+
+                <label for="intro_articles_admin">Intro</label> 
+                    <input class="input_admin" id="intro_articles_admin" type="text" name="intro_articles_admin" value="<?= $intro ?>">
+
+                <label for="article_articles_admin">Article</label>
+                    <textarea id="article_articles_admin" name="article_articles_admin" rows="6"><?= $article ?></textarea>
+
+                <label for="id_categorie_articles_admin">Id catégorie</label>
+                    <input class="input_admin_id" id="id_categorie_articles_admin" type="text" name="id_categorie_articles_admin" value="<?= $id_categorie ?>">
+
+                <button type="submit" name="submit_articles_admin" value="Modifiez">Modifiez</button>
+            </form>
+        </div>
+        <table class="all_articles_admin_table">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Introduction</th>
+                <th>Article</th>
+                <th>Id_categorie</th>
+                <th colspan="2">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php 
+                while ($articles_admin = mysqli_fetch_array($affiche_articles_admin, MYSQLI_ASSOC)){
+            ?>
+            <tr>
+                <td><?= $articles_admin['titre'] ?></td>
+                <td><?= $articles_admin['introduction'] ?></td>
+                <td><?= nl2br($articles_admin['article']) ?></td>
+                <td><?= $articles_admin['id_categorie'] ?></td>
+                <td>
+                    <a href="admin.php?modif=<?= $articles_admin['id'] ?>">Modifiez</a>
+                </td>
+                <td>
+                    <a href="admin.php?supp=<?= $articles_admin['id'] ?>">Supprimer</a>
+                </td>
+            </tr>
+            <?php
+                }
+            ?>
+        </tbody>
+    </table>
+    <?php
     }
                 
             

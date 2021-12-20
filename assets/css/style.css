@@ -423,6 +423,118 @@ body{
     color :#ffffff;
     text-shadow: 0px 0px 1px 2px #000000;
 }
+
+/*--------------------------------PAGE ADMIN---------------------------------*/
+
+.conteneur_infos_admin {
+    margin-top: 5vh;
+    display: flex;
+    justify-content: center;
+    gap: 20vh;
+}
+
+.nbr_articles_admin {
+    background-color: #ea6c3a;
+    border-radius: 7px;
+    padding-top: -2vh;
+    padding-left: 7vh;
+    padding-right: 7vh;
+}
+
+.nbr_users_admin {
+    background-color: #d93356;
+    border-radius: 7px;
+    padding-top: -2vh;
+    padding-left: 7vh;
+    padding-right: 7vh;
+}
+
+.nbr_cat_admin {
+    background-color: #843482;
+    border-radius: 7px;
+    padding-top: -2vh;
+    padding-left: 7vh;
+    padding-right: 7vh;
+}
+
+.conteneur_infos_admin h3 {
+    font-size: 5vh;
+}
+
+.conteneur_infos_admin i {
+    font-size: 10vh;
+}
+
+.conteneur_infos_admin p {
+    font-size: 4vh;
+    font-weight: bold;
+}
+
+.all_articles_admin_table {
+    margin-top: 5vh;
+    border-collapse: collapse;
+    margin-left: 3%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    background-color: rgba(100, 100, 100, 0.308);
+}
+
+
+.all_articles_admin_table thead tr {
+    background-color: #efa32f;
+    color: black;
+}
+
+.all_articles_admin_table th, td {
+    padding: 12px 15px;
+}
+
+.all_articles_admin_table tbody tr {
+    border-bottom: 0.3px solid #aaaaaa9c;
+}
+
+.all_articles_admin_table tbody tr:hover {
+    background-color: rgba(31, 31, 31, 0.438);
+}
+
+.all_articles_admin_table tbody tr:nth-child(even){
+    background-color: rgba(100, 100, 100, 0.308);
+}
+
+.all_articles_admin_table tbody tr:nth-child(even):hover{
+    background-color: rgba(31, 31, 31, 0.438);
+}
+
+.form_articles_admin {
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+    display: flex;
+    flex-direction: column;
+    
+} 
+
+.form_articles_admin input, textarea {
+    text-align: center;
+    margin: auto;
+    margin-bottom: 2vh;
+} 
+
+.form_articles_admin textarea {
+    width: 40%;
+}
+
+.input_admin {
+    width: 30%;
+}
+
+.input_admin_id {
+    width: 4%;
+}
+
+.form_articles_admin button {
+    margin: auto;
+    width: 10%;
+} 
+
 /* -----------------formulaire----------------------------- */
 .form_inscription{
     margin-top: 10%;
