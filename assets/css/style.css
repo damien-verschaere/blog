@@ -441,4 +441,22 @@ body{
 
 .global_accueil{
    margin-left: 2%;
+   border: 2px solid #ea6c3a ;
 }
+.titre_accueil{
+    background-color: #d93356;
+}
+.global_accueil p{
+    text-align: center;
+ }
+ .global_accueil ,.footer_affiche_accueil {
+    text-align: center;
+ }
+ .content_img_categoriese img{
+    width: 24rem ;
+    height: 28rem;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ }
