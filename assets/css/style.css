@@ -435,37 +435,10 @@ body{
 }
 
 /* -------------------accueil------------------------------- */
-.affiche_article{
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    border: solid 2px #ea6c3a;
-    
+.section_accueil{
+    display: inline-flex;
 }
-.image_article{
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    flex-direction: row;
-    
-    
-}
-.image_article img{
-    width: 100%;
-    height: 28rem;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-.footer_accueil{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: .4375rem;
+
+.global_accueil{
+   margin-left: 2%;
 }

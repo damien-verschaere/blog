@@ -65,17 +65,19 @@
         $req=mysqli_query(connexion_BDD(),"SELECT `titre`,`introduction`,`article`,`date`,`image_article` FROM `articles` order by date DESC LIMIT 3 ");
         $result=mysqli_fetch_all($req,MYSQLI_ASSOC);
         foreach ($result as $key) {
-            echo "<div class=affiche_article>";
-            echo "<p>". $key['titre']."</p>";
-            
-            echo "<div class= image_article>";
+            echo "<div class=global_accueil>";
+            echo "<div class=head_selesct_categories>";
+            echo "<p >". $key['titre']."</p>";
+            echo "</div>";
+            echo "<div class=content_img_categories >";
             echo "<img src=".$key['image_article'].">";
             echo "</div>";
-            echo "<div class=footer_accueil>";
-            echo "<p>". $key['introduction']."</p>";
+            echo "<div>";
+            echo "<h4>". $key['introduction']."</h4>";
             echo "<p>".$key['date']."</p>";
             echo "</div>";
             echo "</div>";
+            
             
         }
         
@@ -109,9 +111,6 @@ function affiche_categorie(){
         
             if (isset($_FILES['image_article']) ){
                 $filename = $_FILES['image_article']['tmp_name']; // On récupère le nom du fichier
-                list($width_orig, $height_orig) = getimagesize($filename);
-                if($width_orig >= 500 && $height_orig >= 500 && $width_orig <= 6000 && $height_orig <= 6000){ 
-                array('jpg' => 'image/jpg', 'JPG'=>'image/JPG', 'png' => 'image/png', 'gif' => 'image/gif');
                     $tailleMax = 5242880; // Taille maximum 5 Mo
                     // 2mo  = 2097152
                     // 3mo  = 3145728
@@ -163,11 +162,11 @@ function affiche_categorie(){
                                 
                             }
                         }
-                        
-                    }
-                    error_reporting(E_ERROR | E_PARSE);
+                        error_reporting(E_ERROR | E_PARSE);
                     mysqli_query(connexion_BDD(),"INSERT INTO articles(id, titre, introduction, article, id_utilisateur, id_categorie, date,image_article) VALUES ( NULL,'$titre','$description','$article','$_SESSION[id]','$categorie',NOW(),'$filename')"); 
-                }
+                    }
+                    
+                
 
     /*----------------------------PAGE CONNEXION------------------------------- */
     /*Fonction de verification des informations de connexion */
