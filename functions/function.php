@@ -97,10 +97,10 @@ function affiche_categorie(){
  function creer_article(){
     if (isset($_POST['creer'])) {
         $categorie=$_POST['categorie'];
-        $titre=addslashes(htmlentities($_POST['titre']));
-        $titreBDD=addslashes(htmlentities($_POST['titre']));
-        $description=addslashes(htmlentities($_POST['description']));
-        $article=addslashes(htmlentities($_POST['article']));
+        $titre=addslashes(htmlspecialchars($_POST['titre']));
+        $titreBDD=addslashes(htmlspecialchars($_POST['titre']));
+        $description=addslashes(htmlspecialchars($_POST['description']));
+        $article=addslashes(htmlspecialchars($_POST['article']));
         $space=" ";
         $replace="";
         $outString=str_replace($space,$replace,$titreBDD);
@@ -512,7 +512,7 @@ function affiche_categorie(){
         $display1 = "none";
 
         //requête affichage des articles page admin ordonnée par date de publication les plus récentes
-        $affiche_articles_admin = mysqli_query(connexion_BDD(), "SELECT id, titre, introduction, article, id_categorie FROM articles ORDER BY `date` DESC");
+        $affiche_articles_admin = mysqli_query(connexion_BDD(), "SELECT id, titre, introduction, article, id_categorie, `date` FROM articles ORDER BY `date` DESC");
             
         //Si le formulaire de modif est soumis 
         if(isset($_POST['submit_articles_admin'])){
@@ -607,6 +607,7 @@ function affiche_categorie(){
                 <th>Introduction</th>
                 <th>Article</th>
                 <th>Id_categorie</th>
+                <th>Date</th>
                 <th colspan="2">Action</th>
             </tr>
         </thead>
@@ -619,6 +620,7 @@ function affiche_categorie(){
                 <td><?= $articles_admin['introduction'] ?></td>
                 <td><?= nl2br($articles_admin['article']) ?></td>
                 <td><?= $articles_admin['id_categorie'] ?></td>
+                <td><?= $articles_admin['date'] ?></td>
                 <td>
                     <a href="admin.php?modif=<?= $articles_admin['id'] ?>">Modifiez</a>
                 </td>
