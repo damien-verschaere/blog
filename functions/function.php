@@ -434,7 +434,7 @@ function affiche_categorie(){
                     //Si le textarea est bien rempli
                     if ( !empty ( $_POST['commentaire_article'] )){
         
-                        $com_article = $_POST['commentaire_article'];
+                        $com_article = addslashes($_POST['commentaire_article']);
         
                         //Alors on insert le commentaire en base de données et prévient l'user du bon déroulement
                         $requete_insert_commentaire_article = mysqli_query(connexion_BDD(), "INSERT INTO `commentaires`(`commentaire`, `id_article`, `id_utilisateur`, `date`) VALUES ('$com_article','$id_article','$_SESSION[id]',NOW())");
