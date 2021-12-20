@@ -271,8 +271,13 @@ function affiche_categorie(){
                 $premier_affichage_categories = ($page -1) * $nombre_articles_categories;
                 //Puis on réalise une requête qui récuperera tout des tables articles user et categorie classé par date DESC et ayant pour limites de select les articles à afficher réclamer auparavant
                 $affichage_articles_categories = mysqli_query(connexion_BDD(), "SELECT a.id as id_articles, a.titre, a.introduction, a.article, a.date, u.id as id_utilisateur, u.login, c.id as id_categorie, c.nom FROM articles as a INNER JOIN utilisateurs as u ON id_utilisateur=u.id INNER JOIN categories as c ON id_categorie = c.id WHERE `id_categorie` = '$id_categories_get' ORDER BY `date` DESC LIMIT $premier_affichage_categories, $nombre_articles_categories ");
+                
                 //Puis on boucle sur le résultat de la requete afin d'afficher les articles comme souhaité
                 while($result_affiche_articles_categories = mysqli_fetch_array($affichage_articles_categories, MYSQLI_ASSOC)){
+
+                    $id_article = $result_affiche_articles_categories['id_articles'];
+                    $requete_count_commentaire_article = mysqli_query(connexion_BDD(),"SELECT COUNT(*) FROM commentaires INNER JOIN articles ON commentaires.id_article = articles.id WHERE articles.id = $id_article");
+                    $result_count_commentaire_article = mysqli_fetch_array($requete_count_commentaire_article,MYSQLI_ASSOC);
                     
             ?>
             <form method="get" action="">
@@ -283,6 +288,7 @@ function affiche_categorie(){
                         <p class="introdruction_affiche-articles"><?= htmlspecialchars($result_affiche_articles_categories['introduction']) ?></p>
                         <p class="affiche_articles"><?= htmlspecialchars($result_affiche_articles_categories['article']) ?></p>
                         <p class="user_affiche_articles"> Posté par <?= htmlspecialchars($result_affiche_articles_categories['login']) ?> le <?= htmlspecialchars($result_affiche_articles_categories['date']) ?>
+                        <p class="count_commentaire_article"><i class="fa-solid fa-comments"> <?= $result_count_commentaire_article['COUNT(*)'] ?></i></p>
                         <input type="hidden" name="ID" class="ID" value="<?= htmlspecialchars($result_affiche_articles_categories['id_articles']) ?> ">
                     </article>
                 </a>
@@ -323,6 +329,10 @@ function affiche_categorie(){
     
                 //Puis on boucle sur le résultat afin d'afficher tous les élément voulu de l'article en base de données
                 while($result_affiche_articles = mysqli_fetch_array($affiche_articles, MYSQLI_ASSOC)){
+
+                    $id_article = $result_affiche_articles['id_articles'];
+                    $requete_count_commentaire_article = mysqli_query(connexion_BDD(),"SELECT COUNT(*) FROM commentaires INNER JOIN articles ON commentaires.id_article = articles.id WHERE articles.id = $id_article");
+                    $result_count_commentaire_article = mysqli_fetch_array($requete_count_commentaire_article,MYSQLI_ASSOC);
                     
     ?>
     <form method="get" action="">
@@ -332,7 +342,8 @@ function affiche_categorie(){
                 <p class="titre_affiche_articles"><?= htmlspecialchars($result_affiche_articles['titre']) ?></p>
                 <p class="introdruction_affiche-articles"><?= htmlspecialchars($result_affiche_articles['introduction']) ?></p>
                 <p class="affiche_articles"><?= nl2br($result_affiche_articles['article']) ?></p>
-                <p class="user_affiche_articles"> Posté par <?= htmlspecialchars($result_affiche_articles['login']) ?> le <?= htmlspecialchars($result_affiche_articles['date']) ?><br><br>
+                <p class="user_affiche_articles"> Posté par <?= htmlspecialchars($result_affiche_articles['login']) ?> le <?= htmlspecialchars($result_affiche_articles['date']) ?><br>
+                <p class="count_commentaire_article"><i class="fa-solid fa-comments"><?= $result_count_commentaire_article['COUNT(*)'] ?></i></p>
                 <input type="hidden" id="ID" name="ID" value="<?php echo $result_affiche_articles['id_articles']?>">
             </article>
         </a>
