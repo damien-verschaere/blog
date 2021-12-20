@@ -67,7 +67,7 @@
         foreach ($result as $key) {
             echo "<div class=global_accueil>";
             echo "<div class=titre_accueil>";
-            echo "<h4>". strtoupper( $key['titre'])."</h4>";
+            echo "<h4>".  $key['titre']."</h4>";
             echo "</div>";
             echo "<div class=content_img_categoriese >";
             echo "<img src=".$key['image_article'].">";
@@ -119,11 +119,11 @@ function affiche_categorie(){
                     // 12mo = 12582912
                     $extensionsValides = array('jpg','jpeg','png','JPG'); // Format accepté
                     if ($_FILES['image_article']['size'] <= $tailleMax){ // Si le fichier et bien de taille inférieur ou égal à 5 Mo
-                        echo "l114";
+                        
                         $extensionUpload = strtolower(substr(strrchr($_FILES['image_article']['name'], '.'), 1)); // Prend l'extension après le point, soit "jpg, jpeg ou png"
  
                         if (in_array($extensionUpload, $extensionsValides)){ // Vérifie que l'extension est correct
-                            echo"l118";
+                            
                             $dossier = "../assets/images_article" .$categorie . "/"; // On se place dans le dossier de la personne 
                             if (!is_dir($dossier)){ // Si le nom de dossier n'existe pas alors on le crée
 
@@ -134,17 +134,17 @@ function affiche_categorie(){
                             $chemin = "../assets/images_article" .$categorie . "/" . $nom . "." . $extensionUpload; // Chemin pour placer la photo
                             $resultat = move_uploaded_file($_FILES['image_article']['tmp_name'], $chemin); // On fini par mettre la photo dans le dossier
                             if ($resultat){ // Si on a le résultat alors on va comprésser l'image
-                                    echo "l129"; 
+                                    
                                     $verif_ext = getimagesize("../assets/images_article" .$categorie . "/" . $nom . "." . $extensionUpload);
-                                    echo "l132";
+                                    
                                     // Vérification des extensions avec la liste des extensions autorisés
                                                   
                                         // J'enregistre le chemin de l'image dans filename
                                         $filename = "../assets/images_article" .$categorie . "/" . $nom . "." . $extensionUpload;
-                                        echo "l137";
+                                        
                                         // Vérification des extensions que je souhaite prendre
                                         if($extensionUpload == 'jpg' || $extensionUpload == 'png' || $extensionUpload == "JPG"|| $extensionUpload == "gif" ){
-                                            echo "l140";
+                                            
                                             // Content type
                                             
                                         echo '<script language="Javascript">document.location.replace("accueil.php")</script>';
