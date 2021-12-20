@@ -99,9 +99,7 @@ function affiche_categorie(){
         $categorie=$_POST['categorie'];
         $titre=addslashes(htmlentities($_POST['titre']));
         $titreBDD=addslashes(htmlentities($_POST['titre']));
-        $titre=$_POST['titre'];
-        $titreBDD=$_POST['titre'];
-        $description=addslashes( $_POST['description']);
+        $description=addslashes(htmlentities($_POST['description']));
         $article=addslashes(htmlentities($_POST['article']));
         $article=$_POST['article'];
         $space=" ";
@@ -126,23 +124,23 @@ function affiche_categorie(){
  
                         if (in_array($extensionUpload, $extensionsValides)){ // Vérifie que l'extension est correct
                             echo"l118";
-                            $dossier = "../assets/images_article" . $titreBDD.$categorie . "/"; // On se place dans le dossier de la personne 
+                            $dossier = "../assets/images_article" .$categorie . "/"; // On se place dans le dossier de la personne 
                             if (!is_dir($dossier)){ // Si le nom de dossier n'existe pas alors on le crée
 
                                 mkdir($dossier);
 
                             }
                             $nom = uniqid(rand()) ; // Permet de générer un nom unique à la photo
-                            $chemin = "../assets/images_article" . $titreBDD.$categorie . "/" . $nom . "." . $extensionUpload; // Chemin pour placer la photo
+                            $chemin = "../assets/images_article" .$categorie . "/" . $nom . "." . $extensionUpload; // Chemin pour placer la photo
                             $resultat = move_uploaded_file($_FILES['image_article']['tmp_name'], $chemin); // On fini par mettre la photo dans le dossier
                             if ($resultat){ // Si on a le résultat alors on va comprésser l'image
                                     echo "l129"; 
-                                    $verif_ext = getimagesize("../assets/images_article" . $titreBDD.$categorie . "/" . $nom . "." . $extensionUpload);
+                                    $verif_ext = getimagesize("../assets/images_article" .$categorie . "/" . $nom . "." . $extensionUpload);
                                     echo "l132";
                                     // Vérification des extensions avec la liste des extensions autorisés
                                                   
                                         // J'enregistre le chemin de l'image dans filename
-                                        $filename = "../assets/images_article" . $titreBDD.$categorie . "/" . $nom . "." . $extensionUpload;
+                                        $filename = "../assets/images_article" .$categorie . "/" . $nom . "." . $extensionUpload;
                                         echo "l137";
                                         // Vérification des extensions que je souhaite prendre
                                         if($extensionUpload == 'jpg' || $extensionUpload == 'png' || $extensionUpload == "JPG"|| $extensionUpload == "gif" ){

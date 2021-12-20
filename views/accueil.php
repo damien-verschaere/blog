@@ -12,7 +12,7 @@ require "../functions/function.php";
 <body>
    
      <?php require "requires/require_header.php";?>
-    
+      
     <main class="section_article">
         <section class="section_accueil">
             <?php affiche_article() ?>
