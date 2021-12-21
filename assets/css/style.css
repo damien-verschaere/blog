@@ -599,11 +599,7 @@ body{
     gap:5vh;
 }
 
-.global_accueil{
-   
-   margin-left: 2%;
-   border: 2px solid #ea6c3a ;
-}
+
 .titre_accueil h4{
     text-align: center;
 }

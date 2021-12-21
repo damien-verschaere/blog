@@ -75,6 +75,7 @@
             $requete_categories = mysqli_query(connexion_BDD(),"SELECT * FROM categories WHERE id= '$key[id_categorie]'");
             $resultat_categorie=mysqli_fetch_array($requete_categories,MYSQLI_ASSOC);
             echo "<div class=.global_accueil>";
+            echo "<a href= article.php?article=".$key['id'].">";
             echo "<div class=".$resultat_categorie['style']."_a_background_categories >";
             echo "<div class=titre_accueil>";
             echo "<h4>". strtoupper( $key['titre'])."</h4>";
@@ -87,6 +88,7 @@
             echo "<p>".$key['date']."</p>";
             echo "</div>";
             echo "</div>";
+            echo "</a>";
             echo "</div>";
             
         }
@@ -100,6 +102,7 @@ function affiche_article_com(){
         $requete_categories = mysqli_query(connexion_BDD(),"SELECT * FROM categories WHERE id= '$key[id_categorie]'");
         $resultat_categorie=mysqli_fetch_array($requete_categories,MYSQLI_ASSOC);
         echo "<div class=.global_accueil>";
+            echo "<a href= article.php?article=".$key['id'].">";
             echo "<div class=".$resultat_categorie['style']."_a_background_categories >";
             echo "<div class=titre_accueil>";
             echo "<h4>". strtoupper( $key['titre'])."</h4>";
@@ -112,6 +115,7 @@ function affiche_article_com(){
             echo "<p>".$key['date']."</p>";
             echo "</div>";
             echo "</div>";
+            echo "</a>";
             echo "</div>";
     }
 
