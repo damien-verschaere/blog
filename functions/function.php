@@ -287,8 +287,8 @@ function affiche_categorie(){
                     $result_count_commentaire_article = mysqli_fetch_array($requete_count_commentaire_article,MYSQLI_ASSOC);
                     
             ?>
-            <form method="get" action="">
-                <a class="href_articles" href="../views/article.php?article=<?=$result_affiche_articles_categories['id_articles']?>">
+            <form class="<?= $result_affiche_articles_categories['style'] ?>_a_background_categories" style="border-radius: 8px;" method="get" action="">
+                <a class="articles_affichage" href="../views/article.php?article=<?=$result_affiche_articles_categories['id_articles']?>">
                     <article class="presentation_articles">
                         <p class="categorie_affiche_articles"><?= htmlspecialchars ($result_affiche_articles_categories['nom']) ?></p>
                         <p class="titre_affiche_articles"><?= htmlspecialchars($result_affiche_articles_categories['titre']) ?></p>
@@ -342,8 +342,8 @@ function affiche_categorie(){
                     $result_count_commentaire_article = mysqli_fetch_array($requete_count_commentaire_article,MYSQLI_ASSOC);
                     
     ?>
-    <form method="get" action="">
-        <a class="href_articles" href="../views/article.php?article=<?=$result_affiche_articles['id_articles']?>">
+    <form class="<?= $result_affiche_articles['style'] ?>_a_background_categories" style="border-radius: 8px;" method="get" action="">
+        <a class="articles_affichage" href="../views/article.php?article=<?=$result_affiche_articles['id_articles']?>">
             <article class="presentation_articles">
                 <p class="categorie_affiche_articles"><?= htmlspecialchars($result_affiche_articles['nom']) ?></p>
                 <p class="titre_affiche_articles"><?= htmlspecialchars($result_affiche_articles['titre']) ?></p>
@@ -519,7 +519,7 @@ function affiche_categorie(){
         $display1 = "none";
 
         //requête affichage des articles page admin ordonnée par date de publication les plus récentes
-        $affiche_articles_admin = mysqli_query(connexion_BDD(), "SELECT id, titre, introduction, article, id_categorie, `date` FROM articles ORDER BY `date` DESC");
+        $affiche_articles_admin = mysqli_query(connexion_BDD(), "SELECT a.id, a.titre, a.introduction, a.article, a.id_categorie, a.date, c.style FROM articles AS a INNER JOIN categories AS c ON a.id_categorie = c.id ORDER BY `date` DESC");
             
         //Si le formulaire de modif est soumis 
         if(isset($_POST['submit_articles_admin'])){
@@ -536,11 +536,11 @@ function affiche_categorie(){
                 //Alors on update l'article concerné et on refresh la page directement afin d'afficher le changement sans header location.
                 $update_articles_admin = mysqli_query(connexion_BDD(), "UPDATE `articles` SET `titre`='$titre',`introduction`='$intro',`article`='$article',`id_categorie`='$id_categorie' WHERE id = '$id'");
                 
-                $_SESSION['msg'] = "Article modifié avec succés";
+                $_SESSION['info_update'] = "Article modifié avec succés";
                 echo "<meta http-equiv='refresh' content='0'>";
                     
             } else {
-                $_SESSION['msg'] = "Impossible d'envoyer un champ vide";
+                $_SESSION['error_validation'] = "Impossible d'envoyer un champ vide";
             }
         }
             
@@ -621,8 +621,9 @@ function affiche_categorie(){
         <tbody>
             <?php 
                 while ($articles_admin = mysqli_fetch_array($affiche_articles_admin, MYSQLI_ASSOC)){
+                    
             ?>
-            <tr>
+            <tr class="<?= $articles_admin['style'] ?>_a_background_categories">
                 <td><?= $articles_admin['titre'] ?></td>
                 <td><?= $articles_admin['introduction'] ?></td>
                 <td><?= nl2br($articles_admin['article']) ?></td>
@@ -642,6 +643,156 @@ function affiche_categorie(){
     </table>
     <?php
     }
+
+    function all_categories_admin(){
+        $display = "none";
+        $display1 = "none";
+        $display2 = "none";
+        $value_btn = "";
+        $affiche_categories_admin = mysqli_query(connexion_BDD(),"SELECT * FROM categories");
+
+        if(isset($_GET['add_cat'])){
+            $display = "none";
+            $display1 = "block";
+            $value_btn = "Ajouter";
+
+            if(isset($_POST['submit_add_categories_admin'])){
+                if(!empty($_POST['nom_categories_admin']) && !empty($_POST['accroche_categories_admin']) && !empty($_POST['descriptif_categories_admin']) && !empty($_POST['style_categories_admin'])){
+            
+                $nom = htmlspecialchars($_POST['nom_categories_admin']);
+                $accroche = htmlspecialchars($_POST['accroche_categories_admin']);
+                $descriptif = htmlspecialchars($_POST['descriptif_categories_admin']);
+                $style = htmlspecialchars($_POST['style_categories_admin']);
+
+                $add_categories_admin = mysqli_query(connexion_BDD(), "INSERT INTO `categories`(`nom`, `accroche`, `descriptif`, `style`) VALUES ('$nom','$accroche','$descriptif','$style')");
+                $_SESSION['info_update'] = "Catégories ajoutées avec succés";
+                echo "<meta http-equiv='refresh' content='0'>";
+                } else {
+                $_SESSION['error_validation'] = "Impossible d'envoyer un champ vide";
+                }
+            }
+        }
+        ?>
+            <form action="" method="post" style="display: <?= $display1 ?>;">
+                <label for="nom_categories_admin">Nom</label>
+                <input id="nom_categories_admin" name="nom_categories_admin" type="text">
+                
+                <label for="accroche_categories_admin">Accroche </label>
+                <input id="accroche_categories_admin" name="accroche_categories_admin" type="text">
+                
+
+                <label for="descriptif_categories_admin">Descriptif</label>
+                <input id="descriptif_categories_admin" name="descriptif_categories_admin" type="text">
+
+                <label for="style_categories_admin">Style</label>
+                <input id="style_categories_admin" name="style_categories_admin" type="text">
+                
+
+                <button type="submit" name="submit_add_categories_admin" value="Modifiez"><?= $value_btn ?></button>
+            </form>
+        <?php
+
+        if(isset($_GET['modif_cat'])){
+            $id = $_GET['modif_cat'];
+            $display = "block";
+            $value_btn = "Modifier";
+
+            $affiche_update_categories_admin = mysqli_query(connexion_BDD(), "SELECT * FROM categories WHERE id = $id");
+            $result_update_categories_admin = mysqli_fetch_array($affiche_update_categories_admin, MYSQLI_ASSOC);
+            
+            $nom = $result_update_categories_admin['nom'];
+            $accroche = $result_update_categories_admin['accroche'];
+            $descriptif = $result_update_categories_admin['descriptif'];
+            $style = $result_update_categories_admin['style'];
+
+            if(isset($_POST['submit_update_categories_admin'])){
+                if(!empty($_POST['nom_categories_admin']) && !empty($_POST['accroche_categories_admin']) && !empty($_POST['descriptif_categories_admin']) && !empty($_POST['style_categories_admin'])){
+                    $nom = htmlspecialchars($_POST['nom_categories_admin']);
+                    $accroche = htmlspecialchars($_POST['accroche_categories_admin']);
+                    $descriptif = htmlspecialchars($_POST['descriptif_categories_admin']);
+                    $style = htmlspecialchars($_POST['style_categories_admin']);
+
+                    $update_categories_admin = mysqli_query(connexion_BDD(), "UPDATE `categories` SET `nom`='$nom',`accroche`='$accroche',`descriptif`='$descriptif',`style`='$style' WHERE id = '$id'");
+                    $_SESSION['info_update'] = "Catégorie modifié avec succés";
+                    echo "<meta http-equiv='refresh' content='0'>";
+                } else {
+                    $_SESSION['error_validation'] = "Impossible d'envoyer un champ vide";
+                }
+            }
+        }
+
+        if(isset($_GET['supp_cat'])){
+            $id = $_GET['supp_cat'];
+            $display2 = "block";
+
+            ?>
+                <div class="form_supp_articles_admin" style="display: <?= $display2 ?>;">
+                    <p class="valid_supp_articles">Êtes-vous sur de vouloir supprimer cet article?</p>
+                    <form method="post" action="">
+                        <button name="valid_supp_oui_articles">Oui</button>
+                        <button name="valid_supp_non_articles">Non</button>
+                    </form>
+                </div>
+            <?php
+        }
+
+        ?>
+            <form action="" method="post" style="display: <?= $display ?>;">
+                <label for="nom_categories_admin">Nom</label>
+                <input id="nom_categories_admin" name="nom_categories_admin" type="text" value="<?= $nom ?>">
+                
+                <label for="accroche_categories_admin">Accroche </label>
+                <input id="accroche_categories_admin" name="accroche_categories_admin" type="text" value="<?= $accroche ?>">
+                
+
+                <label for="descriptif_categories_admin">Descriptif</label>
+                <input id="descriptif_categories_admin" name="descriptif_categories_admin" type="text" value="<?= $descriptif ?>">
+
+                <label for="style_categories_admin">Style</label>
+                <input id="style_categories_admin" name="style_categories_admin" type="text" value="<?= $style ?>">
+                
+
+                <button type="submit" name="submit_update_categories_admin" value="Modifiez"><?= $value_btn ?></button>
+            </form>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nom</th>
+                        <th>Accroche</th>
+                        <th>Descriptif</th>
+                        <th>Style</th>
+                        <th colspan="3">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        while($categories_admin = mysqli_fetch_array($affiche_categories_admin, MYSQLI_ASSOC)){
+                    ?>
+                    <tr class="<?= $categories_admin['style'] ?>_a_background_categories">
+                        <td><?= $categories_admin['id']?></td>
+                        <td><?= $categories_admin['nom']?></td>
+                        <td><?= $categories_admin['accroche']?></td>
+                        <td><?= $categories_admin['descriptif']?></td>
+                        <td><?= $categories_admin['style']?></td>
+                        <td>
+                            <a href="admin.php?add_cat=<?= $categories_admin['id'] ?>">Ajouter</a>
+                        </td>
+                        <td>
+                            <a href="admin.php?modif_cat=<?= $categories_admin['id'] ?>">Modifiez</a>
+                        </td>
+                        <td>
+                            <a href="admin.php?supp_cat=<?= $categories_admin['id'] ?>">Supprimer</a>
+                        </td>
+                    </tr>
+                    <?php
+                        }
+                    ?>
+                </tbody>
+            </table>
+        <?php
+    } 
     //---------------------- AFFICHAGE MANIATURE-------------------------------//
     function affichage_miniature(){
         if(!empty(select_miniature_BDD())){
