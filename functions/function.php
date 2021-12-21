@@ -819,7 +819,7 @@ function affiche_categorie(){
                 <?php if(!empty($_FILES['image_avatar']['tmp_name'])){
                         $retour = 'ok';
                 }
-                elseif(isset($_POST['sub_image']) && !empty($_FILES['image_avatar']['tmp_name'])){
+                elseif(isset($_POST['sub_image']) && empty($_FILES['image_avatar']['tmp_name'])){
                     $_SESSION['error_validation'] = 'Aucun fichier n\'a été selectionné';
                     unset($_POST['sub_image']);
                     echo "<SCRIPT LANGUAGE=\"JavaScript\"> document.location.href=\"profil.php\" </SCRIPT>";
@@ -891,11 +891,10 @@ function affiche_categorie(){
                         $id_data = $_SESSION['id'];
                         $up_icon_query = mysqli_query(connexion_BDD(),"UPDATE `utilisateurs` SET `icon`= '$icon' WHERE `id`='$id_data'");
                         select_miniature_BDD();
-                        $_SESSION['info_update']='Votre icon à bien était mis à jour';
-                        echo "<SCRIPT LANGUAGE=\"JavaScript\"> document.location.href=\"profil.php\" </SCRIPT>";
-                        exit();
                         if(!empty(select_miniature_BDD())){
                             $_SESSION['icon'] = select_miniature_BDD();
+                            $_SESSION['info_update']='Votre icon à bien était mis à jour';
+                            echo "<SCRIPT LANGUAGE=\"JavaScript\"> document.location.href=\"profil.php\" </SCRIPT>";
                         }
                         else{
                             $_SESSION['error_validation']='Une erreur est survenue';
