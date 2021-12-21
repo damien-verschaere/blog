@@ -18,11 +18,9 @@ require "../functions/function.php";
             <?php 
             infos_blog_admin();
 
-                if (isset($_SESSION['msg'])){
-                    echo $_SESSION['msg'];
-                    unset($_SESSION['msg']);
-                }
-            all_articles_admin()
+            info_barre();
+            all_articles_admin();
+            all_categories_admin();
             ?>
         </section>
     </main>

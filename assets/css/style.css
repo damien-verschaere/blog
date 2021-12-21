@@ -259,13 +259,48 @@ body{
     color: white;
 }
 
-/*------------Style css de la page articles ---------------*/
 .section_articles {
     text-align: center;
-    padding-top: 10vh;
-    padding-bottom: 10vh;
+    padding-top: 15vh;
+    padding-bottom: 15vh;
     padding-left: 10rem ;
     padding-right: 10rem ;
+}
+
+/*------------Style css de la page articles ---------------*/
+.section_articles_affiche {
+    text-align: center;
+    padding-top: 15vh;
+    padding-bottom: 15vh;
+    padding-left: 15rem ;
+    padding-right: 15rem ;
+}
+
+.presentation_articles {
+    
+    margin-bottom: 4%;
+}
+
+.articles_affichage {
+    
+    text-decoration: none;
+    color: white;
+}
+
+.categorie_affiche_articles {
+    padding: 3px 8px;
+    text-align: left;
+    font-size: 2vh;
+}
+
+.user_affiche_articles {
+    text-align: right;
+    padding-right: 8px;
+    font-size: 2vh;
+}
+.count_commentaire_article {
+    margin-top: -2vh;
+    padding-bottom: 2vh;
 }
 
 /*------------Style css de la page article ---------------*/
@@ -497,28 +532,24 @@ body{
 
 
 .all_articles_admin_table thead tr {
-    background-color: #efa32f;
-    color: black;
+    background-color: #77747727;
+    color: rgb(255, 255, 255);
 }
 
 .all_articles_admin_table th, td {
-    padding: 12px 15px;
+    padding: 12px 20px;
 }
 
 .all_articles_admin_table tbody tr {
-    border-bottom: 0.3px solid #aaaaaa9c;
+    border-bottom: 0.3px solid #000000;
+    color: black;
 }
 
-.all_articles_admin_table tbody tr:hover {
-    background-color: rgba(31, 31, 31, 0.438);
-}
 
-.all_articles_admin_table tbody tr:nth-child(even){
-    background-color: rgba(100, 100, 100, 0.308);
-}
-
-.all_articles_admin_table tbody tr:nth-child(even):hover{
-    background-color: rgba(31, 31, 31, 0.438);
+.all_articles_admin_table tbody tr a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 .form_articles_admin {
@@ -526,7 +557,6 @@ body{
     margin-bottom: 10vh;
     display: flex;
     flex-direction: column;
-    
 } 
 
 .form_articles_admin input, textarea {
@@ -566,15 +596,18 @@ body{
 /* -------------------accueil------------------------------- */
 .section_accueil,.section_accueil2{
     display: inline-flex;
+    gap:5vh;
 }
 
 .global_accueil{
+   
    margin-left: 2%;
    border: 2px solid #ea6c3a ;
 }
-.titre_accueil{
-    background-color: #d93356;
+.titre_accueil h4{
+    text-align: center;
 }
+
 .global_accueil p{
     text-align: center;
  }
