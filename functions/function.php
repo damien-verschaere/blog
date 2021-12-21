@@ -415,7 +415,7 @@ function affiche_categorie(){
                 ?>
                     <div class="affiche_self_article">
                         <article class="presentation_self_article">
-                            <h1 class="affiche_self_article_categorie"><?= htmlspecialchars($result_self_article_categorie['nom']) ?></h1>
+                            <h2 class="affiche_self_article_categorie"><?= htmlspecialchars($result_self_article_categorie['nom']) ?></h2>
                             <h2 class="titre_self_article"><?= htmlspecialchars($result_self_article['titre']) ?></h2>
                             <h3 class="introduction_self_article"><?= htmlspecialchars($result_self_article['introduction']) ?></h3>
                             <img class="image_self_article"  src="<?= $result_self_article['image_article'] ?>">
