@@ -65,115 +65,122 @@ require "requires/require_meta.php"; //Récupération des meta et des link neces
         ?>
     </header>
     <main class="section_article_profil">
-        <table>
-            <?php
-                info_barre()
-            ?>
-            <thead>
-                    <th>Modifier ses information :</th>
-            </thead>
-            <tbody>
-                </tr>
-                <tr>
-                    <td>Login:</td>
-                    <td>
-    <?php
-    //** SELECTION DE MODIFICATION LOGIN*/
-    if(!isset($_POST['modif_login']))
-    {
-        ?>
-                            <p><?=$_SESSION['login']?></p>
-                        </td>
+
+        <section id="habillage_top_profil" class="habillage_form_prfil">
+            <img src="..\assets\img\beblog_header_form_profil.png" alt="Début du formulaire de modification du profil">
+        </section>
+    <section class="content_all_modif_profil">
+            <table>
+                <?php
+                    info_barre()
+                ?>
+                <thead>
+                        <th colspan="3"><h3>Modifier ses information :</h3></th>
+                </thead>
+                <tbody>
+                    </tr>
+                    <tr>
+                        <td>Login:</td>
                         <td>
-                            <form action="profil.php" method="post">
-                            <input type="submit" name="modif_login" value="&#10000;">
-                            </form>
-                        </td>
-        <?php
-        }
-        else
-    //** FORMULAIRE DE MODIFICATION LOGIN*/
-        {
-        ?>
-                                <form action="profil.php" method="post">
-                                <input type="text" name="m_login" value="<?=$_SESSION['login']?>">
-                        </td>
-                        <td>
-                                <input type="submit" name="modif_login" value="&#10004;">
-                                </form>
-                        </td>
-                        
-        <?php
-        }
-        ?>
-               <tr>
-                    <td>Email:</td>
-                    <td>
-        <?php
-        //** SELECTION DE MODIFICATION MAIL*/
-        if(!isset($_POST['modif_email']))
-        {
-            ?>
-                     
-                                <p><?=$_SESSION['email']?></p>
+                    <?php
+                    //** SELECTION DE MODIFICATION LOGIN*/
+                    if(!isset($_POST['modif_login']))
+                    {
+                        ?>
+                                <p><?=$_SESSION['login']?></p>
                             </td>
                             <td>
                                 <form action="profil.php" method="post">
-                                <input type="submit" name="modif_email" value="&#10000;">
+                                <input type="submit" name="modif_login" value="&#10000;">
                                 </form>
                             </td>
-            <?php
-            }
-            else
-        //** FORMULAIRE DE MODIFICATION MAIL*/
-            {
-            ?>
+                    <?php
+                    }
+                    else
+            //** FORMULAIRE DE MODIFICATION LOGIN*/
+                    {
+                    ?>
                                     <form action="profil.php" method="post">
-                                    <input type="text" name="m_email" value="<?=$_SESSION['email']?>">
+                                    <input type="text" name="m_login" value="<?=$_SESSION['login']?>">
                             </td>
-                            <td>
-                                    <input type="submit" name="modif_email" value="&#10004;">
+                            <td class="td_profil">
+                                    <input type="submit" name="modif_login" value="&#10004;">
                                     </form>
                             </td>
-            <?php
-            }
-        ?>
-        <tr>
-                    <td>Password:</td>
-                    <td>
+                            
                     <?php
-                    //** SELECTION DE MODIFICATION MDP*/
-                    
-                    if(!isset($_POST['modif_pass']))
-                    {
-                        echo '********';
+                    }
                     ?>
-                    </td>
-                    <td>
-                        <form action="profil.php" method="post">
-                        <input type="submit" name="modif_pass" value="&#10000;">
+                <tr>
+                        <td>Email:</td>
+                        <td>
+            <?php
+            //** SELECTION DE MODIFICATION MAIL*/
+                    if(!isset($_POST['modif_email']))
+                    {
+                        ?>
                         
-                        </form>
-                    </td>
-    <?php
-    }
-    elseif(empty($_POST['m_pass']))
-    //** 1ER FORMULAIRE DE MODIFICATION LOGIN - VERIFICATION DE L'ANCIEN MDP*/
-    {
-    ?>
+                                    <p><?=$_SESSION['email']?></p>
+                                </td>
+                                <td>
+                                    <form action="profil.php" method="post">
+                                    <input type="submit" name="modif_email" value="&#10000;">
+                                    </form>
+                                </td>
+                    <?php
+                    }
+                    else
+            //** FORMULAIRE DE MODIFICATION MAIL*/
+                    {
+                    ?>
+                                        <form action="profil.php" method="post">
+                                        <input type="text" name="m_email" value="<?=$_SESSION['email']?>">
+                                </td>
+                                <td>
+                                        <input type="submit" name="modif_email" value="&#10004;">
+                                        </form>
+                                </td>
+                    <?php
+                    }
+                    ?>
+                    <tr>
+                        <td>Password:</td>
+                        <td>
+                        <?php
+                        //** SELECTION DE MODIFICATION MDP*/
+                        
+                        if(!isset($_POST['modif_pass']))
+                        {
+                            echo '<P>********</p>';
+                        ?>
+                        </td>
+                        <td>
                             <form action="profil.php" method="post">
-                                <input type="text" name="m_pass" placeholder="Ancien Mot de passe">
-                            </td>
-                            <td>
-                                <input type="submit" name="modif_pass" value="&#10004;"><br>
-                                </form>
-                            </td>       
-    <?php
-    }
-    ?>
-                </tr>
-            </tbody>
-</table> 
+                            <input type="submit" name="modif_pass" value="&#10000;">
+                            
+                            </form>
+                        </td>
+                        <?php
+                        }
+                        elseif(empty($_POST['m_pass']))
+                        //** 1ER FORMULAIRE DE MODIFICATION LOGIN - VERIFICATION DE L'ANCIEN MDP*/
+                        {
+                        ?>
+                                <form action="profil.php" method="post">
+                                    <input type="text" name="m_pass" placeholder="Ancien Mot de passe">
+                                </td>
+                                <td>
+                                    <input type="submit" name="modif_pass" value="&#10004;"><br>
+                                    </form>
+                                </td>       
+                        <?php
+                        }
+                        ?>
+                    </tr>
+                </tbody>
+            </table>
+        <?php update_miniature() ?>
+    </section>
     <?php
     //**FIN DE MON TABLEAU POUR LES MODIFICATION & ENTREE DANS LA FENETRE POPUP */
     if((isset($_POST['m_pass'])) || isset($_POST['Modification_mdp'])) //Début des condition de mon formulaire se trouvant en bas de la pages
@@ -250,6 +257,11 @@ require "requires/require_meta.php"; //Récupération des meta et des link neces
                     ?>
                             </div>
                         </section>
+    </section>
+    <section class="habillage_form_prfil">
+            <img src="..\assets\img\beblog_footer_form_profil.png" alt="Début du formulaire de modification du profil">
+    </section>
+
     </main>
         <footer>
         <?php

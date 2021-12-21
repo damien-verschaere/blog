@@ -573,3 +573,83 @@ body{
     justify-content: center;
     align-items: center;
  }
+ /**--- MODIF Profil ---**/
+.habillage_form_prfil{
+    width: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+#habillage_top_profil{
+    margin-top: 10vh;
+}
+.habillage_form_prfil img{
+    position: absolute;
+    width: 100%;
+}
+.modif_avatar_profil{
+    margin-right: 2.1875rem;
+    width: 40%;
+}
+.content_all_modif_profil{
+    width: 50%;
+    display: flex;
+    background-color: #3c3c3b;
+    padding-top: 2.8125rem;
+    padding-bottom: 2.8125rem;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+.content_all_modif_profil table{
+    margin-left: 2.1875rem;
+    width: 40%;
+}
+.content_all_modif_profil table tbody tr{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+.content_all_modif_profil table th{
+    width: 200%;
+}
+.td_profil{
+    align-self: flex-end;
+}
+/**------ UPLOAD IMG------**/
+.border_color{
+    margin: 1.875rem;
+    width: 15.6rem;
+    height: 15.6rem;
+    border-radius: 15.3rem;
+    background: var(--full_degrade);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 5px 0px 30px 1px rgba(0, 0, 0, 0.308);
+}
+.affichage_avatar_profil{
+    width: 15rem;
+    height: 15rem;
+    border-radius: 15rem;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.affichage_avatar_profil img{
+    width: 120%;
+    height: auto;
+}
+.p_info_modif_profil{
+    font-size: 0.8rem;
+}
+.p_info_modif_profil a{
+    color : var(--jaune)
+}
+/** video background connect **/
+.video_background_connect{
+    width: 100vw;   
+}
