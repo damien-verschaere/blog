@@ -82,6 +82,31 @@
         }
         
     }
+
+function affiche_article_com(){
+    $requete=mysqli_query(connexion_BDD(),"SELECT a.id,a.titre,a.introduction,a.article,a.date,a.image_article,tmp.commentaire FROM articles a INNER JOIN ( SELECT id_article, COUNT(*) commentaire FROM commentaires GROUP BY id_article ) tmp ON a.id = tmp.id_article ORDER BY commentaire DESC LIMIT 3");
+    $resultat=mysqli_fetch_all($requete,MYSQLI_ASSOC);
+    foreach ($resultat as $key) {
+        echo "<div class=global_accueil>";
+        echo "<div class=titre_accueil>";
+        echo "<h4>". strtoupper( $key['titre'])."</h4>";
+        echo "</div>";
+        echo "<div class=content_img_categoriese >";
+        echo "<img src=".$key['image_article'].">";
+        echo "</div>";
+        echo "<div class=footer_affiche_accueil>";
+        echo "<h4>". $key['introduction']."</h4>";
+        echo "<p>".$key['date']."</p>";
+        echo "</div>";
+        echo "</div>";
+    }
+
+    
+}
+
+
+
+
       /*----------------------------PAGE CREER ARTICLE------------------------------- */
 
     
@@ -99,8 +124,6 @@ function affiche_categorie(){
         $categorie=$_POST['categorie'];
         $titre=addslashes(htmlentities($_POST['titre']));
         $titreBDD=addslashes(htmlentities($_POST['titre']));
-        $titre=$_POST['titre'];
-        $titreBDD=$_POST['titre'];
         $description=addslashes( $_POST['description']);
         $article=addslashes(htmlentities($_POST['article']));
         $article=$_POST['article'];
@@ -126,23 +149,23 @@ function affiche_categorie(){
  
                         if (in_array($extensionUpload, $extensionsValides)){ // Vérifie que l'extension est correct
                             echo"l118";
-                            $dossier = "../assets/images_article" . $titreBDD.$categorie . "/"; // On se place dans le dossier de la personne 
+                            $dossier = "../assets/images_article" .$categorie . "/"; // On se place dans le dossier de la personne 
                             if (!is_dir($dossier)){ // Si le nom de dossier n'existe pas alors on le crée
 
                                 mkdir($dossier);
 
                             }
                             $nom = uniqid(rand()) ; // Permet de générer un nom unique à la photo
-                            $chemin = "../assets/images_article" . $titreBDD.$categorie . "/" . $nom . "." . $extensionUpload; // Chemin pour placer la photo
+                            $chemin = "../assets/images_article" .$categorie . "/" . $nom . "." . $extensionUpload; // Chemin pour placer la photo
                             $resultat = move_uploaded_file($_FILES['image_article']['tmp_name'], $chemin); // On fini par mettre la photo dans le dossier
                             if ($resultat){ // Si on a le résultat alors on va comprésser l'image
                                     echo "l129"; 
-                                    $verif_ext = getimagesize("../assets/images_article" . $titreBDD.$categorie . "/" . $nom . "." . $extensionUpload);
+                                    $verif_ext = getimagesize("../assets/images_article" .$categorie . "/" . $nom . "." . $extensionUpload);
                                     echo "l132";
                                     // Vérification des extensions avec la liste des extensions autorisés
                                                   
                                         // J'enregistre le chemin de l'image dans filename
-                                        $filename = "../assets/images_article" . $titreBDD.$categorie . "/" . $nom . "." . $extensionUpload;
+                                        $filename = "../assets/images_article" .$categorie . "/" . $nom . "." . $extensionUpload;
                                         echo "l137";
                                         // Vérification des extensions que je souhaite prendre
                                         if($extensionUpload == 'jpg' || $extensionUpload == 'png' || $extensionUpload == "JPG"|| $extensionUpload == "gif" ){
@@ -402,11 +425,14 @@ function affiche_categorie(){
                 $id_article = $_GET['article'];
         
                 //requête de récupération des informations des commentaires liés à l'article
-                $requete_self_article_commentaire = mysqli_query(connexion_BDD(), "SELECT c.commentaire, c.date FROM articles AS a INNER JOIN commentaires AS c ON a.id = c.id_article WHERE a.id = $id_article ORDER BY `date` DESC");
+                $requete_self_article_commentaire = mysqli_query(connexion_BDD(), "SELECT c.commentaire, c.date FROM `articles` AS a INNER JOIN `commentaires` AS c ON a.id = c.id_article WHERE a.id = '$id_article' ORDER BY `date` DESC");
                 $result_self_article_commentaire = mysqli_fetch_all($requete_self_article_commentaire, MYSQLI_ASSOC);
         
-                $requete_login_article_commentaire = mysqli_query(connexion_BDD(), "SELECT u.id, u.login FROM utilisateurs AS u INNER JOIN commentaires AS c ON u.id = c.id_utilisateur WHERE u.id = c.id_utilisateur AND c.id_article = $id_article");
+                $requete_login_article_commentaire = mysqli_query(connexion_BDD(), "SELECT u.id, u.login FROM `utilisateurs` AS `u` INNER JOIN `commentaires` AS c ON u.id = c.id_utilisateur WHERE u.id = c.id_utilisateur AND c.id_article = '$id_article'");
                 $result_login_article_commentaire = mysqli_fetch_all($requete_login_article_commentaire, MYSQLI_ASSOC);
+                var_dump($result_self_article_commentaire);
+
+
                 $x = 0;
                 $i = 0;
                     while ( isset ( $result_self_article_commentaire[$i]). isset ($result_login_article_commentaire[$x])){

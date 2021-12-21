@@ -547,7 +547,7 @@ body{
 }
 
 /* -------------------accueil------------------------------- */
-.section_accueil{
+.section_accueil,.section_accueil2{
     display: inline-flex;
 }
 
