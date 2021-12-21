@@ -50,8 +50,10 @@
         <!-- DIVISION DE DROITE, LOGIN OU Photo de profil -->
         <div class='primo_div_header'>
             <h3><?=$_SESSION['login']?></h3>
-            <div class="icon_user_header">
-                <img src="..\assets\img\beblog_logo_icon.png" alt="image de profil">
+            <div class="contour_icon_user_header">
+                <div class="icon_user_header">
+                <?php affichage_miniature() ?>
+                </div>
             </div>
         </div>
     <?php } ?> 

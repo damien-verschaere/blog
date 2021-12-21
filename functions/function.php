@@ -10,6 +10,13 @@
         $result=mysqli_fetch_all($requete,MYSQLI_ASSOC);
         return $result;
     }
+    function select_miniature_BDD(){
+        $id_data = $_SESSION['id'];
+        $verif_icon = mysqli_query(connexion_BDD(),"SELECT `icon` FROM `utilisateurs` WHERE `id`='$id_data'");
+        $result_icon =  mysqli_fetch_assoc($verif_icon);
+        $src_miniature = $result_icon['icon'];
+        return $src_miniature;
+    }
     /*------------------- Donner les droit pour l'affichage------------------- */
     function droit_user(){
         if(!isset($_SESSION['id_droits'])){
@@ -408,10 +415,10 @@ function affiche_categorie(){
                 ?>
                     <div class="affiche_self_article">
                         <article class="presentation_self_article">
-                            <p class="affiche_self_article_categorie"><?= htmlspecialchars($result_self_article_categorie['nom']) ?></p>
+                            <h1 class="affiche_self_article_categorie"><?= htmlspecialchars($result_self_article_categorie['nom']) ?></h1>
                             <h2 class="titre_self_article"><?= htmlspecialchars($result_self_article['titre']) ?></h2>
                             <h3 class="introduction_self_article"><?= htmlspecialchars($result_self_article['introduction']) ?></h3>
-                            <img  src="<?= $result_self_article['image_article'] ?>">
+                            <img class="image_self_article"  src="<?= $result_self_article['image_article'] ?>">
                             <p class="contenu_article"><?= nl2br($result_self_article['article'] )?></p>
                             <p class="login_date_article">Posté par <?= htmlspecialchars($result_self_article_user['login']) ?> le <?= htmlspecialchars($result_self_article['datefr']) ?> à <?= htmlspecialchars($result_self_article['heurefr']) ?></p>
                             <p class="count_commentaire_article"><i class="fa-solid fa-comments"> <?= $result_count_commentaire_article['COUNT(*)'] ?></i></p>
@@ -664,7 +671,117 @@ function affiche_categorie(){
     </table>
     <?php
     }
-                
+    //---------------------- AFFICHAGE MANIATURE-------------------------------//
+    function affichage_miniature(){
+        if(!empty(select_miniature_BDD())){
+            ?>
+            <img src="<?=select_miniature_BDD()?>" alt="votre image de profil">
+            <?php
+        }    
+        else
+        {
+        ?>
+         <img src="..\assets\img\beblog_logo_icon.png" alt="image par defaut avec le logo de beblog">
+         <?php
+        }
+    }
+    //....................... UPDATE MINIATURE ----------------------------//
+    function update_miniature(){
+        ?>
+    <div class="modif_avatar_profil">
+                <h3>Modifier son image de profil</h3>
+                <form method="post" enctype="multipart/form-data">
+                <input type="file" name="image_avatar">
+                <input type="submit" value="Changer">
+                </form>
+                <?php if(!empty($_FILES['image_avatar']['tmp_name'])){
+                        $retour = copy($_FILES['image_avatar']['tmp_name'], $_FILES['image_avatar']['name']);
+                }
+                else{
+                    $_SESSION['error_validation'] = 'Aucun fichier n\'a été selectionné';
+                }
+                ?>
+                <div class="border_color">
+                <div class="affichage_avatar_profil">
+                    <?php
+                    if(isset($retour)){
+                    ?>
+                    <img src="<?=$_FILES['image_avatar']['name']?>" alt="votre nouvelle image de profil">
+                    <form action="" method=""></form>
+                    <?php
+                    }
+                    elseif(!empty(select_miniature_BDD())){
+                        ?>
+                        <img src="<?=select_miniature_BDD()?>" alt="votre image de profil">
+                        <?php
+                    }    
+                    else
+                    {
+                    ?>
+                    <img src="..\assets\img\beblog_logo_icon.png" alt="image par defaut avec le logo de beblog">
+                    <?php
+                    }
+                    ?>
+                </div>
+                </div>
+                <p class="p_info_modif_profil">Fomrat 1:1(carré) conseillé.</p>
+                <p class="p_info_modif_profil">Rendez-vous sur <a href="https://www.iloveimg.com/fr/recadrer-image">I&#10084;IMG</a> pour recradrer l'image</p>
+                        
+                <?php
+            if(isset($retour)){
+               $explode_file = explode(".",$_FILES['image_avatar']['name']);
+                $extention = ['jpeg','jpg','JPEG','JPG'];
+                $i=0;
+                while(isset($extention[$i])){
+                    if($extention[$i] == $explode_file[1]){
+                        $approuve = 'ok';
+                    }
+                    $i++;
+                }
+                if(isset($approuve)&&$approuve=='ok'){
+                    select_miniature_BDD();
+                        if(!empty(select_miniature_BDD())){
+                        $explode_src_icon = explode('/',select_miniature_BDD());
+                        $select_icon_name = explode('.',$explode_src_icon[4]);
+                        $holder_name_icon = $select_icon_name[0];
+                        $explode_file[0] = $holder_name_icon;
+                    }
+                    else {
+                        $explode_file[0] = uniqid();
+                    }
+                    $explode_file[1] = ".$explode_file[1]";
+                    $_FILES['image_avatar']['name'] = $explode_file[0].$explode_file[1];
+                    $im_miniature = $_FILES['image_avatar']['name'];
+                    $taille = getimagesize($_FILES['image_avatar']['tmp_name']);
+                    $largeur = $taille[0];
+                    $hauteur = $taille[1];
+                    $largeur_miniature = 400;
+                    $hauteur_miniature = $hauteur / $largeur * 400;
+                    $im = imagecreatefromjpeg($_FILES['image_avatar']['tmp_name']);
+                    $im_miniature = imagecreatetruecolor($largeur_miniature, $hauteur_miniature);
+                    imagecopyresampled($im_miniature, $im, 0, 0, 0, 0, $largeur_miniature, $hauteur_miniature, $largeur, $hauteur);
+                    imagejpeg($im_miniature, '../assets/img/miniatures/'.$_FILES['image_avatar']['name'],90);
+                    $icon = '../assets/img/miniatures/'.$_FILES['image_avatar']['name'];
+                    //--- UPDATE ---//
+                        $id_data = $_SESSION['id'];
+                        $up_icon_query = mysqli_query(connexion_BDD(),"UPDATE `utilisateurs` SET `icon`= '$icon' WHERE `id`='$id_data'");
+                        select_miniature_BDD();
+                        if(!empty(select_miniature_BDD())){
+                            $_SESSION['icon'] = select_miniature_BDD();
+                            $_SESSION['info_update']='Votre icon à bien était mis à jour';
+                            echo "<SCRIPT LANGUAGE=\"JavaScript\"> document.location.href=\"profil.php\" </SCRIPT>";
+                        }
+                        else{
+                            $_SESSION['error_validation']='Une erreur est survenue';
+                        }
+
+                }
+                else $_SESSION['error_validation'] = "OUPS ! assurer vous que l'image soit en .jpg";
+            }
+    ?>
+    </div>
+    <?php
+    }            
             
                 
   
