@@ -391,7 +391,7 @@ function affiche_categorie(){
                 $id_article = $_GET['article'];
         
                 //requête de récupération des informations d'affichage de l'article concerné, formatage de la date à la sortie pour un meilleur affichage à l'user.
-                $requete_self_article = mysqli_query(connexion_BDD(),"SELECT titre, introduction, article, DATE_FORMAT(date, '%d/%m/%Y') AS 'datefr' , DATE_FORMAT(date, '%H:%i:%s') AS 'heurefr' FROM articles WHERE id = $id_article");
+                $requete_self_article = mysqli_query(connexion_BDD(),"SELECT titre, introduction, article, image_article, DATE_FORMAT(date, '%d/%m/%Y') AS 'datefr' , DATE_FORMAT(date, '%H:%i:%s') AS 'heurefr' FROM articles WHERE id = $id_article");
                 $result_self_article = mysqli_fetch_array($requete_self_article, MYSQLI_ASSOC);
         
                 //requête de récupération des informations de l'user ayant posté cet article
@@ -411,6 +411,7 @@ function affiche_categorie(){
                             <p class="affiche_self_article_categorie"><?= htmlspecialchars($result_self_article_categorie['nom']) ?></p>
                             <h2 class="titre_self_article"><?= htmlspecialchars($result_self_article['titre']) ?></h2>
                             <h3 class="introduction_self_article"><?= htmlspecialchars($result_self_article['introduction']) ?></h3>
+                            <img  src="<?= $result_self_article['image_article'] ?>">
                             <p class="contenu_article"><?= nl2br($result_self_article['article'] )?></p>
                             <p class="login_date_article">Posté par <?= htmlspecialchars($result_self_article_user['login']) ?> le <?= htmlspecialchars($result_self_article['datefr']) ?> à <?= htmlspecialchars($result_self_article['heurefr']) ?></p>
                             <p class="count_commentaire_article"><i class="fa-solid fa-comments"> <?= $result_count_commentaire_article['COUNT(*)'] ?></i></p>
@@ -429,7 +430,7 @@ function affiche_categorie(){
         
                 $requete_login_article_commentaire = mysqli_query(connexion_BDD(), "SELECT u.id, u.login FROM `utilisateurs` AS `u` INNER JOIN `commentaires` AS c ON u.id = c.id_utilisateur WHERE u.id = c.id_utilisateur AND c.id_article = '$id_article'");
                 $result_login_article_commentaire = mysqli_fetch_all($requete_login_article_commentaire, MYSQLI_ASSOC);
-                var_dump($result_self_article_commentaire);
+               
 
 
                 $x = 0;
