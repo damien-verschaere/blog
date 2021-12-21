@@ -67,7 +67,7 @@
         foreach ($result as $key) {
             echo "<div class=global_accueil>";
             echo "<div class=titre_accueil>";
-            echo "<h4>". strtoupper( $key['titre'])."</h4>";
+            echo "<h4>".  $key['titre']."</h4>";
             echo "</div>";
             echo "<div class=content_img_categoriese >";
             echo "<img src=".$key['image_article'].">";
@@ -122,11 +122,10 @@ function affiche_categorie(){
  function creer_article(){
     if (isset($_POST['creer'])) {
         $categorie=$_POST['categorie'];
-        $titre=addslashes(htmlentities($_POST['titre']));
-        $titreBDD=addslashes(htmlentities($_POST['titre']));
-        $description=addslashes( $_POST['description']);
-        $article=addslashes(htmlentities($_POST['article']));
-        $article=$_POST['article'];
+        $titre=addslashes(htmlspecialchars($_POST['titre']));
+        $titreBDD=addslashes(htmlspecialchars($_POST['titre']));
+        $description=addslashes(htmlspecialchars($_POST['description']));
+        $article=addslashes(htmlspecialchars($_POST['article']));
         $space=" ";
         $replace="";
         $outString=str_replace($space,$replace,$titreBDD);
@@ -144,11 +143,11 @@ function affiche_categorie(){
                     // 12mo = 12582912
                     $extensionsValides = array('jpg','jpeg','png','JPG'); // Format accepté
                     if ($_FILES['image_article']['size'] <= $tailleMax){ // Si le fichier et bien de taille inférieur ou égal à 5 Mo
-                        echo "l114";
+                        
                         $extensionUpload = strtolower(substr(strrchr($_FILES['image_article']['name'], '.'), 1)); // Prend l'extension après le point, soit "jpg, jpeg ou png"
  
                         if (in_array($extensionUpload, $extensionsValides)){ // Vérifie que l'extension est correct
-                            echo"l118";
+                            
                             $dossier = "../assets/images_article" .$categorie . "/"; // On se place dans le dossier de la personne 
                             if (!is_dir($dossier)){ // Si le nom de dossier n'existe pas alors on le crée
 
@@ -159,17 +158,17 @@ function affiche_categorie(){
                             $chemin = "../assets/images_article" .$categorie . "/" . $nom . "." . $extensionUpload; // Chemin pour placer la photo
                             $resultat = move_uploaded_file($_FILES['image_article']['tmp_name'], $chemin); // On fini par mettre la photo dans le dossier
                             if ($resultat){ // Si on a le résultat alors on va comprésser l'image
-                                    echo "l129"; 
+                                    
                                     $verif_ext = getimagesize("../assets/images_article" .$categorie . "/" . $nom . "." . $extensionUpload);
-                                    echo "l132";
+                                    
                                     // Vérification des extensions avec la liste des extensions autorisés
                                                   
                                         // J'enregistre le chemin de l'image dans filename
                                         $filename = "../assets/images_article" .$categorie . "/" . $nom . "." . $extensionUpload;
-                                        echo "l137";
+                                        
                                         // Vérification des extensions que je souhaite prendre
                                         if($extensionUpload == 'jpg' || $extensionUpload == 'png' || $extensionUpload == "JPG"|| $extensionUpload == "gif" ){
-                                            echo "l140";
+                                            
                                             // Content type
                                             
                                         echo '<script language="Javascript">document.location.replace("accueil.php")</script>';
@@ -369,7 +368,7 @@ function affiche_categorie(){
                 <p class="introdruction_affiche-articles"><?= htmlspecialchars($result_affiche_articles['introduction']) ?></p>
                 <p class="affiche_articles"><?= nl2br($result_affiche_articles['article']) ?></p>
                 <p class="user_affiche_articles"> Posté par <?= htmlspecialchars($result_affiche_articles['login']) ?> le <?= htmlspecialchars($result_affiche_articles['date']) ?><br>
-                <p class="count_commentaire_article"><i class="fa-solid fa-comments"><?= $result_count_commentaire_article['COUNT(*)'] ?></i></p>
+                <p class="count_commentaire_article"><i class="fa-solid fa-comments"> <?= $result_count_commentaire_article['COUNT(*)'] ?></i></p>
                 <input type="hidden" id="ID" name="ID" value="<?php echo $result_affiche_articles['id_articles']?>">
             </article>
         </a>
@@ -463,7 +462,7 @@ function affiche_categorie(){
                     //Si le textarea est bien rempli
                     if ( !empty ( $_POST['commentaire_article'] )){
         
-                        $com_article = $_POST['commentaire_article'];
+                        $com_article = addslashes($_POST['commentaire_article']);
         
                         //Alors on insert le commentaire en base de données et prévient l'user du bon déroulement
                         $requete_insert_commentaire_article = mysqli_query(connexion_BDD(), "INSERT INTO `commentaires`(`commentaire`, `id_article`, `id_utilisateur`, `date`) VALUES ('$com_article','$id_article','$_SESSION[id]',NOW())");
@@ -541,7 +540,7 @@ function affiche_categorie(){
         $display1 = "none";
 
         //requête affichage des articles page admin ordonnée par date de publication les plus récentes
-        $affiche_articles_admin = mysqli_query(connexion_BDD(), "SELECT id, titre, introduction, article, id_categorie FROM articles ORDER BY `date` DESC");
+        $affiche_articles_admin = mysqli_query(connexion_BDD(), "SELECT id, titre, introduction, article, id_categorie, `date` FROM articles ORDER BY `date` DESC");
             
         //Si le formulaire de modif est soumis 
         if(isset($_POST['submit_articles_admin'])){
@@ -636,6 +635,7 @@ function affiche_categorie(){
                 <th>Introduction</th>
                 <th>Article</th>
                 <th>Id_categorie</th>
+                <th>Date</th>
                 <th colspan="2">Action</th>
             </tr>
         </thead>
@@ -648,6 +648,7 @@ function affiche_categorie(){
                 <td><?= $articles_admin['introduction'] ?></td>
                 <td><?= nl2br($articles_admin['article']) ?></td>
                 <td><?= $articles_admin['id_categorie'] ?></td>
+                <td><?= $articles_admin['date'] ?></td>
                 <td>
                     <a href="admin.php?modif=<?= $articles_admin['id'] ?>">Modifiez</a>
                 </td>
