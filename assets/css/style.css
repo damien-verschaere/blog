@@ -266,6 +266,13 @@ body{
     padding-left: 10rem ;
     padding-right: 10rem ;
 }
+.section_article {
+    text-align: center;
+    padding-top: 15vh;
+    padding-bottom: 15vh;
+    padding-left: 10rem ;
+    padding-right: 10rem ;
+}
 
 /*------------Style css de la page articles ---------------*/
 .jaune_a_background_articles{

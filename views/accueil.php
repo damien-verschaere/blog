@@ -17,7 +17,6 @@ require "../functions/function.php";
         <h3>LES DERNIERS ARTICLES </h3>
         <section class="section_accueil">
             <?php affiche_article()  ?>
-            <
         </section>
         <h3>LES ARTICLES LES PLUS COMMENTES</h3>
         <section class="section_accueil">
