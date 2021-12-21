@@ -268,6 +268,24 @@ body{
 }
 
 /*------------Style css de la page articles ---------------*/
+.jaune_a_background_articles{
+    background: linear-gradient(#efa32f,#ea6c3a);
+    width: 70vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+.orange_a_background_articles{
+    background: linear-gradient(#ea6c3a,#d93356);
+    width: 70vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+.violet_a_background_articles{
+    background: linear-gradient(#d93356,#843482);
+    width: 70vw;
+    margin-left: auto;
+    margin-right: auto;
+}
 .section_articles_affiche {
     text-align: center;
     padding-top: 15vh;
@@ -275,14 +293,28 @@ body{
     padding-left: 15rem ;
     padding-right: 15rem ;
 }
+.div_count_com{
+    background-color: #0089c8;
+    width: 6rem;
+    border-radius: 0rem .375rem 0rem 2.150rem;
+    box-shadow: 0px 0px 3px 5px rgba(0, 0, 0, 0.15);
+}
+.article_header_aricles{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
 
 .presentation_articles {
-    
-    margin-bottom: 4%;
+    width: 100%;
+    margin-bottom: .9375rem;
+    padding-block-end: 0.2rem;
+    position: relative;
+    overflow: hidden;
 }
 
 .articles_affichage {
-    
     text-decoration: none;
     color: white;
 }
@@ -291,29 +323,58 @@ body{
     padding: 3px 8px;
     text-align: left;
     font-size: 2vh;
+    font-style: oblique;
+    display: block;
+    margin-block-start: 0.4em;
+    margin-block-end: 0em;
+    margin-inline-start: 10px;
 }
-
+.titre_affiche_articles{
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
 .user_affiche_articles {
     text-align: right;
     padding-right: 8px;
-    font-size: 2vh;
+    font-size: 0.8rem;
+    margin-block-end: 0.8em;
+    font-style: oblique;
 }
-.count_commentaire_article {
-    margin-top: -2vh;
-    padding-bottom: 2vh;
-}
-
-/*------------Style css de la page article ---------------*/
-.section_article {
+.over_articles{
+    z-index: 1;
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #000000a9;
+    backdrop-filter: blur(5px);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding-top: 10vh;
-    height: 80vh;
-    padding-left: 10rem ;
-    padding-right: 10rem ;
-    overflow: auto;
+    justify-self: center;
+    align-self: center;
+    padding: 15px;
+    opacity: 0;
+    transition: 1s;
+    transition-delay: 0.6s;
 }
+.over_articles h2{
+    text-decoration: underline;
+}
+.over_articles h3{
+    width: 80%;
+    text-align: center;
+    align-self: center;
+}
+.over_articles:hover{
+    opacity: 1;
+}
+
 
 /* ----------------------- Page Catégorie-----------------*/
 .content_all_cats_categories{
