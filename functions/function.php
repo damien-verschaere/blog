@@ -692,13 +692,16 @@ function affiche_categorie(){
                 <h3>Modifier son image de profil</h3>
                 <form method="post" enctype="multipart/form-data">
                 <input type="file" name="image_avatar">
-                <input type="submit" value="Changer">
+                <input type="submit" name="sub_image" value="Changer">
                 </form>
                 <?php if(!empty($_FILES['image_avatar']['tmp_name'])){
-                        $retour = copy($_FILES['image_avatar']['tmp_name'], $_FILES['image_avatar']['name']);
+                        $retour = 'ok';
                 }
-                else{
+                elseif(isset($_POST['sub_image'])){
                     $_SESSION['error_validation'] = 'Aucun fichier n\'a été selectionné';
+                    unset($_POST['sub_image']);
+                    echo "<SCRIPT LANGUAGE=\"JavaScript\"> document.location.href=\"profil.php\" </SCRIPT>";
+                    exit();
                 }
                 ?>
                 <div class="border_color">
@@ -766,10 +769,11 @@ function affiche_categorie(){
                         $id_data = $_SESSION['id'];
                         $up_icon_query = mysqli_query(connexion_BDD(),"UPDATE `utilisateurs` SET `icon`= '$icon' WHERE `id`='$id_data'");
                         select_miniature_BDD();
+                        $_SESSION['info_update']='Votre icon à bien était mis à jour';
+                        echo "<SCRIPT LANGUAGE=\"JavaScript\"> document.location.href=\"profil.php\" </SCRIPT>";
+                        exit();
                         if(!empty(select_miniature_BDD())){
                             $_SESSION['icon'] = select_miniature_BDD();
-                            $_SESSION['info_update']='Votre icon à bien était mis à jour';
-                            echo "<SCRIPT LANGUAGE=\"JavaScript\"> document.location.href=\"profil.php\" </SCRIPT>";
                         }
                         else{
                             $_SESSION['error_validation']='Une erreur est survenue';
