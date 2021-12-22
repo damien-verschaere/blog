@@ -42,7 +42,6 @@ body{
     --violet: #843482;
     --full_degrade: linear-gradient(to top left,#efa32f,#ea6c3a,#d93356,#843482);
 }
-
 /**DEBUT HEADER*/
 .navbar_header{
     width: 100%;
@@ -267,33 +266,8 @@ body{
     padding-left: 10rem ;
     padding-right: 10rem ;
 }
-.section_article {
-    text-align: center;
-    padding-top: 15vh;
-    padding-bottom: 15vh;
-    padding-left: 10rem ;
-    padding-right: 10rem ;
-}
 
 /*------------Style css de la page articles ---------------*/
-.jaune_a_background_articles{
-    background: linear-gradient(#efa32f,#ea6c3a);
-    width: 70vw;
-    margin-left: auto;
-    margin-right: auto;
-}
-.orange_a_background_articles{
-    background: linear-gradient(#ea6c3a,#d93356);
-    width: 70vw;
-    margin-left: auto;
-    margin-right: auto;
-}
-.violet_a_background_articles{
-    background: linear-gradient(#d93356,#843482);
-    width: 70vw;
-    margin-left: auto;
-    margin-right: auto;
-}
 .section_articles_affiche {
     text-align: center;
     padding-top: 15vh;
@@ -301,28 +275,14 @@ body{
     padding-left: 15rem ;
     padding-right: 15rem ;
 }
-.div_count_com{
-    background-color: #0089c8;
-    width: 6rem;
-    border-radius: 0rem .375rem 0rem 2.150rem;
-    box-shadow: 0px 0px 3px 5px rgba(0, 0, 0, 0.15);
-}
-.article_header_aricles{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-}
 
 .presentation_articles {
-    width: 100%;
-    margin-bottom: .9375rem;
-    padding-block-end: 0.2rem;
-    position: relative;
-    overflow: hidden;
+    
+    margin-bottom: 4%;
 }
 
 .articles_affichage {
+    
     text-decoration: none;
     color: white;
 }
@@ -331,58 +291,29 @@ body{
     padding: 3px 8px;
     text-align: left;
     font-size: 2vh;
-    font-style: oblique;
-    display: block;
-    margin-block-start: 0.4em;
-    margin-block-end: 0em;
-    margin-inline-start: 10px;
 }
-.titre_affiche_articles{
-    display: block;
-    font-size: 1.5em;
-    margin-block-start: 0em;
-    margin-block-end: 0em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: bold;
-}
+
 .user_affiche_articles {
     text-align: right;
     padding-right: 8px;
-    font-size: 0.8rem;
-    margin-block-end: 0.8em;
-    font-style: oblique;
+    font-size: 2vh;
 }
-.over_articles{
-    z-index: 1;
-    top: 0;
-    left: 0;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: #000000a9;
-    backdrop-filter: blur(5px);
-    display: flex;
-    flex-direction: column;
-    justify-self: center;
-    align-self: center;
-    padding: 15px;
-    opacity: 0;
-    transition: 1s;
-    transition-delay: 0.6s;
-}
-.over_articles h2{
-    text-decoration: underline;
-}
-.over_articles h3{
-    width: 80%;
-    text-align: center;
-    align-self: center;
-}
-.over_articles:hover{
-    opacity: 1;
+.count_commentaire_article {
+    margin-top: -2vh;
+    padding-bottom: 2vh;
 }
 
+/*------------Style css de la page article ---------------*/
+.section_article {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10vh;
+    height: 80vh;
+    padding-left: 10rem ;
+    padding-right: 10rem ;
+    overflow: auto;
+}
 
 /* ----------------------- Page Catégorie-----------------*/
 .content_all_cats_categories{
@@ -590,8 +521,8 @@ body{
     font-weight: bold;
 }
 
+/*-------------------Table article admin---------------*/
 .all_articles_admin_table {
-
     margin-top: 5vh;
     border-collapse: collapse;
     margin-left: 3%;
@@ -620,7 +551,6 @@ body{
     text-decoration: none;
     font-weight: bold;
 }
-
 .form_articles_admin {
     margin-top: 10vh;
     margin-bottom: 10vh;
@@ -650,7 +580,169 @@ body{
     margin: auto;
     width: 10%;
 } 
+/*----------Table categories admin---------------*/
+.all_categories_admin_table thead tr {
+    background-color: #77747727;
+    color: white;
+}
 
+.all_categories_admin_table {
+    margin-top: 5vh;
+    border-collapse: collapse;
+    margin-left: 3%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    background-color: rgba(100, 100, 100, 0.308);
+}
+
+.all_categories_admin_table th, td {
+    padding: 12px 20px;
+}
+
+.all_categories_admin_table tbody tr {
+    border-bottom: 0.3px solid #000000;
+    color: black;
+}
+
+.all_categories_admin_table tbody tr a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+/*-------formulaire create categorie admin------------*/
+.form_add_categorie_admin {
+    margin-top: 10vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.align_center_form {
+    justify-content: center;
+}
+.form_add_categorie_admin input {
+    text-align: center;
+    margin: auto;
+}
+.form_add_categorie_admin button {
+    margin: auto;
+}
+
+.descriptif_categories_admin {
+    width: 400px;
+}
+
+.img_user_admin {
+    max-width: 70px;
+    max-height: 70px;
+    border-radius: 35px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.img_user_admin img {
+    width: 120%;
+}
+/*-------formulaire update user admin------------*/
+.all_user_admin_table {
+    margin: auto;
+    margin-top: 5vh;
+    border-collapse: collapse;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    background-color: rgba(241, 241, 241, 0.438);
+}
+
+.all_user_admin_table thead tr {
+    background-color: #181818a1;
+    color: white;
+}
+
+.all_user_admin_table tbody tr {
+    border-bottom: 0.3px solid #49494994;
+    color: black;
+}
+
+.all_user_admin_table tbody tr:nth-child(even) {
+    border-bottom: 0.3px solid #49494994;
+    color: black;
+    background-color: rgba(240, 240, 240, 0.315);
+}
+
+.all_user_admin_table tbody tr:hover {
+    background: linear-gradient(#efa32f,#ea6c3a);
+}
+
+.all_user_admin_table tbody tr:nth-child(even):hover {
+    background: linear-gradient(#d93356,#843482);
+}
+
+.all_user_admin_table td a {
+    color: white;
+    text-decoration: none;
+}
+
+.id_user_admin {
+    width: 3vh;
+}
+.id_droits_admin {
+    width: 3vh;
+}
+
+/*------------------------------CONNEXION----------------------------*/
+.section_article_connexion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10vh;
+    padding-left: 10rem ;
+    padding-right: 10rem ;
+}
+
+.bloc_connexion {
+    box-shadow: 0 200px 100px -100px white inset; 
+    transition: box-shadow 1s;
+    margin-top: 10vh;
+    border-radius: 10px;
+    text-align: center;
+    padding: 13vh 20vh;
+    box-shadow: 10px 10px 4px 2px rgba(0, 0, 0, 0.425);
+    background-image: linear-gradient(#efa32f,#ea6c3a,#d93356,#843482);
+}
+
+.bloc_connexion .input_connexion {
+    width: 30vh;
+    text-align: center;
+    box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.178);
+}
+
+.bloc_connexion .input_connexion:hover {
+    transition: .3s ease-out;
+    height: 3vh;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    width: 95%;
+}
+
+.bloc_connexion .input_connexion:focus {
+    outline: none;
+} 
+
+.submit_connexion {
+    width: 20vh;
+    border: none;
+    height: 2rem;
+    border-radius: 6px;
+    background: linear-gradient(#efa32f,#ea6c3a);
+    box-shadow: 0px 3px 15px 5px rgba(0, 0, 0, 0.33);
+}
+
+.submit_connexion:hover {
+        background: linear-gradient(#363636,#272727);
+        color: #efa32f;
+        border: #efa32f solid 0.3px;
+        border: none;
+}
 /* -----------------formulaire----------------------------- */
 .main_inscription{
     padding: 10% ;
@@ -691,15 +783,17 @@ body{
   background-color: #d93356;
     
 }
-
-
 /* -------------------accueil------------------------------- */
 .section_accueil,.section_accueil2{
     display: inline-flex;
     gap:5vh;
 }
 
-
+.global_accueil{
+   
+   margin-left: 2%;
+   border: 2px solid #ea6c3a ;
+}
 .titre_accueil h4{
     text-align: center;
 }
@@ -813,8 +907,12 @@ body{
 .video_background_connect{
     width: 100vw;   
 }
-/* ----------------- lien A href-------------------- */
+
+
 .href{
     text-decoration: none;
     color:white;
+}
+.hyperliens {
+    color: #efa32f;
 }

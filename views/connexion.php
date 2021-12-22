@@ -19,22 +19,24 @@ verif_user_connexion();
         ?>
     </header>
     <main>
-        <section class="section_article">
-    <h2 class="titre_connexion">Beblog</h2>
+        <section class="section_article_connexion"> 
+            <div class="bloc_connexion">
+                <h2 class="titre_connexion">Connexion</h2>
 
+                <form class="form_connexion" action="" method="post">
+                    <label for="login">Login</label></br>
+                    <input class="input_connexion" type="text" name="login" placeholder="Login">
+                    <br>
 
-    <form class="form_connexion" action="" method="post">
-    <label for="login">Login</label></br>
-    <input type="text" name="login" placeholder="Login">
-    <br>
-
-    <label for="password">Password</label></br>
-    <input type="password" name="password" placeholder="Password">
-    </br><br>
+                    <label for="password">Password</label></br>
+                    <input class="input_connexion" type="password" name="password" placeholder="Password">
+                    </br><br>
     
-    <input type="submit" name="submit_connexion" value="Connexion">
-    </form> 
+                    <input class="submit_connexion" type="submit" name="submit_connexion" value="Connexion">
+                    </form> 
+            </div>
         </section>
+        
     </main>
 </body>
 </html>

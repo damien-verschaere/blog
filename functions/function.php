@@ -72,58 +72,58 @@
         }
     }
 #affiche les 3 premiers articles de la page index
-    function affiche_article(){
-        $req=mysqli_query(connexion_BDD(),"SELECT `id` ,`titre`,`introduction`,`article`,`date`,`image_article`,`id_categorie` FROM `articles` order by date DESC LIMIT 3 ");
-        $result=mysqli_fetch_all($req,MYSQLI_ASSOC);
-        foreach ($result as $key) {
-            $requete_categories = mysqli_query(connexion_BDD(),"SELECT * FROM categories WHERE id= '$key[id_categorie]'");
-            $resultat_categorie=mysqli_fetch_array($requete_categories,MYSQLI_ASSOC);
-            echo "<div class=.global_accueil>";
-            echo "<a class=href href= article.php?article=".$key['id'].">";
-            echo "<div class=".$resultat_categorie['style']."_a_background_categories >";
-            echo "<div class=titre_accueil>";
-            echo "<h4>". strtoupper( $key['titre'])."</h4>";
-            echo "</div>";
-            echo "<div class=content_img_categoriese >";
-            echo "<img src=".$key['image_article'].">";
-            echo "</div>";
-            echo "<div class=footer_affiche_accueil>";
-            echo "<h4>". $key['introduction']."</h4>";
-            echo "<p>".$key['date']."</p>";
-            echo "</div>";
-            echo "</div>";
-            echo "</a>";
-            echo "</div>";
-            
-        }
-      
-    }
-
-function affiche_article_com(){
-    $requete=mysqli_query(connexion_BDD(),"SELECT a.id,a.titre,a.introduction,a.article,a.date,a.id_categorie,a.image_article,tmp.commentaire FROM articles a INNER JOIN ( SELECT id_article, COUNT(*) commentaire FROM commentaires GROUP BY id_article ) tmp ON a.id = tmp.id_article ORDER BY commentaire DESC LIMIT 3");
-    $resultat=mysqli_fetch_all($requete,MYSQLI_ASSOC);
-    foreach ($resultat as $key) {
+function affiche_article(){
+    $req=mysqli_query(connexion_BDD(),"SELECT `id` ,`titre`,`introduction`,`article`,`date`,`image_article`,`id_categorie` FROM `articles` order by date DESC LIMIT 3 ");
+    $result=mysqli_fetch_all($req,MYSQLI_ASSOC);
+    foreach ($result as $key) {
         $requete_categories = mysqli_query(connexion_BDD(),"SELECT * FROM categories WHERE id= '$key[id_categorie]'");
         $resultat_categorie=mysqli_fetch_array($requete_categories,MYSQLI_ASSOC);
         echo "<div class=.global_accueil>";
-            echo "<a class=href href= article.php?article=".$key['id'].">";
-            echo "<div class=".$resultat_categorie['style']."_a_background_categories >";
-            echo "<div class=titre_accueil>";
-            echo "<h4>". strtoupper( $key['titre'])."</h4>";
-            echo "</div>";
-            echo "<div class=content_img_categoriese >";
-            echo "<img src=".$key['image_article'].">";
-            echo "</div>";
-            echo "<div class=footer_affiche_accueil>";
-            echo "<h4>". $key['introduction']."</h4>";
-            echo "<p>".$key['date']."</p>";
-            echo "</div>";
-            echo "</div>";
-            echo "</a>";
-            echo "</div>";
+        echo "<a class=href href= article.php?article=".$key['id'].">";
+        echo "<div class=".$resultat_categorie['style']."_a_background_categories >";
+        echo "<div class=titre_accueil>";
+        echo "<h4>". strtoupper( $key['titre'])."</h4>";
+        echo "</div>";
+        echo "<div class=content_img_categoriese >";
+        echo "<img src=".$key['image_article'].">";
+        echo "</div>";
+        echo "<div class=footer_affiche_accueil>";
+        echo "<h4>". $key['introduction']."</h4>";
+        echo "<p>".$key['date']."</p>";
+        echo "</div>";
+        echo "</div>";
+        echo "</a>";
+        echo "</div>";
+        
     }
+  
+}
 
-    
+function affiche_article_com(){
+$requete=mysqli_query(connexion_BDD(),"SELECT a.id,a.titre,a.introduction,a.article,a.date,a.id_categorie,a.image_article,tmp.commentaire FROM articles a INNER JOIN ( SELECT id_article, COUNT(*) commentaire FROM commentaires GROUP BY id_article ) tmp ON a.id = tmp.id_article ORDER BY commentaire DESC LIMIT 3");
+$resultat=mysqli_fetch_all($requete,MYSQLI_ASSOC);
+foreach ($resultat as $key) {
+    $requete_categories = mysqli_query(connexion_BDD(),"SELECT * FROM categories WHERE id= '$key[id_categorie]'");
+    $resultat_categorie=mysqli_fetch_array($requete_categories,MYSQLI_ASSOC);
+    echo "<div class=.global_accueil>";
+        echo "<a class=href href= article.php?article=".$key['id'].">";
+        echo "<div class=".$resultat_categorie['style']."_a_background_categories >";
+        echo "<div class=titre_accueil>";
+        echo "<h4>". strtoupper( $key['titre'])."</h4>";
+        echo "</div>";
+        echo "<div class=content_img_categoriese >";
+        echo "<img src=".$key['image_article'].">";
+        echo "</div>";
+        echo "<div class=footer_affiche_accueil>";
+        echo "<h4>". $key['introduction']."</h4>";
+        echo "<p>".$key['date']."</p>";
+        echo "</div>";
+        echo "</div>";
+        echo "</a>";
+        echo "</div>";
+}
+
+
 }
       /*----------------------------PAGE CREER ARTICLE------------------------------- */
 
@@ -148,7 +148,6 @@ function affiche_categorie(){
         $replace="";
         $outString=str_replace($space,$replace,$titreBDD);
         $titreBDD=$outString;
-   
         
             if (isset($_FILES['image_article']) ){
                 $filename = $_FILES['image_article']['tmp_name']; // On récupère le nom du fichier
@@ -208,7 +207,7 @@ function affiche_categorie(){
                 }
                     
                 
-            
+
 
 
 
@@ -255,190 +254,153 @@ function affiche_categorie(){
         }
     }
     
+    /*----------------------------PAGE ARTICLES------------------------------- */
 
-/*----------------------------PAGE ARTICLES------------------------------- */
-
-function affiche_all_articles(){
+    function affiche_all_articles(){
         
 
-    //On selectionne la totalité des infos des catégories afin des les afficher dans nos inputs
-    $requete_categories = mysqli_query(connexion_BDD(),"SELECT * FROM categories");
+        //On selectionne la totalité des infos des catégories afin des les afficher dans nos inputs
+        $requete_categories = mysqli_query(connexion_BDD(),"SELECT * FROM categories");
 
-    //on récupere le résultat en gardant le nom de nos index
-    $result_categories = mysqli_fetch_all($requete_categories, MYSQLI_ASSOC);
-        
-        //Puis on boucle de l'index du résultat de notre requête afin de créer le nombre d'input équivalent au nombre de catégorie
-        $p = 0;
-        while(isset($result_categories[$p])){
-        ?>
-            <button type="submit" name="categories" value="<?= $result_categories[$p]['id']?>"><?= $result_categories[$p]['nom']?></button>
-        <?php
-            $p++;
-        }
-        ?>
-        <form method="post" action="">
-            <input type="submit" name="all" value="Tous">
-        </form>
-        <?php
-    //Si une catégorie est définie
-    if (isset($_GET['categories'])){
-            
-            //Alors on récupere la valeur de l'url et on l'assimile à notre variable 'id de categorie'
-            $id_categories_get = $_GET['categories'];
-            //Afin de préparer la pagination, on choisit un nombre d'article à afficher sur notre page
-            $nombre_articles_categories = 5;
-            
-            //On compte le nombre total d'articles ou '$id' correspond à l'id de catégorie connu en base de donnée
-            //Afin de n'afficher que le nombre de page pour les articles concernés
-            //Sans sa la pagination sera faite pour des articles dont la catégorie ne correspond pas et cela créera des pages vides
-            $count_total_articles_categories = mysqli_query(connexion_BDD(),"SELECT COUNT(*) AS nombre_articles_cat FROM articles WHERE id_categorie = '$id_categories_get'");
+        //on récupere le résultat en gardant le nom de nos index
+        $result_categories = mysqli_fetch_all($requete_categories, MYSQLI_ASSOC);
 
-            //On récupere le nombre total d'articles correspondant à la catégorie
-            $nombre_categories = mysqli_fetch_array($count_total_articles_categories,MYSQLI_ASSOC);
-
-            //Puis calcule le nombre de page en divisant 'le nombre d'articles total' par 'le nombre d'articles par page'
-            //On utilise la fonction systême ceil afin d'arrondir au chiffre entier supérieur qui créera une page de plus même pour 1 message
-            $nombre_pages = ceil($nombre_categories['nombre_articles_cat'] / $nombre_articles_categories);
-        ?>
-        <?php
-            //Si une page est définie
-            if (isset($_GET['page'])){
+            //Puis on boucle de l'index du résultat de notre requête afin de créer le nombre d'input équivalent au nombre de catégorie
+            $p = 0;
+            while(isset($result_categories[$p])){
+            ?>
+                <button type="submit" name="categories" value="<?= $result_categories[$p]['id']?>"><?= $result_categories[$p]['nom']?></button>
+            <?php
+                $p++;
+            }
+            ?>
+            <form method="post" action="">
+                <input type="submit" name="all" value="Tous">
+            </form>
+            <?php
+        //Si une catégorie est définie
+        if (isset($_GET['categories'])){
                 
-                //On récupere le numéro de page inscrit dans l'adresse 
-                $page = $_GET['page'];
+                //Alors on récupere la valeur de l'url et on l'assimile à notre variable 'id de categorie'
+                $id_categories_get = $_GET['categories'];
+                //Afin de préparer la pagination, on choisit un nombre d'article à afficher sur notre page
+                $nombre_articles_categories = 5;
+                
+                //On compte le nombre total d'articles ou '$id' correspond à l'id de catégorie connu en base de donnée
+                //Afin de n'afficher que le nombre de page pour les articles concernés
+                //Sans sa la pagination sera faite pour des articles dont la catégorie ne correspond pas et cela créera des pages vides
+                $count_total_articles_categories = mysqli_query(connexion_BDD(),"SELECT COUNT(*) AS nombre_articles_cat FROM articles WHERE id_categorie = '$id_categories_get'");
+
+                //On récupere le nombre total d'articles correspondant à la catégorie
+                $nombre_categories = mysqli_fetch_array($count_total_articles_categories,MYSQLI_ASSOC);
+
+                //Puis calcule le nombre de page en divisant 'le nombre d'articles total' par 'le nombre d'articles par page'
+                //On utilise la fonction systême ceil afin d'arrondir au chiffre entier supérieur qui créera une page de plus même pour 1 message
+                $nombre_pages = ceil($nombre_categories['nombre_articles_cat'] / $nombre_articles_categories);
+            ?>
+            <?php
+                //Si une page est définie
+                if (isset($_GET['page'])){
+                    
+                    //On récupere le numéro de page inscrit dans l'adresse 
+                    $page = $_GET['page'];
+                //Si elle n'existe pas alors c'est la premiére fois qu'on charge la page donc on affiche la 1ere
+                } else {
+                    $page = 1;
+                }
+                //On calcule que l'affichage qui devra être présent en page 1 est le résultat de page - 1 * 'nombre article'
+                //Exemple = $page 1 - 1 = 0 / 0 * 5 = 0 alors on commence l'affichage à partir de l'article 0
+                //$page2 - 1 = 1 / 1 * 5 = 5 alors on commence l'affichage à partir de l'article 5
+                $premier_affichage_categories = ($page -1) * $nombre_articles_categories;
+                //Puis on réalise une requête qui récuperera tout des tables articles user et categorie classé par date DESC et ayant pour limites de select les articles à afficher réclamer auparavant
+                $affichage_articles_categories = mysqli_query(connexion_BDD(), "SELECT a.id as id_articles, a.titre, a.introduction, a.article, a.date, u.id as id_utilisateur, u.login, c.id as id_categorie, c.nom, c.style FROM articles as a INNER JOIN utilisateurs as u ON id_utilisateur=u.id INNER JOIN categories as c ON id_categorie = c.id WHERE `id_categorie` = '$id_categories_get' ORDER BY `date` DESC LIMIT $premier_affichage_categories, $nombre_articles_categories ");
+                
+                //Puis on boucle sur le résultat de la requete afin d'afficher les articles comme souhaité
+                while($result_affiche_articles_categories = mysqli_fetch_array($affichage_articles_categories, MYSQLI_ASSOC)){
+
+                    $id_article = $result_affiche_articles_categories['id_articles'];
+                    $requete_count_commentaire_article = mysqli_query(connexion_BDD(),"SELECT COUNT(*) FROM commentaires INNER JOIN articles ON commentaires.id_article = articles.id WHERE articles.id = $id_article");
+                    $result_count_commentaire_article = mysqli_fetch_array($requete_count_commentaire_article,MYSQLI_ASSOC);
+                    
+            ?>
+            <form class="<?= $result_affiche_articles_categories['style'] ?>_a_background_categories" style="border-radius: 8px;" method="get" action="">
+                <a class="articles_affichage" href="../views/article.php?article=<?=$result_affiche_articles_categories['id_articles']?>">
+                    <article class="presentation_articles">
+                        <p class="categorie_affiche_articles"><i class="fas fa-tag"></i> : <?= htmlspecialchars($result_affiche_articles_categories['nom']) ?></p>
+                        <h2 class="titre_affiche_articles"><?= htmlspecialchars($result_affiche_articles_categories['titre']) ?></h2>
+                        <h3 class="introdruction_affiche-articles"><?= htmlspecialchars($result_affiche_articles_categories['introduction']) ?></h3>
+                        <p class="affiche_articles"><?= htmlspecialchars($result_affiche_articles_categories['article']) ?></p>
+                        <p class="user_affiche_articles"> Posté par <?= htmlspecialchars($result_affiche_articles_categories['login']) ?> le <?= htmlspecialchars($result_affiche_articles_categories['date']) ?></p>
+                        <p class="count_commentaire_article"><i class="fa-solid fa-comments"> <?= $result_count_commentaire_article['COUNT(*)'] ?></i></p>
+                        <input type="hidden" name="ID" class="ID" value="<?= htmlspecialchars($result_affiche_articles_categories['id_articles']) ?> ">
+                    </article>
+                </a>
+            </form>
+
+            <?php
+                //Puis on boucle sur le nombre de page afin d'écrire les href à toutes les pages
+                }
+                echo "Page : ";
+                $t = 0;
+                for ($t = 1 ; $t <= $nombre_pages; $t++){
+                    echo '<a href="articles.php?categories='.$id_categories_get.'&page=' . $t . '">' . $t . '</a> ';
+                }
+        } elseif(!isset($_GET['categories']) || isset($_POST['all'])) {
+
+            //On définit le nombre d'articles qu'il y aura par pages
+            $nombre_articles_page = 5;
+            //On effectue une requête qui compte le nombre d'articles en BDD
+            $count_total_articles = mysqli_query(connexion_BDD(), "SELECT COUNT(*) AS nombre_articles FROM articles");
+            //On récupere le résultat de cette requête
+            $nombre = mysqli_fetch_array($count_total_articles);
+            // On déclare que le nombre de page sera le résultat de la division du 'nombre d'articles' par le 'nombre d'articles par page'
+            // Grace à la fonction ceil on arrondie à l'entier supérieur ce qui nous permet de créer une nouvelle page même si elle ne contient qu'un article
+            $nombre_pages = ceil($nombre['nombre_articles'] / $nombre_articles_page);
+
+            //Des que l'utilisateur choisit une page
+            if (isset($_GET['start'])){
+                //Alors on récupere le numéro de page inscrit dans l'adresse 
+                $page = $_GET['start'];
             //Si elle n'existe pas alors c'est la premiére fois qu'on charge la page donc on affiche la 1ere
             } else {
                 $page = 1;
             }
-            //On calcule que l'affichage qui devra être présent en page 1 est le résultat de page - 1 * 'nombre article'
-            //Exemple = $page 1 - 1 = 0 / 0 * 5 = 0 alors on commence l'affichage à partir de l'article 0
-            //$page2 - 1 = 1 / 1 * 5 = 5 alors on commence l'affichage à partir de l'article 5
-            $premier_affichage_categories = ($page -1) * $nombre_articles_categories;
-            //Puis on réalise une requête qui récuperera tout des tables articles user et categorie classé par date DESC et ayant pour limites de select les articles à afficher réclamer auparavant
-            $affichage_articles_categories = mysqli_query(connexion_BDD(), "SELECT a.id as id_articles, a.titre, a.introduction, a.article, a.date, u.id as id_utilisateur, u.login, c.id as id_categorie, c.nom, c.style FROM articles as a INNER JOIN utilisateurs as u ON id_utilisateur=u.id INNER JOIN categories as c ON id_categorie = c.id WHERE `id_categorie` = '$id_categories_get' ORDER BY `date` DESC LIMIT $premier_affichage_categories, $nombre_articles_categories ");
-            //Puis on boucle sur le résultat de la requete afin d'afficher les articles comme souhaité
-            while($result_affiche_articles_categories = mysqli_fetch_array($affichage_articles_categories, MYSQLI_ASSOC)){
+    
+            $premier_affichage = ($page - 1 ) * $nombre_articles_page;
+            //Puis on réalise une requête qui récupere tout dans le table 'articles' et 'utilisateurs' ainsi que 'categories' classé par date récente 
+            $affiche_articles = mysqli_query(connexion_BDD(), "SELECT a.id as id_articles, a.titre, a.introduction, a.article, a.date, u.id as id_utilisateur, u.login, c.id as id_categorie, c.nom, c.style FROM articles as a INNER JOIN utilisateurs as u ON id_utilisateur=u.id INNER JOIN categories as c ON id_categorie = c.id ORDER BY `date` DESC LIMIT $premier_affichage,$nombre_articles_page");
+    
+                //Puis on boucle sur le résultat afin d'afficher tous les élément voulu de l'article en base de données
+                while($result_affiche_articles = mysqli_fetch_array($affiche_articles, MYSQLI_ASSOC)){
 
-                if($result_affiche_articles_categories['id_categorie']=='2'){
-                    $font_awesome = '<i class="fas fa-microscope"></i>';
-                }
-                elseif($result_affiche_articles_categories['id_categorie']=='1'){
-                    $font_awesome = '<i class="fas fa-heartbeat"></i>';
-                }
-                elseif($result_affiche_articles_categories['id_categorie']=='3'){
-                    $font_awesome = '<i class="fas fa-newspaper"></i>';
-                }
-                else{
-                    $font_awesome = '<i class="fas fa-newspaper"></i>';
-                }
-
-                $id_article = $result_affiche_articles_categories['id_articles'];
-                $requete_count_commentaire_article = mysqli_query(connexion_BDD(),"SELECT COUNT(*) FROM commentaires INNER JOIN articles ON commentaires.id_article = articles.id WHERE articles.id = $id_article");
-                $result_count_commentaire_article = mysqli_fetch_array($requete_count_commentaire_article,MYSQLI_ASSOC);
-                
-        ?>
-        <form class="<?= $result_affiche_articles_categories['style'] ?>_a_background_categories" style="border-radius: 8px;" method="get" action="">
-            <a class="articles_affichage" href="../views/article.php?article=<?=$result_affiche_articles_categories['id_articles']?>">
-                <article class="presentation_articles">
-                    <section class="article_header_aricles">
-                        <p class="categorie_affiche_articles"><?=$font_awesome?>  <?= htmlspecialchars ($result_affiche_articles_categories['nom']) ?></p>
-                        <div class="div_count_com">
-                            <p class="count_commentaire_article"><i class="fa-solid fa-comments"> <?= $result_count_commentaire_article['COUNT(*)'] ?></i></p>
-                        </div>
-                    </section>
-                    <h2 class="titre_affiche_articles"><?= htmlspecialchars($result_affiche_articles_categories['titre']) ?></h2>
-                    <div class="over_articles">
-                        <h2 class="titre_affiche_articles"><?= htmlspecialchars($result_affiche_articles_categories['titre']) ?></h2>
-                        <h3 class="introdruction_affiche-articles"><?= htmlspecialchars($result_affiche_articles_categories['introduction']) ?></h3>
-                    </div>
-                    <p class="user_affiche_articles"> Posté par <?= htmlspecialchars($result_affiche_articles_categories['login']) ?> le <?= htmlspecialchars($result_affiche_articles_categories['date']) ?></p>
-                    <input type="hidden" name="ID" class="ID" value="<?= htmlspecialchars($result_affiche_articles_categories['id_articles']) ?> ">
-                </article>
-            </a>
-        </form>
-
-        <?php
-            //Puis on boucle sur le nombre de page afin d'écrire les href à toutes les pages
-            }
-            echo "Page : ";
-            $t = 0;
-            for ($t = 1 ; $t <= $nombre_pages; $t++){
-                echo '<a href="articles.php?categories='.$id_categories_get.'&page=' . $t . '">' . $t . '</a> ';
-            }
-    } elseif(!isset($_GET['categories']) || isset($_POST['all'])) {
-
-        //On définit le nombre d'articles qu'il y aura par pages
-        $nombre_articles_page = 5;
-        //On effectue une requête qui compte le nombre d'articles en BDD
-        $count_total_articles = mysqli_query(connexion_BDD(), "SELECT COUNT(*) AS nombre_articles FROM articles");
-        //On récupere le résultat de cette requête
-        $nombre = mysqli_fetch_array($count_total_articles);
-        // On déclare que le nombre de page sera le résultat de la division du 'nombre d'articles' par le 'nombre d'articles par page'
-        // Grace à la fonction ceil on arrondie à l'entier supérieur ce qui nous permet de créer une nouvelle page même si elle ne contient qu'un article
-        $nombre_pages = ceil($nombre['nombre_articles'] / $nombre_articles_page);
-
-        //Des que l'utilisateur choisit une page
-        if (isset($_GET['start'])){
-            //Alors on récupere le numéro de page inscrit dans l'adresse 
-            $page = $_GET['start'];
-        //Si elle n'existe pas alors c'est la premiére fois qu'on charge la page donc on affiche la 1ere
-        } else {
-            $page = 1;
-        }
-
-        $premier_affichage = ($page - 1 ) * $nombre_articles_page;
-        //Puis on réalise une requête qui récupere tout dans le table 'articles' et 'utilisateurs' ainsi que 'categories' classé par date récente 
-        $affiche_articles = mysqli_query(connexion_BDD(), "SELECT a.id as id_articles, a.titre, a.introduction, a.article, a.date, u.id as id_utilisateur, u.login, c.id as id_categorie, c.nom, c.style FROM articles as a INNER JOIN utilisateurs as u ON id_utilisateur=u.id INNER JOIN categories as c ON id_categorie = c.id ORDER BY `date` DESC LIMIT $premier_affichage,$nombre_articles_page");
-
-            //Puis on boucle sur le résultat afin d'afficher tous les élément voulu de l'article en base de données
-            while($result_affiche_articles = mysqli_fetch_array($affiche_articles, MYSQLI_ASSOC)){
-                if($result_affiche_articles['id_categorie']=='2'){
-                    $font_awesome = '<i class="fas fa-microscope"></i>';
-                }
-                elseif($result_affiche_articles['id_categorie']=='1'){
-                    $font_awesome = '<i class="fas fa-heartbeat"></i>';
-                }
-                elseif($result_affiche_articles['id_categorie']=='3'){
-                    $font_awesome = '<i class="fas fa-newspaper"></i>';
-                }
-                else{
-                    $font_awesome = '<i class="fas fa-newspaper"></i>';
-                }
-                $id_article = $result_affiche_articles['id_articles'];
-                $requete_count_commentaire_article = mysqli_query(connexion_BDD(),"SELECT COUNT(*) FROM commentaires INNER JOIN articles ON commentaires.id_article = articles.id WHERE articles.id = $id_article");
-                $result_count_commentaire_article = mysqli_fetch_array($requete_count_commentaire_article,MYSQLI_ASSOC);
-                
-?>
-<form class="<?= $result_affiche_articles['style'] ?>_a_background_articles" style="border-radius: 8px;" method="get" action="">
-    <a class="articles_affichage" href="../views/article.php?article=<?=$result_affiche_articles['id_articles']?>">
-        <article class="presentation_articles">
-            <section class="article_header_aricles">
-                <p class="categorie_affiche_articles"><?=$font_awesome?>  <?= htmlspecialchars($result_affiche_articles['nom']) ?></p>
-                <div class="div_count_com">
-                    <p class="count_commentaire_article"><i class="fa-solid fa-comments"> <?= $result_count_commentaire_article['COUNT(*)'] ?></i></p>
-                </div>
-            </section>
-            <h2 class="titre_affiche_articles"><?= htmlspecialchars($result_affiche_articles['titre']) ?></h2>
-            <div class="over_articles">
+                    $id_article = $result_affiche_articles['id_articles'];
+                    $requete_count_commentaire_article = mysqli_query(connexion_BDD(),"SELECT COUNT(*) FROM commentaires INNER JOIN articles ON commentaires.id_article = articles.id WHERE articles.id = $id_article");
+                    $result_count_commentaire_article = mysqli_fetch_array($requete_count_commentaire_article,MYSQLI_ASSOC);
+                    
+    ?>
+    <form class="<?= $result_affiche_articles['style'] ?>_a_background_categories" style="border-radius: 8px;" method="get" action="">
+        <a class="articles_affichage" href="../views/article.php?article=<?=$result_affiche_articles['id_articles']?>">
+            <article class="presentation_articles">
+                <p class="categorie_affiche_articles"><i class="fas fa-tag"></i> : <?= htmlspecialchars($result_affiche_articles['nom']) ?></p>
                 <h2 class="titre_affiche_articles"><?= htmlspecialchars($result_affiche_articles['titre']) ?></h2>
                 <h3 class="introdruction_affiche-articles"><?= htmlspecialchars($result_affiche_articles['introduction']) ?></h3>
-            </div>
-            <p class="user_affiche_articles"> Posté par <?= htmlspecialchars($result_affiche_articles['login']) ?> le <?= htmlspecialchars($result_affiche_articles['date']) ?></p>
-            <input type="hidden" id="ID" name="ID" value="<?php echo $result_affiche_articles['id_articles']?>">
-        </article>
-    </a>
-</form>
-<?php           
-    
+                <p class="user_affiche_articles"> Posté par <?= htmlspecialchars($result_affiche_articles['login']) ?> le <?= htmlspecialchars($result_affiche_articles['date']) ?></p><br>
+                <p class="count_commentaire_article"><i class="fa-solid fa-comments"> <?= $result_count_commentaire_article['COUNT(*)'] ?></i></p>
+                <input type="hidden" id="ID" name="ID" value="<?php echo $result_affiche_articles['id_articles']?>">
+            </article>
+        </a>
+    </form>
+    <?php           
+        
+                }
+             //Puis on boucle sur le nombre de page afin d'écrire les href à toutes les pages
+            echo "Page : ";
+            $i = 0;
+            for ($i = 1 ; $i <= $nombre_pages; $i++){
+                echo '<a href="articles.php?start=' . $i . '">' . $i . '</a> ';
             }
-         //Puis on boucle sur le nombre de page afin d'écrire les href à toutes les pages
-        echo "Page : ";
-        $i = 0;
-        for ($i = 1 ; $i <= $nombre_pages; $i++){
-            echo '<a href="articles.php?start=' . $i . '">' . $i . '</a> ';
         }
     }
-}
 
             /*----------------------------PAGE ARTICLE------------------------------- */
             function affiche_self_article(){
@@ -462,11 +424,11 @@ function affiche_all_articles(){
                         
                 ?>
                     <div class="affiche_self_article">
-                        <article class="presentation_self_article" >
-                            <h2 class="affiche_self_article_categorie"><?= htmlspecialchars($result_self_article_categorie['nom']) ?></h2>
+                        <article class="presentation_self_article">
+                            <p class="affiche_self_article_categorie"><?= htmlspecialchars($result_self_article_categorie['nom']) ?></p>
                             <h2 class="titre_self_article"><?= htmlspecialchars($result_self_article['titre']) ?></h2>
                             <h3 class="introduction_self_article"><?= htmlspecialchars($result_self_article['introduction']) ?></h3>
-                            <img class="image_self_article" src="<?= $result_self_article['image_article'] ?>">
+                            <img src="<?= $result_self_article['image_article'] ?>">
                             <p class="contenu_article"><?= nl2br($result_self_article['article'] )?></p>
                             <p class="login_date_article">Posté par <?= htmlspecialchars($result_self_article_user['login']) ?> le <?= htmlspecialchars($result_self_article['datefr']) ?> à <?= htmlspecialchars($result_self_article['heurefr']) ?></p>
                             <p class="count_commentaire_article"><i class="fa-solid fa-comments"> <?= $result_count_commentaire_article['COUNT(*)'] ?></i></p>
@@ -480,14 +442,11 @@ function affiche_all_articles(){
                 $id_article = $_GET['article'];
         
                 //requête de récupération des informations des commentaires liés à l'article
-                $requete_self_article_commentaire = mysqli_query(connexion_BDD(), "SELECT c.commentaire, c.date FROM `articles` AS a INNER JOIN `commentaires` AS c ON a.id = c.id_article WHERE a.id = '$id_article' ORDER BY `date` DESC");
+                $requete_self_article_commentaire = mysqli_query(connexion_BDD(), "SELECT c.commentaire, c.date FROM articles AS a INNER JOIN commentaires AS c ON a.id = c.id_article WHERE a.id = $id_article ORDER BY `date` DESC");
                 $result_self_article_commentaire = mysqli_fetch_all($requete_self_article_commentaire, MYSQLI_ASSOC);
         
-                $requete_login_article_commentaire = mysqli_query(connexion_BDD(), "SELECT u.id, u.login FROM `utilisateurs` AS `u` INNER JOIN `commentaires` AS c ON u.id = c.id_utilisateur WHERE u.id = c.id_utilisateur AND c.id_article = '$id_article'");
+                $requete_login_article_commentaire = mysqli_query(connexion_BDD(), "SELECT u.id, u.login FROM utilisateurs AS u INNER JOIN commentaires AS c ON u.id = c.id_utilisateur WHERE u.id = c.id_utilisateur AND c.id_article = $id_article");
                 $result_login_article_commentaire = mysqli_fetch_all($requete_login_article_commentaire, MYSQLI_ASSOC);
-               
-
-
                 $x = 0;
                 $i = 0;
                     while ( isset ( $result_self_article_commentaire[$i]). isset ($result_login_article_commentaire[$x])){
@@ -590,7 +549,7 @@ function affiche_all_articles(){
         <?php
     }
 
-
+    /*Function articles admin */
     function all_articles_admin(){
            
         $display1 = "none";
@@ -630,10 +589,10 @@ function affiche_all_articles(){
             $affiche_update_articles_admin = mysqli_query(connexion_BDD(), "SELECT id, titre, introduction, article, id_categorie FROM articles WHERE id = '$id' ");
             $result_update_articles_admin = mysqli_fetch_array($affiche_update_articles_admin, MYSQLI_ASSOC);
 
-            $titre = $result_update_articles_admin['titre'];
-            $intro = $result_update_articles_admin['introduction'];
-            $article = $result_update_articles_admin['article'];
-            $id_categorie = $result_update_articles_admin['id_categorie'];
+            $titre = htmlspecialchars($result_update_articles_admin['titre']);
+            $intro = htmlspecialchars($result_update_articles_admin['introduction']);
+            $article = htmlspecialchars($result_update_articles_admin['article']);
+            $id_categorie = htmlspecialchars($result_update_articles_admin['id_categorie']);
             $id = $result_update_articles_admin['id'];
         }
 
@@ -721,6 +680,7 @@ function affiche_all_articles(){
     <?php
     }
 
+    /*Function categories admin*/
     function all_categories_admin(){
         $display = "none";
         $display1 = "none";
@@ -736,10 +696,10 @@ function affiche_all_articles(){
             if(isset($_POST['submit_add_categories_admin'])){
                 if(!empty($_POST['nom_categories_admin']) && !empty($_POST['accroche_categories_admin']) && !empty($_POST['descriptif_categories_admin']) && !empty($_POST['style_categories_admin'])){
             
-                $nom = htmlspecialchars($_POST['nom_categories_admin']);
-                $accroche = htmlspecialchars($_POST['accroche_categories_admin']);
-                $descriptif = htmlspecialchars($_POST['descriptif_categories_admin']);
-                $style = htmlspecialchars($_POST['style_categories_admin']);
+                $nom = addslashes(htmlspecialchars($_POST['nom_categories_admin']));
+                $accroche = addslashes(htmlspecialchars($_POST['accroche_categories_admin']));
+                $descriptif = addslashes(htmlspecialchars($_POST['descriptif_categories_admin']));
+                $style = addslashes(htmlspecialchars($_POST['style_categories_admin']));
 
                 $add_categories_admin = mysqli_query(connexion_BDD(), "INSERT INTO `categories`(`nom`, `accroche`, `descriptif`, `style`) VALUES ('$nom','$accroche','$descriptif','$style')");
                 $_SESSION['info_update'] = "Catégories ajoutées avec succés";
@@ -750,7 +710,8 @@ function affiche_all_articles(){
             }
         }
         ?>
-            <form action="" method="post" style="display: <?= $display1 ?>;">
+        <div class="align_center_form" style="display: <?= $display1 ?>;"> 
+            <form class="form_add_categorie_admin" action="" method="post">
                 <label for="nom_categories_admin">Nom</label>
                 <input id="nom_categories_admin" name="nom_categories_admin" type="text">
                 
@@ -759,7 +720,7 @@ function affiche_all_articles(){
                 
 
                 <label for="descriptif_categories_admin">Descriptif</label>
-                <input id="descriptif_categories_admin" name="descriptif_categories_admin" type="text">
+                <input class="descriptif_categories_admin" id="descriptif_categories_admin" name="descriptif_categories_admin" type="text">
 
                 <label for="style_categories_admin">Style</label>
                 <input id="style_categories_admin" name="style_categories_admin" type="text">
@@ -767,6 +728,7 @@ function affiche_all_articles(){
 
                 <button type="submit" name="submit_add_categories_admin" value="Modifiez"><?= $value_btn ?></button>
             </form>
+        </div>
         <?php
 
         if(isset($_GET['modif_cat'])){
@@ -784,10 +746,10 @@ function affiche_all_articles(){
 
             if(isset($_POST['submit_update_categories_admin'])){
                 if(!empty($_POST['nom_categories_admin']) && !empty($_POST['accroche_categories_admin']) && !empty($_POST['descriptif_categories_admin']) && !empty($_POST['style_categories_admin'])){
-                    $nom = htmlspecialchars($_POST['nom_categories_admin']);
-                    $accroche = htmlspecialchars($_POST['accroche_categories_admin']);
-                    $descriptif = htmlspecialchars($_POST['descriptif_categories_admin']);
-                    $style = htmlspecialchars($_POST['style_categories_admin']);
+                    $nom = addslashes($_POST['nom_categories_admin']);
+                    $accroche = addslashes(htmlspecialchars($_POST['accroche_categories_admin']));
+                    $descriptif = addslashes(htmlspecialchars($_POST['descriptif_categories_admin']));
+                    $style = addslashes(htmlspecialchars($_POST['style_categories_admin']));
 
                     $update_categories_admin = mysqli_query(connexion_BDD(), "UPDATE `categories` SET `nom`='$nom',`accroche`='$accroche',`descriptif`='$descriptif',`style`='$style' WHERE id = '$id'");
                     $_SESSION['info_update'] = "Catégorie modifié avec succés";
@@ -801,20 +763,28 @@ function affiche_all_articles(){
         if(isset($_GET['supp_cat'])){
             $id = $_GET['supp_cat'];
             $display2 = "block";
-
+            if(isset($_POST['valid_supp_non_categories'])){
+                $display2 = "none";
+            } elseif(isset($_POST['valid_supp_oui_categories'])){
+                $delete_articles_admin = mysqli_query(connexion_BDD(), " DELETE FROM categories WHERE id = '$id' ");
+                $_SESSION['info_update'] = "Catégorie supprimée avec succés";
+                echo '<script language="Javascript">document.location.replace("admin.php")</script>';
+            }
             ?>
                 <div class="form_supp_articles_admin" style="display: <?= $display2 ?>;">
                     <p class="valid_supp_articles">Êtes-vous sur de vouloir supprimer cet article?</p>
                     <form method="post" action="">
-                        <button name="valid_supp_oui_articles">Oui</button>
-                        <button name="valid_supp_non_articles">Non</button>
+                        <button name="valid_supp_oui_categories">Oui</button>
+                        <button name="valid_supp_non_categories">Non</button>
                     </form>
                 </div>
             <?php
+            
         }
 
         ?>
-            <form action="" method="post" style="display: <?= $display ?>;">
+        <div class="align_center_form" style="display: <?= $display ?>;"> 
+            <form class="form_add_categorie_admin" action="" method="post">
                 <label for="nom_categories_admin">Nom</label>
                 <input id="nom_categories_admin" name="nom_categories_admin" type="text" value="<?= $nom ?>">
                 
@@ -823,7 +793,7 @@ function affiche_all_articles(){
                 
 
                 <label for="descriptif_categories_admin">Descriptif</label>
-                <input id="descriptif_categories_admin" name="descriptif_categories_admin" type="text" value="<?= $descriptif ?>">
+                <input class="descriptif_categories_admin" id="descriptif_categories_admin" name="descriptif_categories_admin" type="text" value="<?= $descriptif ?>">
 
                 <label for="style_categories_admin">Style</label>
                 <input id="style_categories_admin" name="style_categories_admin" type="text" value="<?= $style ?>">
@@ -831,8 +801,8 @@ function affiche_all_articles(){
 
                 <button type="submit" name="submit_update_categories_admin" value="Modifiez"><?= $value_btn ?></button>
             </form>
-
-            <table>
+        </div>
+            <table class="all_categories_admin_table">
                 <thead>
                     <tr>
                         <th>Id</th>
@@ -870,6 +840,123 @@ function affiche_all_articles(){
             </table>
         <?php
     }       
+
+    /*Function all users admin */
+    function all_users_admin(){
+        $display = "none";
+        $display1 = "none";
+        $affiche_users_admin = mysqli_query(connexion_BDD(), " SELECT * FROM utilisateurs");
+
+        if(isset($_GET['modif_user'])){
+            $value_btn = "Modifiez";
+            $id = $_GET['modif_user'];
+            $display = "block";
+
+            $affiche_update_user_admin = mysqli_query(connexion_BDD(),"SELECT * FROM utilisateurs WHERE id = '$id'");
+            $result_update_user_admin = mysqli_fetch_array($affiche_update_user_admin, MYSQLI_ASSOC);
+            $login = $result_update_user_admin['login'];
+            $email = $result_update_user_admin['email'];
+            $id_droits = $result_update_user_admin['id_droits'];
+
+            if(isset($_POST['submit_update_user_admin'])){
+                if (!empty($_POST['id_user_admin']) && !empty($_POST['login_user_admin']) && !empty($_POST['email_user_admin']) && !empty($_POST['id_droits_admin'])){
+                    $id = htmlspecialchars($_POST['id_user_admin']);
+                    $login = addslashes(htmlspecialchars($_POST['login_user_admin']));
+                    $email = addslashes(htmlspecialchars($_POST['email_user_admin']));
+                    $id_droits = htmlspecialchars($_POST['id_droits_admin']);
+
+                    $update_user_admin = mysqli_query(connexion_BDD(),"UPDATE `utilisateurs` SET `id` = '$id', `login`= '$login',`email`= '$email',`id_droits`= '$id_droits' WHERE id = '$id' ");
+                    $_SESSION['info_update'] = "Utilisateur modifié avec succés";
+                    echo "<meta http-equiv='refresh' content='0'>";
+                } else {
+                    $_SESSION['error_validation'] = "Impossible d'envoyer un champ vide";
+                }
+            }
+        }
+
+        if(isset($_GET['supp_user'])){
+            $id = $_GET['supp_user'];
+            $display1 = "block";
+            if(isset($_POST['valid_supp_non_user'])){
+                $display1 = "none";
+            } elseif (isset($_POST['valid_supp_oui_user'])){
+                $delete_user_admin = mysqli_query(connexion_BDD(),"DELETE FROM utilisateurs WHERE id ='$id' ");
+                $_SESSION['info_update'] = "Utilisateur supprimé avec succés";
+                echo "<meta http-equiv='refresh' content='0'>";
+            }
+        }
+        ?>
+        <div class="form_supp_articles_admin" style="display: <?= $display1 ?>;">
+            <p class="valid_supp_user">Êtes-vous sur de vouloir supprimer cet article?</p>
+            <form method="post" action="">
+                <button name="valid_supp_oui_user">Oui</button>
+                <button name="valid_supp_non_user">Non</button>
+            </form>
+
+        </div>
+
+        <div class="align_center_form" style="display: <?= $display ?>;"> 
+            <form class="form_add_categorie_admin" method="post" action="">
+                <label for="id_user_admin">Id</label>
+                    <input class="id_user_admin" id="id_user_admin" name="id_user_admin" type="text" value="<?= $id ?>">
+                
+                    <label for="login_user_admin">login </label>
+                    <input id="login_user_admin" name="login_user_admin" type="text" value="<?= $login ?>">
+                
+
+                    <label for="email_user_admin">E-mail</label>
+                    <input class="email_user_admin" id="email_user_admin" name="email_user_admin" type="text" value="<?= $email ?>">
+
+                    <label for="id_droit_admin">Id_droits</label>
+                    <input class="id_droits_admin" id="id_droit_admin" name="id_droits_admin" type="text" value="<?= $id_droits ?>">
+                
+
+                <button type="submit" name="submit_update_user_admin" value="Modifiez"><?= $value_btn ?></button>
+            </form>
+        </div>
+
+
+            <table class="all_user_admin_table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Login</th>
+                        <th>E-mail</th>
+                        <th>Id_droits</th>
+                        <th>Icône</th>
+                        <th colspan="2">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        while($users_admin = mysqli_fetch_array($affiche_users_admin, MYSQLI_ASSOC)){
+                    ?>
+                    <tr>
+                        <td><?= $users_admin['id'] ?></td>
+                        <td><?= $users_admin['login'] ?></td>
+                        <td><?= $users_admin['email'] ?></td>
+                        <td><?= $users_admin['id_droits'] ?></td>
+                        <td>
+                        <div class="img_user_admin">
+                           <img src="<?= $users_admin['icon'] ?>">
+                        </div>
+                        </td>
+                        <td>
+                            <a class="href_admin" href="admin.php?modif_user=<?= $users_admin['id'] ?>">Modifiez</a>
+                        </td>
+                        <td>
+                            <a class="href_admin" href="admin.php?supp_user=<?= $users_admin['id'] ?>">Supprimer</a>
+                        </td>
+                    </tr>
+                    <?php
+                        }
+                    ?>
+                </tbody>
+            </table>
+        <?php
+                  
+    }
+
      //---------------------- AFFICHAGE MANIATURE-------------------------------//
      function affichage_miniature(){
         if(!empty(select_miniature_BDD())){
@@ -896,7 +983,7 @@ function affiche_all_articles(){
                 <?php if(!empty($_FILES['image_avatar']['tmp_name'])){
                         $retour = 'ok';
                 }
-                elseif(isset($_POST['sub_image']) && empty($_FILES['image_avatar']['tmp_name'])){
+                elseif(isset($_POST['sub_image']) && !empty($_FILES['image_avatar']['tmp_name'])){
                     $_SESSION['error_validation'] = 'Aucun fichier n\'a été selectionné';
                     unset($_POST['sub_image']);
                     echo "<SCRIPT LANGUAGE=\"JavaScript\"> document.location.href=\"profil.php\" </SCRIPT>";
@@ -968,10 +1055,11 @@ function affiche_all_articles(){
                         $id_data = $_SESSION['id'];
                         $up_icon_query = mysqli_query(connexion_BDD(),"UPDATE `utilisateurs` SET `icon`= '$icon' WHERE `id`='$id_data'");
                         select_miniature_BDD();
+                        $_SESSION['info_update']='Votre icon à bien était mis à jour';
+                        echo "<SCRIPT LANGUAGE=\"JavaScript\"> document.location.href=\"profil.php\" </SCRIPT>";
+                        exit();
                         if(!empty(select_miniature_BDD())){
                             $_SESSION['icon'] = select_miniature_BDD();
-                            $_SESSION['info_update']='Votre icon à bien était mis à jour';
-                            echo "<SCRIPT LANGUAGE=\"JavaScript\"> document.location.href=\"profil.php\" </SCRIPT>";
                         }
                         else{
                             $_SESSION['error_validation']='Une erreur est survenue';
@@ -984,4 +1072,4 @@ function affiche_all_articles(){
     </div>
     <?php
     }            
-            
+           

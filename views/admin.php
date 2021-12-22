@@ -21,6 +21,7 @@ require "../functions/function.php";
             info_barre();
             all_articles_admin();
             all_categories_admin();
+            all_users_admin();
             ?>
         </section>
     </main>
