@@ -428,7 +428,7 @@ function affiche_categorie(){
                             <p class="affiche_self_article_categorie"><?= htmlspecialchars($result_self_article_categorie['nom']) ?></p>
                             <h2 class="titre_self_article"><?= htmlspecialchars($result_self_article['titre']) ?></h2>
                             <h3 class="introduction_self_article"><?= htmlspecialchars($result_self_article['introduction']) ?></h3>
-                            <img src="<?= $result_self_article['image_article'] ?>">
+                            <img class="image_self_article" src="<?= $result_self_article['image_article'] ?>">
                             <p class="contenu_article"><?= nl2br($result_self_article['article'] )?></p>
                             <p class="login_date_article">Posté par <?= htmlspecialchars($result_self_article_user['login']) ?> le <?= htmlspecialchars($result_self_article['datefr']) ?> à <?= htmlspecialchars($result_self_article['heurefr']) ?></p>
                             <p class="count_commentaire_article"><i class="fa-solid fa-comments"> <?= $result_count_commentaire_article['COUNT(*)'] ?></i></p>
