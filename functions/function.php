@@ -35,12 +35,14 @@
     }
     /*----------------------------PAGE INSCRIPTION------------------------------- */
     function inscription(){
+            
         $message='';
         if ( isset($_POST['inscription'])){
             $login = htmlspecialchars ( $_POST['login'] );
             $email = htmlspecialchars ( $_POST['email'] );
             $password = htmlspecialchars( $_POST['password'] );
             $password2 = $_POST['password2'];
+            $icon = $_POST['icon'];
             $droit = 1;
             if ( empty($login)) {
             return $message='champ login vide';
@@ -55,13 +57,13 @@
         }
         elseif ( !empty($login)) {
             $veriflogin = mysqli_query(connexion_BDD(),"SELECT login FROM utilisateurs WHERE login= '$login'");
-            var_dump ( mysqli_num_rows($veriflogin) );
             if ( mysqli_num_rows($veriflogin) == 1) {
                 echo "<p> Le LOGIN existe deja .</p> ";    
             }
             else {
+                
                 $cryptage = password_hash($password,PASSWORD_DEFAULT);
-                $requete = mysqli_query(connexion_BDD(),"INSERT INTO utilisateurs (`id`,`login`,`password`,`email`,`id_droits`) VALUES (NULL,'$login','$cryptage','$email','$droit')");
+                $requete = mysqli_query(connexion_BDD()," INSERT INTO utilisateurs (`login`,`password`,`email`,`id_droits`,`icon`) VALUES ('$login','$cryptage','$email','$droit','$icon')");
                 header('location:' . 'connexion.php');
             }
         }
@@ -250,7 +252,6 @@ function affiche_categorie(){
         }
     }
     
-    /*----------------------------PAGE ARTICLES------------------------------- */
 
 /*----------------------------PAGE ARTICLES------------------------------- */
 

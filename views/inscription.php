@@ -20,6 +20,7 @@ require "../functions/function.php";
             <input type="email" placeholder="email" name="email">
             <input type="password" placeholder="password" name="password">
             <input type="password" placeholder="confirm password" name="password2">
+            <input type="hidden" name="icon" value="../assets/img/beblog_logo_icon.png">
             <input type="submit" name="inscription">
             <?php inscription()?>
         </form>
