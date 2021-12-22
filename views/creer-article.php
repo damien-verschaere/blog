@@ -18,7 +18,7 @@ require "../functions/function.php";
         <?php require "requires/require_Header.php" ?>
     </header>
     <main class="main_center">
-        <section class="section_article">
+        <section class="section_articles">
             <form action="creer-article.php" method="POST" enctype="multipart/form-data" class="form_inscription">
                 <select name="categorie">
                     <?php affiche_categorie() ?>
