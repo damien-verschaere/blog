@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+$img_utilisateur="../assets/img/beblog_logo_icon.png";
 
 require "../functions/function.php";
 
@@ -14,16 +14,22 @@ require "../functions/function.php";
      <header>
         <?php require "requires/require_Header.php"; ?>
      </header>
- <main class="section_article">
+ <main >
+     <div class="main_inscription">
         <form action="inscription.php" method="post" class="form_inscription">
-            <input type="text" placeholder="login" name=login>
-            <input type="email" placeholder="email" name="email">
-            <input type="password" placeholder="password" name="password">
-            <input type="password" placeholder="confirm password" name="password2">
-            <input type="hidden" name="icon" value="../assets/img/beblog_logo_icon.png">
-            <input type="submit" name="inscription">
-            <?php inscription()?>
+            <input class="inscription_login" type="text" placeholder="login" name=login>
+            <input class="inscription_email" type="email" placeholder="email" name="email">
+            <input class="inscription_password" type="password" placeholder="password" name="password">
+            <input class="inscription_password2" type="password" placeholder="confirm password" name="password2">
+            <input type="hidden" name="icon" value= <?php $img_utilisateur ?> >
+            <input class="sub_inscription" type="submit" name="inscription" value="inscription">
+            <?php
+             inscription();
+             info_barre();
+            ?>
+
         </form>
+        </div>
     </main>
     <footer>
         <?php require "requires/require_Footer.php";?>

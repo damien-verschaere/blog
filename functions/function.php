@@ -36,7 +36,7 @@
     /*----------------------------PAGE INSCRIPTION------------------------------- */
     function inscription(){
             
-        $message='';
+        
         if ( isset($_POST['inscription'])){
             $login = htmlspecialchars ( $_POST['login'] );
             $email = htmlspecialchars ( $_POST['email'] );
@@ -44,21 +44,23 @@
             $password2 = $_POST['password2'];
             $icon = $_POST['icon'];
             $droit = 1;
+
             if ( empty($login)) {
-            return $message='champ login vide';
-            "test";
+                echo $_SESSION['error_validation'] ='champ login vide';
+        }
+        elseif (empty($email)) {
+            echo  $_SESSION['error_validation'] = "veuillez remplir le champ email ";;
         }
         elseif ( empty($password)) {
-            echo "<p> remplissez le champ password </p>";
-            
+            echo  $_SESSION['error_validation']="remplissez le champ password "; 
         }
         elseif ($password != $password2) {
-            echo " Les passwords ne correspondent pas .";
+            echo  $_SESSION['error_validation'] = " Les passwords ne correspondent pas .";
         }
-        elseif ( !empty($login)) {
+        elseif (!empty($login)) {
             $veriflogin = mysqli_query(connexion_BDD(),"SELECT login FROM utilisateurs WHERE login= '$login'");
             if ( mysqli_num_rows($veriflogin) == 1) {
-                echo "<p> Le LOGIN existe deja .</p> ";    
+                echo $_SESSION['error_validation']="Le login existe deja ";
             }
             else {
                 
@@ -77,7 +79,7 @@
             $requete_categories = mysqli_query(connexion_BDD(),"SELECT * FROM categories WHERE id= '$key[id_categorie]'");
             $resultat_categorie=mysqli_fetch_array($requete_categories,MYSQLI_ASSOC);
             echo "<div class=.global_accueil>";
-            echo "<a href= article.php?article=".$key['id'].">";
+            echo "<a class=href href= article.php?article=".$key['id'].">";
             echo "<div class=".$resultat_categorie['style']."_a_background_categories >";
             echo "<div class=titre_accueil>";
             echo "<h4>". strtoupper( $key['titre'])."</h4>";
@@ -104,7 +106,7 @@ function affiche_article_com(){
         $requete_categories = mysqli_query(connexion_BDD(),"SELECT * FROM categories WHERE id= '$key[id_categorie]'");
         $resultat_categorie=mysqli_fetch_array($requete_categories,MYSQLI_ASSOC);
         echo "<div class=.global_accueil>";
-            echo "<a href= article.php?article=".$key['id'].">";
+            echo "<a class=href href= article.php?article=".$key['id'].">";
             echo "<div class=".$resultat_categorie['style']."_a_background_categories >";
             echo "<div class=titre_accueil>";
             echo "<h4>". strtoupper( $key['titre'])."</h4>";
@@ -146,6 +148,7 @@ function affiche_categorie(){
         $replace="";
         $outString=str_replace($space,$replace,$titreBDD);
         $titreBDD=$outString;
+   
         
             if (isset($_FILES['image_article']) ){
                 $filename = $_FILES['image_article']['tmp_name']; // On récupère le nom du fichier
@@ -205,7 +208,7 @@ function affiche_categorie(){
                 }
                     
                 
-
+            
 
 
 

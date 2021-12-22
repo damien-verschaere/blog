@@ -14,6 +14,10 @@
             <a href="connexion.php">
             <span class="large_a">Se connecter</span>
             </a>
+            <div class="cesure_navbar_footer"></div>
+            <a href="https://github.com/damien-verschaere/blog">
+            <span class="large_a">Github</span>
+            </a>
             <?php
             }
         if(droit_user()!='none'){
@@ -27,11 +31,19 @@
             <span class="large_a">Nouvel Article</span>
         </a>
         <div class="cesure_navbar_footer"></div>
+        <a href="https://github.com/damien-verschaere/blog">
+            <span class="large_a">Github</span>
+            </a>
+        <div class="cesure_navbar_footer"></div>
     <?php } 
         elseif(droit_user()=='admin'){?> <!-- PAGE DESTINEE AU ADMINISTRATEUR -->
         <a href="admin.php">
             <span class="large_a">Administrateur</span>
         </a>
+        <div class="cesure_navbar_footer"></div>
+        <a href="https://github.com/damien-verschaere/blog">
+            <span class="large_a">Github</span>
+            </a>
         <div class="cesure_navbar_footer"></div>
     <?php } 
     ?>

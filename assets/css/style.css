@@ -42,6 +42,7 @@ body{
     --violet: #843482;
     --full_degrade: linear-gradient(to top left,#efa32f,#ea6c3a,#d93356,#843482);
 }
+
 /**DEBUT HEADER*/
 .navbar_header{
     width: 100%;
@@ -651,15 +652,46 @@ body{
 } 
 
 /* -----------------formulaire----------------------------- */
+.main_inscription{
+    padding: 10% ;
+}
+.form_inscription:hover{
+    opacity: 1;
+}
 .form_inscription{
-    margin-top: 10%;
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-direction: column;
+    border: 3px solid black ;
+    border-radius: 50px;
+    background:linear-gradient(#efa32f,#ea6c3a);
+    opacity: 0.6;
 }
 .form_inscription input,.form_inscription textarea{
-    margin-top: 5%;
+    margin-top: 1%;
+    width: 20%;
+    margin-bottom: 1%;
+    border-radius: 30px;
+    border: 2px solid black;
 }
+.inscription_login:hover{
+    background-color:#f35d21 ;
+}
+.inscription_email:hover{
+    background-color:#efa32f ;
+}
+.inscription_password:hover{
+    background-color: #843482;
+}
+.inscription_password2:hover{
+    background:linear-gradient(#efa32f,#ea6c3a);
+}
+.sub_inscription:hover{
+  background-color: #d93356;
+    
+}
+
 
 /* -------------------accueil------------------------------- */
 .section_accueil,.section_accueil2{
@@ -780,4 +812,9 @@ body{
 /** video background connect **/
 .video_background_connect{
     width: 100vw;   
+}
+/* ----------------- lien A href-------------------- */
+.href{
+    text-decoration: none;
+    color:white;
 }

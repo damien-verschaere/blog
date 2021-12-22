@@ -28,7 +28,10 @@ require "../functions/function.php";
                 <input type="file" name="image_article">
                 <textarea name="article" cols="30" rows="10"></textarea>
                 <input type="submit" name="creer">
-                <?php creer_article() ?>
+                <?php 
+                creer_article();
+                info_barre();
+                ?>
             </form>
             </div>
         </section>
