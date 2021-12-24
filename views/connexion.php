@@ -25,15 +25,18 @@ verif_user_connexion();
 
                 <form class="form_connexion" action="" method="post">
                     <label for="login">Login</label></br>
-                    <input class="input_connexion" type="text" name="login" placeholder="Login">
+                    <input id="login" class="input_connexion" type="text" name="login" placeholder="Login">
                     <br>
 
                     <label for="password">Password</label></br>
-                    <input class="input_connexion" type="password" name="password" placeholder="Password">
+                    <input id="password" class="input_connexion" type="password" name="password" placeholder="Password">
                     </br><br>
     
                     <input class="submit_connexion" type="submit" name="submit_connexion" value="Connexion">
-                    </form> 
+                    <?php
+                    info_barre();
+                    ?>
+                    </form>  
             </div>
         </section>
         

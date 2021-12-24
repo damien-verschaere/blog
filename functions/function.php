@@ -17,7 +17,7 @@
         $src_miniature = $result_icon['icon'];
         return $src_miniature;
     }
-    /*------------------- Donner les droit pour l'affichage------------------- */
+    /*------------------- Donner les droit pour l'affichage Joahn------------------- */
     function droit_user(){
         if(!isset($_SESSION['id_droits'])){
             $droit_user = 'none';
@@ -33,7 +33,7 @@
         }
         return  $droit_user;
     }
-    /*----------------------------PAGE INSCRIPTION------------------------------- */
+    /*----------------------------PAGE INSCRIPTION Damien------------------------------- */
     function inscription(){
             
         
@@ -46,16 +46,16 @@
             $droit = 1;
 
             if ( empty($login)) {
-                echo $_SESSION['error_validation'] ='champ login vide';
+            $_SESSION['error_validation'] ='champ login vide';
         }
         elseif (empty($email)) {
-            echo  $_SESSION['error_validation'] = "veuillez remplir le champ email ";;
+            $_SESSION['error_validation'] = "veuillez remplir le champ email ";;
         }
         elseif ( empty($password)) {
-            echo  $_SESSION['error_validation']="remplissez le champ password "; 
+            $_SESSION['error_validation']="remplissez le champ password "; 
         }
         elseif ($password != $password2) {
-            echo  $_SESSION['error_validation'] = " Les passwords ne correspondent pas .";
+            $_SESSION['error_validation'] = " Les passwords ne correspondent pas .";
         }
         elseif (!empty($login)) {
             $veriflogin = mysqli_query(connexion_BDD(),"SELECT login FROM utilisateurs WHERE login= '$login'");
@@ -73,23 +73,35 @@
     }
 #affiche les 3 premiers articles de la page index
 function affiche_article(){
-    $req=mysqli_query(connexion_BDD(),"SELECT `id` ,`titre`,`introduction`,`article`,`date`,`image_article`,`id_categorie` FROM `articles` order by date DESC LIMIT 3 ");
+    $req=mysqli_query(connexion_BDD(),"SELECT `id` ,`titre`,`introduction`,`article`,`image_article`,`id_utilisateur`,`id_categorie`, DATE_FORMAT(date, '%d/%m/%Y') AS 'datefr' , DATE_FORMAT(date, '%H:%i:%s') AS 'heurefr' FROM `articles` order by date DESC LIMIT 3 ");
     $result=mysqli_fetch_all($req,MYSQLI_ASSOC);
     foreach ($result as $key) {
         $requete_categories = mysqli_query(connexion_BDD(),"SELECT * FROM categories WHERE id= '$key[id_categorie]'");
         $resultat_categorie=mysqli_fetch_array($requete_categories,MYSQLI_ASSOC);
-        echo "<div class=.global_accueil>";
+
+        $requete_utilisateur = mysqli_query(connexion_BDD(),"SELECT * FROM utilisateurs WHERE id = '$key[id_utilisateur]'");
+        $result_utilisateur = mysqli_fetch_array($requete_utilisateur, MYSQLI_ASSOC);
+
+        echo "<div class=global_accueil>";
         echo "<a class=href href= article.php?article=".$key['id'].">";
-        echo "<div class=".$resultat_categorie['style']."_a_background_categories >";
+        echo "<div class=".$resultat_categorie['style']."_a_background_categories_accueil >";
+        ?>
+        <p class =titre_categorie_accueil ><i class="fas fa-tag"></i> <?= $resultat_categorie['nom']?></p>
+        <?php
         echo "<div class=titre_accueil>";
-        echo "<h4>". strtoupper( $key['titre'])."</h4>";
+        echo "<h4>". $key['titre'] ."</h4>";
         echo "</div>";
         echo "<div class=content_img_categoriese >";
         echo "<img src=".$key['image_article'].">";
         echo "</div>";
         echo "<div class=footer_affiche_accueil>";
         echo "<h4>". $key['introduction']."</h4>";
-        echo "<p>".$key['date']."</p>";
+        ?>
+        <div class="sous_contenu_accueil">
+        <p><i class="fas fa-user-edit"></i> <?= $result_utilisateur['login'] ?></p>
+        <i class="fas fa-calendar-day"></i> <?= $key['datefr']?> <i class="fas fa-clock"></i> <?= $key['heurefr']?></p>
+        </div>
+        <?php
         echo "</div>";
         echo "</div>";
         echo "</a>";
@@ -100,23 +112,35 @@ function affiche_article(){
 }
 
 function affiche_article_com(){
-$requete=mysqli_query(connexion_BDD(),"SELECT a.id,a.titre,a.introduction,a.article,a.date,a.id_categorie,a.image_article,tmp.commentaire FROM articles a INNER JOIN ( SELECT id_article, COUNT(*) commentaire FROM commentaires GROUP BY id_article ) tmp ON a.id = tmp.id_article ORDER BY commentaire DESC LIMIT 3");
+$requete=mysqli_query(connexion_BDD(),"SELECT a.id,a.titre,a.introduction,a.article,a.id_utilisateur,a.id_categorie,a.image_article,tmp.commentaire, DATE_FORMAT(date, '%d/%m/%Y') AS 'datefr' , DATE_FORMAT(date, '%H:%i:%s') AS 'heurefr' FROM articles a INNER JOIN ( SELECT id_article, COUNT(*) commentaire FROM commentaires GROUP BY id_article ) tmp ON a.id = tmp.id_article ORDER BY commentaire DESC LIMIT 3");
 $resultat=mysqli_fetch_all($requete,MYSQLI_ASSOC);
 foreach ($resultat as $key) {
     $requete_categories = mysqli_query(connexion_BDD(),"SELECT * FROM categories WHERE id= '$key[id_categorie]'");
     $resultat_categorie=mysqli_fetch_array($requete_categories,MYSQLI_ASSOC);
-    echo "<div class=.global_accueil>";
+
+    $requete_utilisateur = mysqli_query(connexion_BDD(),"SELECT * FROM utilisateurs WHERE id = '$key[id_utilisateur]'");
+    $result_utilisateur = mysqli_fetch_array($requete_utilisateur, MYSQLI_ASSOC);
+
+    echo "<div class=global_accueil>";
         echo "<a class=href href= article.php?article=".$key['id'].">";
-        echo "<div class=".$resultat_categorie['style']."_a_background_categories >";
+        echo "<div class=".$resultat_categorie['style']."_a_background_categories_accueil >";
+        ?>
+        <p class =titre_categorie_accueil ><i class="fas fa-tag"></i> <?= $resultat_categorie['nom']?></p>
+        <?php
         echo "<div class=titre_accueil>";
-        echo "<h4>". strtoupper( $key['titre'])."</h4>";
+        echo "<h4>".$key['titre']."</h4>";
         echo "</div>";
         echo "<div class=content_img_categoriese >";
         echo "<img src=".$key['image_article'].">";
         echo "</div>";
         echo "<div class=footer_affiche_accueil>";
         echo "<h4>". $key['introduction']."</h4>";
-        echo "<p>".$key['date']."</p>";
+        ?>
+        <div class="sous_contenu_accueil">
+        <p><i class="fas fa-user-edit"></i> <?= $result_utilisateur['login'] ?></p>
+        <i class="fas fa-calendar-day"></i> <?= $key['datefr']?> <i class="fas fa-clock"></i> <?= $key['heurefr']?></p>
+        </div>
+        <?php
         echo "</div>";
         echo "</div>";
         echo "</a>";
@@ -125,7 +149,7 @@ foreach ($resultat as $key) {
 
 
 }
-      /*----------------------------PAGE CREER ARTICLE------------------------------- */
+      /*----------------------------PAGE CREER ARTICLE Damien------------------------------- */
 
     
 
@@ -134,18 +158,22 @@ function affiche_categorie(){
      $result = mysqli_fetch_all($requete,MYSQLI_ASSOC);
      foreach ($result as $key ) {
          echo "<option value=".$key['id'].">".$key['nom']."</option>";
+         
      }
      
  }
  function creer_article(){
+
     if (isset($_POST['creer'])) {
+
+        if(!empty($_POST['titre']) && !empty($_POST['description']) && !empty($_POST['article']) && !empty($_FILES['image_article'])){
         $categorie=$_POST['categorie'];
-        $titre=addslashes(htmlspecialchars($_POST['titre']));
-        $titreBDD=addslashes(htmlspecialchars($_POST['titre']));
-        $description=addslashes(htmlspecialchars($_POST['description']));
-        $article=addslashes(htmlspecialchars($_POST['article']));
-        $space=" ";
-        $replace="";
+        $titre = addslashes ( htmlspecialchars ($_POST['titre']));
+        $titreBDD = addslashes ( htmlspecialchars ($_POST['titre']));
+        $description = addslashes (htmlspecialchars ($_POST['description']));
+        $article = addslashes (nl2br($_POST['article']));
+        $space= "";
+        $replace= "";
         $outString=str_replace($space,$replace,$titreBDD);
         $titreBDD=$outString;
         
@@ -177,41 +205,42 @@ function affiche_categorie(){
                             $resultat = move_uploaded_file($_FILES['image_article']['tmp_name'], $chemin); // On fini par mettre la photo dans le dossier
                             if ($resultat){ // Si on a le résultat alors on va comprésser l'image
                                     
-                                    $verif_ext = getimagesize("../assets/images_article" .$categorie . "/" . $nom . "." . $extensionUpload);
+                                $verif_ext = getimagesize("../assets/images_article" .$categorie . "/" . $nom . "." . $extensionUpload);
                                     
-                                    // Vérification des extensions avec la liste des extensions autorisés
+                                // Vérification des extensions avec la liste des extensions autorisés
                                                   
-                                        // J'enregistre le chemin de l'image dans filename
-                                        $filename = "../assets/images_article" .$categorie . "/" . $nom . "." . $extensionUpload;
+                                // J'enregistre le chemin de l'image dans filename
+                                $filename = "../assets/images_article" .$categorie . "/" . $nom . "." . $extensionUpload;
                                         
-                                        // Vérification des extensions que je souhaite prendre
-                                        if($extensionUpload == 'jpg' || $extensionUpload == 'png' || $extensionUpload == "JPG"|| $extensionUpload == "gif" ){
+                                // Vérification des extensions que je souhaite prendre
+                                if($extensionUpload == 'jpg' || $extensionUpload == 'png' || $extensionUpload == "JPG"|| $extensionUpload == "gif" ){
                                             
-                                            // Content type
-                                            
-                                        echo '<script language="Javascript">document.location.replace("accueil.php")</script>';
+                                // Content type
+                                error_reporting(E_ERROR | E_PARSE);
+                                mysqli_query(connexion_BDD(),"INSERT INTO articles(id, titre, introduction, article, id_utilisateur, id_categorie, date,image_article) VALUES ( NULL,'$titre','$description','$article','$_SESSION[id]','$categorie',NOW(),'$filename')"); 
+                                echo '<script language="Javascript">document.location.replace("accueil.php")</script>';
 
                                             
                                             
-                                        }
-                                        
-                                       
-                                    }
-                                } 
+                                }      
                             }
-                            
-                        }
+                        } 
                     }
-                    error_reporting(E_ERROR | E_PARSE);
-                mysqli_query(connexion_BDD(),"INSERT INTO articles(id, titre, introduction, article, id_utilisateur, id_categorie, date,image_article) VALUES ( NULL,'$titre','$description','$article','$_SESSION[id]','$categorie',NOW(),'$filename')"); 
-                }
-                    
+                            
+            } else {
+                $_SESSION['error_validation'] = "veuillez insérer une image";
+            }
+        } else {
+            $_SESSION['error_validation'] = "Assurez-vous que les champs soit remplis";
+        }
+    }
                 
+}
+                    
 
 
 
-
-    /*----------------------------PAGE CONNEXION------------------------------- */
+    /*----------------------------PAGE CONNEXION Max------------------------------- */
     /*Fonction de verification des informations de connexion */
     function verif_user_connexion(){
         /*Variable de récupération des messages d'erreur */
@@ -239,22 +268,21 @@ function affiche_categorie(){
                         $_SESSION['id_droits'] = $result_user_connexion['id_droits'];
                         header("location: accueil.php");
                     } else {
-                        $message_erreur = "Mot de passe incorrect";
-                        echo $message_erreur;
+                        $_SESSION['error_validation'] = "Mot de passe incorrect";
                     }
     
                 } else {
-                    $message_erreur = "Login incorrect";
+                    $_SESSION['error_validation'] = "Login incorrect";
                     echo $message_erreur;
                 }
             } else {
-                $message_erreur = "Veuillez remplir les champs vides";
-                echo $message_erreur;
+                $_SESSION['error_validation'] = "Veuillez remplir les champs vides";
+                
             }
         }
     }
     
-    /*----------------------------PAGE ARTICLES------------------------------- */
+    /*----------------------------PAGE ARTICLES Max------------------------------- */
 
     function affiche_all_articles(){
         
@@ -269,13 +297,13 @@ function affiche_categorie(){
             $p = 0;
             while(isset($result_categories[$p])){
             ?>
-                <button type="submit" name="categories" value="<?= $result_categories[$p]['id']?>"><?= $result_categories[$p]['nom']?></button>
+                <button class="input_categories" type="submit" name="categories" value="<?= $result_categories[$p]['id']?>"><?= $result_categories[$p]['nom']?></button>
             <?php
                 $p++;
             }
             ?>
             <form method="post" action="">
-                <input type="submit" name="all" value="Tous">
+                <button class="input_all_categories" type="submit" name="all" value="Tous">Toutes les catégories</button>
             </form>
             <?php
         //Si une catégorie est définie
@@ -323,19 +351,21 @@ function affiche_categorie(){
                     $result_count_commentaire_article = mysqli_fetch_array($requete_count_commentaire_article,MYSQLI_ASSOC);
                     
             ?>
+        
             <form class="<?= $result_affiche_articles_categories['style'] ?>_a_background_categories" style="border-radius: 8px;" method="get" action="">
                 <a class="articles_affichage" href="../views/article.php?article=<?=$result_affiche_articles_categories['id_articles']?>">
                     <article class="presentation_articles">
                         <p class="categorie_affiche_articles"><i class="fas fa-tag"></i> : <?= htmlspecialchars($result_affiche_articles_categories['nom']) ?></p>
                         <h2 class="titre_affiche_articles"><?= htmlspecialchars($result_affiche_articles_categories['titre']) ?></h2>
                         <h3 class="introdruction_affiche-articles"><?= htmlspecialchars($result_affiche_articles_categories['introduction']) ?></h3>
-                        <p class="affiche_articles"><?= htmlspecialchars($result_affiche_articles_categories['article']) ?></p>
-                        <p class="user_affiche_articles"> Posté par <?= htmlspecialchars($result_affiche_articles_categories['login']) ?> le <?= htmlspecialchars($result_affiche_articles_categories['date']) ?></p>
+                        <div class="opac_articles"><p class="affiche_articles"><?= nl2br($result_affiche_articles_categories['article']) ?></p></div>
+                        <p class="user_affiche_articles"> <i class="fas fa-user-edit"></i> <?= htmlspecialchars($result_affiche_articles_categories['login']) ?> <i class="fas fa-calendar-day"></i> <?= htmlspecialchars($result_affiche_articles_categories['date']) ?></p>
                         <p class="count_commentaire_article"><i class="fa-solid fa-comments"> <?= $result_count_commentaire_article['COUNT(*)'] ?></i></p>
                         <input type="hidden" name="ID" class="ID" value="<?= htmlspecialchars($result_affiche_articles_categories['id_articles']) ?> ">
                     </article>
                 </a>
             </form>
+
 
             <?php
                 //Puis on boucle sur le nombre de page afin d'écrire les href à toutes les pages
@@ -343,7 +373,7 @@ function affiche_categorie(){
                 echo "Page : ";
                 $t = 0;
                 for ($t = 1 ; $t <= $nombre_pages; $t++){
-                    echo '<a href="articles.php?categories='.$id_categories_get.'&page=' . $t . '">' . $t . '</a> ';
+                    echo '<a class="hyperliens_articles" href="articles.php?categories='.$id_categories_get.'&page=' . $t . '">' . $t . '</a> ';
                 }
         } elseif(!isset($_GET['categories']) || isset($_POST['all'])) {
 
@@ -384,7 +414,8 @@ function affiche_categorie(){
                 <p class="categorie_affiche_articles"><i class="fas fa-tag"></i> : <?= htmlspecialchars($result_affiche_articles['nom']) ?></p>
                 <h2 class="titre_affiche_articles"><?= htmlspecialchars($result_affiche_articles['titre']) ?></h2>
                 <h3 class="introdruction_affiche-articles"><?= htmlspecialchars($result_affiche_articles['introduction']) ?></h3>
-                <p class="user_affiche_articles"> Posté par <?= htmlspecialchars($result_affiche_articles['login']) ?> le <?= htmlspecialchars($result_affiche_articles['date']) ?></p><br>
+                <div class="opac_articles"><p class="affiche_articles"><?= nl2br($result_affiche_articles['article']) ?></p></div>
+                <p class="user_affiche_articles"> <i class="fas fa-user-edit"></i> <?= htmlspecialchars($result_affiche_articles['login']) ?> <i class="fas fa-calendar-day"></i> <?= htmlspecialchars($result_affiche_articles['date']) ?></p><br>
                 <p class="count_commentaire_article"><i class="fa-solid fa-comments"> <?= $result_count_commentaire_article['COUNT(*)'] ?></i></p>
                 <input type="hidden" id="ID" name="ID" value="<?php echo $result_affiche_articles['id_articles']?>">
             </article>
@@ -397,12 +428,12 @@ function affiche_categorie(){
             echo "Page : ";
             $i = 0;
             for ($i = 1 ; $i <= $nombre_pages; $i++){
-                echo '<a href="articles.php?start=' . $i . '">' . $i . '</a> ';
+                echo '<a class="hyperliens_articles" href="articles.php?start=' . $i . '">' . $i . '</a> ';
             }
         }
     }
 
-            /*----------------------------PAGE ARTICLE------------------------------- */
+            /*----------------------------PAGE ARTICLE Max------------------------------- */
             function affiche_self_article(){
 
                 $id_article = $_GET['article'];
@@ -416,7 +447,7 @@ function affiche_categorie(){
                 $result_self_article_user = mysqli_fetch_array($requete_self_article_user, MYSQLI_ASSOC);
         
                 //requête de récupération des informations de la catégorie de l'article
-                $requete_self_article_categorie = mysqli_query(connexion_BDD(), "SELECT c.id , c.nom FROM categories AS c INNER JOIN articles AS a ON c.id = a.id_categorie WHERE a.id = $id_article ");
+                $requete_self_article_categorie = mysqli_query(connexion_BDD(), "SELECT c.id , c.nom, c.style FROM categories AS c INNER JOIN articles AS a ON c.id = a.id_categorie WHERE a.id = $id_article ");
                 $result_self_article_categorie = mysqli_fetch_array($requete_self_article_categorie, MYSQLI_ASSOC);
         
                 $requete_count_commentaire_article = mysqli_query(connexion_BDD(),"SELECT COUNT(*) FROM commentaires INNER JOIN articles ON commentaires.id_article = articles.id WHERE articles.id = $id_article");
@@ -425,14 +456,13 @@ function affiche_categorie(){
                 ?>
                     <div class="affiche_self_article">
                         <article class="presentation_self_article">
-                            <p class="affiche_self_article_categorie"><?= htmlspecialchars($result_self_article_categorie['nom']) ?></p>
+                            <p class="<?= $result_self_article_categorie['style'] ?>_affiche_self_article_categorie"><i class="fas fa-tag"></i> : <?= htmlspecialchars($result_self_article_categorie['nom']) ?></p>
                             <h2 class="titre_self_article"><?= htmlspecialchars($result_self_article['titre']) ?></h2>
                             <h3 class="introduction_self_article"><?= htmlspecialchars($result_self_article['introduction']) ?></h3>
                             <img class="image_self_article" src="<?= $result_self_article['image_article'] ?>">
                             <p class="contenu_article"><?= nl2br($result_self_article['article'] )?></p>
-                            <p class="login_date_article">Posté par <?= htmlspecialchars($result_self_article_user['login']) ?> le <?= htmlspecialchars($result_self_article['datefr']) ?> à <?= htmlspecialchars($result_self_article['heurefr']) ?></p>
+                            <p class="login_date_article"><i class="fas fa-user-edit"></i> <?= htmlspecialchars($result_self_article_user['login']) ?> <i class="fas fa-calendar-day"></i> <?= htmlspecialchars($result_self_article['datefr']) ?> <i class="fas fa-clock"></i> <?= htmlspecialchars($result_self_article['heurefr']) ?></p>
                             <p class="count_commentaire_article"><i class="fa-solid fa-comments"> <?= $result_count_commentaire_article['COUNT(*)'] ?></i></p>
-                                    
                         </article>
                     </div>
                 <?php 
@@ -452,9 +482,9 @@ function affiche_categorie(){
                     while ( isset ( $result_self_article_commentaire[$i]). isset ($result_login_article_commentaire[$x])){
                         ?>
                             <div class="affiche_commentaires_article">
-                                <p class="commentaires_article"><?= $result_self_article_commentaire[$i]['commentaire'] ?> </p>
-                                <p class="date_commentaires_articles">Posté le <?= $result_self_article_commentaire[$i]['date'] ?></p>
-                                <p class="login_commentaire_article">Par <?= $result_login_article_commentaire[$x]['login'] ?></p>
+                                <p class="commentaires_article"><?= nl2br($result_self_article_commentaire[$i]['commentaire']) ?> </p>
+                                <p class="date_commentaire_article"><i class="fas fa-calendar-day"></i>  <?= $result_self_article_commentaire[$i]['date'] ?></p>
+                                <p class="login_commentaire_article"> <i class="fas fa-user-edit"></i> <?= $result_login_article_commentaire[$x]['login'] ?></p>
                                 
                             </div>
                         <?php
@@ -482,13 +512,11 @@ function affiche_categorie(){
                         //Alors on insert le commentaire en base de données et prévient l'user du bon déroulement
                         $requete_insert_commentaire_article = mysqli_query(connexion_BDD(), "INSERT INTO `commentaires`(`commentaire`, `id_article`, `id_utilisateur`, `date`) VALUES ('$com_article','$id_article','$_SESSION[id]',NOW())");
         
-                        $echo = ' <a class="echo"> Votre commentaire a été envoyer avec succés </a>';
-                        echo $echo;
+                        $_SESSION['info_update'] = "Votre commentaire a été envoyer avec succés ";
                         mysqli_close(connexion_BDD());
                         
                     } else {
-                        $error = '<a class="message_erreur"> Erreur, <br> Veuillez remplir le champ </a>';
-                        echo $error;
+                        $_SESSION['error_validation'] = "Veuillez remplir le champ ";
                     }
                 }
             }
@@ -517,7 +545,7 @@ function affiche_categorie(){
             }
         }
 
-    //----------------------------PAGE ADMIN -----------------------------//
+    //----------------------------PAGE ADMIN Max-----------------------------//
     function infos_blog_admin(){
         $requete_nbr_articles = mysqli_query(connexion_BDD(), "SELECT COUNT(*) FROM articles");
         $result_nbr_articles = mysqli_fetch_array($requete_nbr_articles);
@@ -573,7 +601,7 @@ function affiche_categorie(){
                 $update_articles_admin = mysqli_query(connexion_BDD(), "UPDATE `articles` SET `titre`='$titre',`introduction`='$intro',`article`='$article',`id_categorie`='$id_categorie' WHERE id = '$id'");
                 
                 $_SESSION['info_update'] = "Article modifié avec succés";
-                echo "<meta http-equiv='refresh' content='0'>";
+                echo '<script language="Javascript">document.location.replace("admin.php")</script>';
                     
             } else {
                 $_SESSION['error_validation'] = "Impossible d'envoyer un champ vide";
@@ -608,7 +636,7 @@ function affiche_categorie(){
 
             elseif (isset($_POST['valid_supp_oui_articles'])){
                 $delete_articles_admin = mysqli_query(connexion_BDD(), " DELETE FROM articles WHERE id = '$id' ");
-                $_SESSION['msg'] = "Article supprimé avec succés";
+                $_SESSION['info_update'] = "Article supprimé avec succés";
                 echo '<script language="Javascript">document.location.replace("admin.php")</script>';
             }
             
@@ -845,7 +873,7 @@ function affiche_categorie(){
     function all_users_admin(){
         $display = "none";
         $display1 = "none";
-        $affiche_users_admin = mysqli_query(connexion_BDD(), " SELECT * FROM utilisateurs");
+        $affiche_users_admin = mysqli_query(connexion_BDD(), " SELECT * FROM utilisateurs ORDER BY id ASC");
 
         if(isset($_GET['modif_user'])){
             $value_btn = "Modifiez";
@@ -983,7 +1011,7 @@ function affiche_categorie(){
                 <?php if(!empty($_FILES['image_avatar']['tmp_name'])){
                         $retour = 'ok';
                 }
-                elseif(isset($_POST['sub_image']) && !empty($_FILES['image_avatar']['tmp_name'])){
+                elseif(isset($_POST['sub_image']) && empty($_FILES['image_avatar']['tmp_name'])){
                     $_SESSION['error_validation'] = 'Aucun fichier n\'a été selectionné';
                     unset($_POST['sub_image']);
                     echo "<SCRIPT LANGUAGE=\"JavaScript\"> document.location.href=\"profil.php\" </SCRIPT>";
@@ -1053,6 +1081,7 @@ function affiche_categorie(){
                     $icon = '../assets/img/miniatures/'.$_FILES['image_avatar']['name'];
                     //--- UPDATE ---//
                         $id_data = $_SESSION['id'];
+                        
                         $up_icon_query = mysqli_query(connexion_BDD(),"UPDATE `utilisateurs` SET `icon`= '$icon' WHERE `id`='$id_data'");
                         select_miniature_BDD();
                         $_SESSION['info_update']='Votre icon à bien était mis à jour';

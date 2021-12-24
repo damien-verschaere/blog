@@ -14,11 +14,11 @@ require "../functions/function.php";
      <?php require "requires/require_header.php";?>
       
     <main class="section_article">
-        <h3>LES DERNIERS ARTICLES </h3>
+        <h3 class="titre_articles">Les derniers articles <i class="fas fa-newspaper"></i></h3>
         <section class="section_accueil">
             <?php affiche_article()  ?>
         </section>
-        <h3>LES ARTICLES LES PLUS COMMENTES</h3>
+        <h3 class="titre_articles2">Les articles les plus commentés <i class="fas fa-fire"></i></h3>
         <section class="section_accueil">
             <?php affiche_article_com() ?>
         </section>

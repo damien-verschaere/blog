@@ -16,21 +16,24 @@ require "../functions/function.php";
      </header>
  <main >
      <div class="main_inscription">
-        <form action="inscription.php" method="post" class="form_inscription">
-            <input class="inscription_login" type="text" placeholder="login" name=login>
-            <input class="inscription_email" type="email" placeholder="email" name="email">
-            <input class="inscription_password" type="password" placeholder="password" name="password">
-            <input class="inscription_password2" type="password" placeholder="confirm password" name="password2">
-            <input type="hidden" name="icon" value= <?php $img_utilisateur ?> >
-            <input class="sub_inscription" type="submit" name="inscription" value="inscription">
+         <section class="section_article_inscription">
+            <form action="inscription.php" method="post" class="form_inscription">
+                <h2 class="titre_inscription">Inscription</h2>
+                <input class="inscription_login" type="text" placeholder="Login" name=login>
+                <input class="inscription_email" type="email" placeholder="E-mail" name="email">
+                <input class="inscription_password" type="password" placeholder="Password" name="password">
+                <input class="inscription_password2" type="password" placeholder="Confirm password" name="password2">
+                <input type="hidden" name="icon" value= <?php $img_utilisateur ?> >
+                <input class="sub_inscription" type="submit" name="inscription" value="Inscription">
             <?php
              inscription();
              info_barre();
             ?>
 
-        </form>
-        </div>
-    </main>
+            </form>
+         </section>
+    </div>
+</main>
     <footer>
         <?php require "requires/require_Footer.php";?>
     </footer>

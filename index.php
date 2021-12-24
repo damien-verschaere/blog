@@ -20,6 +20,6 @@ session_start();
 </body>
 </html>
 <?php
-
-header("Refresh: 3.7;url=http://localhost/blog/views/accueil.php");
+header("Refresh: 3.7;url=http://localhost/projectPool2/blog/views/accueil.php");
+header("Refresh: 3.7;url=http://localhost/projectPool2/blog/views/accueil.php");
 ?>
