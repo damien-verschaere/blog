@@ -467,31 +467,32 @@ function affiche_categorie(){
                     </div>
                 <?php 
                 }
-            function affiche_commentaires_article() {   
+                function affiche_commentaires_article() {   
                         
-                $id_article = $_GET['article'];
-        
-                //requête de récupération des informations des commentaires liés à l'article
-                $requete_self_article_commentaire = mysqli_query(connexion_BDD(), "SELECT c.commentaire, c.date FROM articles AS a INNER JOIN commentaires AS c ON a.id = c.id_article WHERE a.id = $id_article ORDER BY `date` DESC");
-                $result_self_article_commentaire = mysqli_fetch_all($requete_self_article_commentaire, MYSQLI_ASSOC);
-        
-                $requete_login_article_commentaire = mysqli_query(connexion_BDD(), "SELECT u.id, u.login FROM utilisateurs AS u INNER JOIN commentaires AS c ON u.id = c.id_utilisateur WHERE u.id = c.id_utilisateur AND c.id_article = $id_article");
-                $result_login_article_commentaire = mysqli_fetch_all($requete_login_article_commentaire, MYSQLI_ASSOC);
-                $x = 0;
-                $i = 0;
-                    while ( isset ( $result_self_article_commentaire[$i]). isset ($result_login_article_commentaire[$x])){
-                        ?>
-                            <div class="affiche_commentaires_article">
-                                <p class="commentaires_article"><?= nl2br($result_self_article_commentaire[$i]['commentaire']) ?> </p>
-                                <p class="date_commentaire_article"><i class="fas fa-calendar-day"></i>  <?= $result_self_article_commentaire[$i]['date'] ?></p>
-                                <p class="login_commentaire_article"> <i class="fas fa-user-edit"></i> <?= $result_login_article_commentaire[$x]['login'] ?></p>
-                                
-                            </div>
-                        <?php
-                        $i ++;
-                    $x++;
+                    $id_article = $_GET['article'];
+                    $id = $_SESSION['id'];
+                    $requete_article_self = mysqli_query(connexion_BDD(),"SELECT c.commentaire, c.date, u.login FROM commentaires AS c INNER JOIN articles AS a ON c.id_article = a.id INNER JOIN utilisateurs AS u ON c.id_utilisateur = u.id AND c.id_article = $id_article ORDER BY `date` DESC");
+                    $result_article_self = mysqli_fetch_all($requete_article_self, MYSQLI_ASSOC);
+                    //requête de récupération des informations des commentaires liés à l'article
+                    // $requete_self_article_commentaire = mysqli_query(connexion_BDD(), "SELECT c.commentaire, c.date FROM articles AS a INNER JOIN commentaires AS c ON a.id = c.id_article WHERE a.id = $id_article ORDER BY `date` DESC");
+                    // $result_self_article_commentaire = mysqli_fetch_all($requete_self_article_commentaire, MYSQLI_ASSOC);
+            
+                    // $requete_login_article_commentaire = mysqli_query(connexion_BDD(), "SELECT u.id, u.login FROM utilisateurs AS u INNER JOIN commentaires AS c ON u.id = c.id_utilisateur WHERE u.id = c.id_utilisateur AND c.id_article = $id_article");
+                    // $result_login_article_commentaire = mysqli_fetch_all($requete_login_article_commentaire, MYSQLI_ASSOC);
+                   
+                    $i = 0;
+                        while ( isset ( $result_article_self[$i])){
+                            ?>
+                                <div class="affiche_commentaires_article">
+                                    <p class="commentaires_article"><?= nl2br($result_article_self[$i]['commentaire']) ?> </p>
+                                    <p class="date_commentaire_article"><i class="fas fa-calendar-day"></i>  <?= $result_article_self[$i]['date'] ?></p>
+                                    <p class="login_commentaire_article"> <i class="fas fa-user-edit"></i> <?= $result_article_self[$i]['login'] ?></p>
+                                    
+                                </div>
+                            <?php
+                            $i ++;
+                        }
                     }
-                }
                     
             function post_commentaire_article(){
         
